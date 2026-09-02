@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UC1 · Apresentação das 9 aulas | Desenvolvedor Mobile – Senac</title>
+<meta name="description" content="Apresentação de aula da Unidade Curricular 1 do curso Desenvolvedor Mobile: 80 slides cobrindo os nove encontros.">
+<style>
+:root{
+  --azul:#00447c; --azul-esc:#00305a; --azul-claro:#e8f1f9;
+  --laranja:#e8730c; --laranja-claro:#fdf0e3;
+  --verde:#1d7a52; --verde-claro:#e6f4ee;
+  --roxo:#6b3fa0; --roxo-claro:#f1ebfa;
+  --vermelho:#b3261e; --vermelho-claro:#fdecea;
+  --tinta:#12181f; --tinta2:#4a5563; --linha:#dfe4ea; --fundo2:#f6f8fa;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:"SF Mono",Consolas,"Liberation Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#0d1720;font-family:var(--sans);color:var(--tinta)}
+#palco{position:fixed;inset:0;display:grid;place-items:center}
+#slide{width:1280px;height:720px;background:#fff;position:relative;overflow:hidden;transform-origin:center;box-shadow:0 24px 70px rgba(0,0,0,.5)}
+.sl{position:absolute;inset:0;padding:56px 72px 76px;display:none;flex-direction:column}
+.sl.on{display:flex;animation:entra .28s ease-out}
+@keyframes entra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.marca{position:absolute;left:72px;bottom:26px;font-size:13px;color:#94a1b0;letter-spacing:.3px}
+.pag{position:absolute;right:72px;bottom:26px;font-size:13px;color:#94a1b0;font-variant-numeric:tabular-nums}
+.faixa{position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--linha)}
+.faixa i{display:block;height:100%;background:var(--laranja);width:0}
+.et{position:absolute;right:72px;top:30px;font-size:11.5px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--laranja);background:var(--laranja-claro);border:1px solid #f5d5b0;padding:4px 12px;border-radius:99px}
+
+h1{font-size:52px;line-height:1.08;margin:0 0 16px;letter-spacing:-1px}
+h2{font-size:38px;line-height:1.15;margin:0 0 6px;letter-spacing:-.6px}
+.sub{font-size:19px;color:var(--tinta2);margin:0 0 26px;max-width:56ch}
+ul{margin:0;padding-left:0;list-style:none}
+li{font-size:23px;line-height:1.42;margin-bottom:18px;padding-left:34px;position:relative}
+li::before{content:"";position:absolute;left:0;top:11px;width:11px;height:11px;border-radius:3px;background:var(--laranja)}
+li b{font-weight:700}
+li small{display:block;font-size:17px;color:var(--tinta2);margin-top:3px;line-height:1.4}
+.corpo{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center}
+
+/* capa */
+.capa{background:linear-gradient(135deg,#00305a,#00447c 55%,#0b6ab0);color:#fff;padding:0}
+.capa .in{padding:80px 90px;display:flex;flex-direction:column;justify-content:center;height:100%}
+.capa h1{color:#fff;font-size:62px;max-width:19ch}
+.capa .tag{display:inline-block;align-self:flex-start;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);padding:6px 16px;border-radius:99px;font-size:14px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:26px}
+.capa p{font-size:22px;color:rgba(255,255,255,.9);margin:0;max-width:60ch}
+.capa .rod{margin-top:auto;font-size:15px;color:rgba(255,255,255,.7)}
+
+/* divisor de aula */
+.div-aula{background:var(--azul);color:#fff}
+.div-aula .n{font-size:15px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#8fc4ee;margin-bottom:14px}
+.div-aula h1{color:#fff;font-size:50px;max-width:20ch}
+.div-aula .obj{font-size:20px;color:rgba(255,255,255,.9);max-width:60ch;margin-top:10px;border-left:3px solid var(--laranja);padding-left:18px}
+.div-aula .meta{margin-top:34px;display:flex;gap:12px;flex-wrap:wrap}
+.div-aula .meta span{background:rgba(255,255,255,.13);border-radius:8px;padding:8px 14px;font-size:14.5px}
+.div-aula .marca,.div-aula .pag{color:rgba(255,255,255,.55)}
+
+/* destaque */
+.destaque{justify-content:center}
+.destaque .frase{font-size:44px;line-height:1.2;font-weight:700;letter-spacing:-.8px;max-width:24ch}
+.destaque .apoio{font-size:21px;color:var(--tinta2);margin-top:22px;max-width:60ch}
+.destaque .frase em{font-style:normal;color:var(--laranja)}
+
+/* pergunta */
+.pergunta{background:var(--fundo2);justify-content:center}
+.pergunta .q{font-size:40px;font-weight:700;line-height:1.22;max-width:26ch;letter-spacing:-.6px}
+.pergunta .rot{font-size:12.5px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--roxo);margin-bottom:18px}
+
+/* colunas */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:34px;flex:1;min-height:0;align-content:center}
+.col h3{font-size:15px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;margin:0 0 16px;padding-bottom:8px;border-bottom:2px solid}
+.col.a h3{color:var(--azul);border-color:var(--azul)}
+.col.b h3{color:var(--laranja);border-color:var(--laranja)}
+.col.v h3{color:var(--verde);border-color:var(--verde)}
+.col.r h3{color:var(--vermelho);border-color:var(--vermelho)}
+.col li{font-size:19.5px;margin-bottom:13px;padding-left:26px}
+.col li::before{width:8px;height:8px;top:9px;background:currentColor;opacity:.55}
+
+/* figura */
+.figs{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.figs svg{max-height:430px;width:100%;height:auto}
+.figleg{font-size:16px;color:var(--tinta2);margin-top:16px;text-align:center;max-width:88ch;line-height:1.45}
+
+/* atividade */
+.ativ{background:var(--verde-claro)}
+.ativ .rot{display:inline-block;align-self:flex-start;background:var(--verde);color:#fff;font-size:12.5px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;padding:5px 14px;border-radius:99px;margin-bottom:18px}
+.ativ h2{color:#12181f}
+.ativ ol{counter-reset:pa;list-style:none;padding:0;margin:22px 0 0}
+.ativ ol li{counter-increment:pa;font-size:21px;padding-left:46px;margin-bottom:15px}
+.ativ ol li::before{content:counter(pa);background:var(--verde);color:#fff;width:31px;height:31px;border-radius:50%;display:grid;place-items:center;font-size:15px;font-weight:700;top:0;left:0}
+.ativ .entrega{margin-top:auto;background:#fff;border:1px solid #bde0cf;border-radius:10px;padding:14px 20px;font-size:18px}
+.ativ .entrega b{color:var(--verde)}
+.ativ .tempo{position:absolute;right:72px;top:30px;background:#fff;border:1px solid #bde0cf;color:var(--verde);font-size:14px;font-weight:700;padding:6px 14px;border-radius:99px}
+
+/* tabela */
+table{border-collapse:collapse;width:100%;font-size:18px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--linha);vertical-align:top}
+thead th{background:var(--fundo2);font-size:13px;text-transform:uppercase;letter-spacing:.8px;color:var(--tinta2);border-bottom:2px solid var(--linha)}
+td b{font-weight:700}
+
+/* cartoes */
+.cards{display:grid;gap:18px;flex:1;align-content:center}
+.c3{grid-template-columns:repeat(3,1fr)} .c4{grid-template-columns:repeat(4,1fr)} .c2{grid-template-columns:repeat(2,1fr)}
+.cd{border:1px solid var(--linha);border-radius:12px;padding:20px 22px;background:#fff}
+.cd h4{margin:0 0 8px;font-size:19px}
+.cd p{margin:0;font-size:17px;color:var(--tinta2);line-height:1.45}
+.cd .k{font-size:12px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--laranja);display:block;margin-bottom:6px}
+
+/* citacao cliente */
+.fala{background:var(--laranja-claro);border-left:6px solid var(--laranja);border-radius:12px;padding:28px 32px;font-size:22px;line-height:1.5;font-style:italic;color:#3d2c18}
+.fala .quem{display:block;font-style:normal;font-size:15px;font-weight:700;color:var(--laranja);margin-top:14px;letter-spacing:.6px;text-transform:uppercase}
+
+/* notas do apresentador */
+#notas{position:fixed;left:0;right:0;bottom:0;max-height:38vh;overflow-y:auto;background:#111b25;color:#d7e2ec;padding:18px 26px;font-size:15px;line-height:1.55;border-top:2px solid var(--laranja);display:none;z-index:20}
+#notas.on{display:block}
+#notas b{color:#ffb060}
+#notas .cab{font-size:11.5px;letter-spacing:1.4px;text-transform:uppercase;color:#7d8fa0;margin-bottom:8px}
+
+/* ajuda / overview */
+#ajuda{position:fixed;inset:0;background:rgba(9,15,21,.94);color:#e7eef4;display:none;place-items:center;z-index:30;font-size:17px}
+#ajuda.on{display:grid}
+#ajuda .cx{max-width:520px;line-height:1.9}
+#ajuda kbd{background:#22303d;border:1px solid #3a4c5c;border-radius:5px;padding:2px 9px;font-family:var(--mono);font-size:14px;margin-right:8px}
+#mapa{position:fixed;inset:0;background:#0d1720;overflow-y:auto;padding:30px;display:none;z-index:25}
+#mapa.on{display:block}
+#mapa .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;max-width:1400px;margin:0 auto}
+#mapa .m{background:#16222e;border:1px solid #27384a;border-radius:8px;padding:12px 14px;color:#cbd8e4;font-size:13.5px;cursor:pointer;line-height:1.35}
+#mapa .m:hover{border-color:var(--laranja);background:#1d2c3b}
+#mapa .m span{display:block;font-size:11px;color:#7d8fa0;margin-bottom:4px}
+#mapa h3{color:#e7eef4;text-align:center;font-size:16px;letter-spacing:1.4px;text-transform:uppercase;margin:0 0 22px}
+#toque{position:fixed;inset:0;z-index:5;display:flex}
+#toque div{flex:1}
+
+@media print{
+  html,body{overflow:visible;background:#fff;height:auto;width:1280px}
+  #palco{position:static;display:block}
+  #slide{width:1280px;height:auto;box-shadow:none;transform:none!important}
+  .sl{display:flex!important;position:relative;inset:auto;width:1280px;height:720px;border:0;overflow:hidden;break-inside:avoid;page-break-inside:avoid}
+  .sl:not(:last-child){break-after:page;page-break-after:always}
+  #notas,#ajuda,#mapa,#toque,.faixa{display:none!important}
+  @page{size:1280px 720px;margin:0}
+}
+
+/* animações */
+
+.anim{position:relative}
+.anim-head{display:flex;align-items:center;gap:10px;margin:-4px 0 12px}
+.anim-tag{font-size:10.5px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:var(--roxo);background:var(--roxo-claro);border:1px solid #d8c9ef;padding:3px 10px;border-radius:99px}
+.anim-head .btn{margin-left:auto;padding:5px 12px;font-size:12.5px}
+.anim-head .btn:hover{border-color:var(--roxo);color:var(--roxo)}
+
+@keyframes surge{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes surgeE{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulsa{0%,100%{opacity:1;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
+@keyframes some{from{opacity:1}to{opacity:.18}}
+@keyframes cresce{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
+@keyframes risca{to{stroke-dashoffset:0}}
+
+.sl svg .s1,.sl svg .s2,.sl svg .s3,.sl svg .s4,.sl svg .s5,
+.sl svg .s6,.sl svg .s7,.sl svg .s8,.sl svg .s9,.sl svg .s10{transform-box:fill-box;transform-origin:center}
+.sl.tocando .s1{animation:surge .5s 0s both}
+.sl.tocando .s2{animation:surge .5s .5s both}
+.sl.tocando .s3{animation:surge .5s 1s both}
+.sl.tocando .s4{animation:surge .5s 1.5s both}
+.sl.tocando .s5{animation:surge .5s 2s both}
+.sl.tocando .s6{animation:surge .5s 2.5s both}
+.sl.tocando .s7{animation:surge .5s 3s both}
+.sl.tocando .s8{animation:surge .5s 3.5s both}
+.sl.tocando .s9{animation:surge .5s 4s both}
+.sl.tocando .s10{animation:surge .5s 4.5s both}
+
+/* DNS */
+.sl.tocando #dns-pac{animation:dnsPac 5.4s ease-in-out both}
+@keyframes dnsPac{
+  0%{opacity:0;transform:translate(0,0)}
+  6%{opacity:1;transform:translate(0,0)}
+  22%{transform:translate(197px,0)}
+  38%{transform:translate(197px,0)}
+  54%{transform:translate(405px,0)}
+  66%{transform:translate(405px,0)}
+  80%{transform:translate(570px,0)}
+  90%{opacity:1;transform:translate(570px,0)}
+  100%{opacity:0;transform:translate(570px,0)}
+}
+.sl.tocando #dns-volta{stroke-dasharray:760;stroke-dashoffset:760;animation:risca 1.1s 4.4s ease-out both}
+
+/* Persona */
+.sl.tocando .multidao{animation:some .8s 1.6s both}
+.sl.tocando #p-destaque{transform-box:fill-box;transform-origin:center;animation:cresce .6s 2.2s both,pulsa 1.6s 2.8s 2}
+.sl.tocando #p-cartao{animation:surgeE .7s 2.6s both}
+
+/* Card sorting */
+.sl.tocando .cs-move{transform-box:view-box}
+.sl.tocando #cs1{animation:cs1 1s 1.4s both}.sl.tocando #cs2{animation:cs2 1s 1.7s both}
+.sl.tocando #cs3{animation:cs3 1s 2s both}.sl.tocando #cs4{animation:cs4 1s 2.3s both}
+.sl.tocando #cs5{animation:cs5 1s 2.6s both}.sl.tocando #cs6{animation:cs6 1s 2.9s both}
+.sl.tocando #cs7{animation:cs7 1s 3.2s both}.sl.tocando #cs8{animation:cs8 1s 3.5s both}
+.sl.tocando #cs9{animation:cs9 1s 3.8s both}
+@keyframes cs1{from{transform:translate(78px,96px)}to{transform:translate(0,0)}}
+@keyframes cs2{from{transform:translate(-46px,84px)}to{transform:translate(0,0)}}
+@keyframes cs3{from{transform:translate(122px,72px)}to{transform:translate(0,0)}}
+@keyframes cs4{from{transform:translate(-158px,102px)}to{transform:translate(0,0)}}
+@keyframes cs5{from{transform:translate(24px,120px)}to{transform:translate(0,0)}}
+@keyframes cs6{from{transform:translate(196px,88px)}to{transform:translate(0,0)}}
+@keyframes cs7{from{transform:translate(-212px,64px)}to{transform:translate(0,0)}}
+@keyframes cs8{from{transform:translate(-104px,116px)}to{transform:translate(0,0)}}
+@keyframes cs9{from{transform:translate(64px,58px)}to{transform:translate(0,0)}}
+.sl.tocando .cs-col{animation:surge .5s 1s both}
+
+/* MoSCoW */
+.sl.tocando .mo-card{transform-box:view-box}
+.sl.tocando #mo1{animation:mo1 .9s 1.2s both}.sl.tocando #mo2{animation:mo2 .9s 1.6s both}
+.sl.tocando #mo3{animation:mo3 .9s 2s both}.sl.tocando #mo4{animation:mo4 .9s 2.4s both}
+.sl.tocando #mo5{animation:mo5 .9s 2.8s both}.sl.tocando #mo6{animation:mo6 .9s 3.2s both}
+@keyframes mo1{from{transform:translate(255px,-110px);opacity:0}35%{opacity:1}to{transform:translate(0,0);opacity:1}}
+@keyframes mo2{from{transform:translate(255px,-150px);opacity:0}35%{opacity:1}to{transform:translate(0,0);opacity:1}}
+@keyframes mo3{from{transform:translate(80px,-110px);opacity:0}35%{opacity:1}to{transform:translate(0,0);opacity:1}}
+@keyframes mo4{from{transform:translate(80px,-150px);opacity:0}35%{opacity:1}to{transform:translate(0,0);opacity:1}}
+@keyframes mo5{from{transform:translate(-95px,-110px);opacity:0}35%{opacity:1}to{transform:translate(0,0);opacity:1}}
+@keyframes mo6{from{transform:translate(-262px,-110px);opacity:0}35%{opacity:1}to{transform:translate(0,0);opacity:1}}
+
+/* Fidelidade */
+.sl.tocando #fid-1{animation:fidOut 1.2s 1s both}
+.sl.tocando #fid-2{animation:fidIn 1.2s 1s both,fidOut 1.2s 2.4s both}
+.sl.tocando #fid-3{animation:fidIn 1.2s 2.4s both,fidOut 1.2s 3.8s both}
+.sl.tocando #fid-4{animation:fidIn 1.2s 3.8s both}
+.sl.tocando #fid-toque{animation:cresce .4s 5s both,pulsa 1s 5.4s 2}
+.sl.tocando #fid-rot1{animation:rotOut .3s 1s both}
+.sl.tocando #fid-rot2{animation:rotIn .3s 1.1s both,rotOut .3s 2.4s both}
+.sl.tocando #fid-rot3{animation:rotIn .3s 2.5s both,rotOut .3s 3.8s both}
+.sl.tocando #fid-rot4{animation:rotIn .3s 3.9s both}
+@keyframes fidIn{from{opacity:0}to{opacity:1}}
+@keyframes fidOut{from{opacity:1}to{opacity:0}}
+@keyframes rotIn{from{opacity:0}to{opacity:1}}
+@keyframes rotOut{from{opacity:1}to{opacity:0}}
+
+/* Protótipo navegável */
+.sl.tocando .pt-liga{stroke-dasharray:200;stroke-dashoffset:200}
+.sl.tocando #pt-l1{animation:risca .7s 1.6s ease-out both}
+.sl.tocando #pt-l2{animation:risca .7s 2.3s ease-out both}
+.sl.tocando #pt-cursor{animation:ptCursor 4.6s 3s ease-in-out both}
+@keyframes ptCursor{
+  0%{opacity:0;transform:translate(0,0)}
+  8%{opacity:1;transform:translate(0,0)}
+  20%{transform:translate(6px,26px)}
+  30%{transform:translate(6px,26px)}
+  48%{transform:translate(232px,12px)}
+  62%{transform:translate(232px,72px)}
+  78%{transform:translate(462px,40px)}
+  100%{opacity:1;transform:translate(462px,40px)}
+}
+.sl.tocando #pt-t2{animation:fidIn .4s 4.6s both}
+.sl.tocando #pt-t3{animation:fidIn .4s 5.9s both}
+
+/* Porquês */
+.sl.tocando .pq-seta{stroke-dasharray:40;stroke-dashoffset:40}
+.sl.tocando #pq-a{animation:risca .35s .55s both}
+.sl.tocando #pq-b{animation:risca .35s 1.35s both}
+.sl.tocando #pq-c{animation:risca .35s 2.15s both}
+.sl.tocando #pq-final{animation:surge .6s 3s both,pulsa 1.4s 3.6s 2}
+
+@media (prefers-reduced-motion:reduce){
+  .tocando *{animation:none!important}
+}
+@media print{ .anim-head{display:none} }
+
+</style>
+</head>
+<body>
+<div id="palco"><div id="slide"><section class="sl capa" data-nota="Apresentação completa das 9 aulas. Navegue com as setas. Tecle &lt;b&gt;N&lt;/b&gt; para abrir e fechar estas notas, &lt;b&gt;M&lt;/b&gt; para o mapa de slides e &lt;b&gt;?&lt;/b&gt; para a ajuda. Cada aula começa com um slide azul de abertura."><div class="in"><span class="tag">Unidade Curricular 1 · 36 horas</span><h1>Elaborar projetos de aplicações para web</h1><p>Curso Desenvolvedor Mobile · Eixo tecnológico Informação e Comunicação</p><div class="rod">Senac · Qualificação Profissional · Plano de curso DN 2826, v.2 · Instrutor: Welton Castoldi</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">1</div></section>
+<section class="sl" data-nota="Slide de contrato de expectativa. Deixe claro desde já: &lt;b&gt;nesta UC não se programa&lt;/b&gt;. Muitos alunos chegam ansiosos por código e se frustram se isso não for nomeado agora. Use a última linha para provocar: &#x27;quem aqui já fez um site de graça pra um conhecido e se arrependeu?&#x27;"><div class="et">Abertura</div><h2>O que esta unidade entrega</h2><p class="sub">Ao final de 36 horas você terá projetado, do zero, uma aplicação web completa — sem escrever uma linha de código.</p><div class="corpo"><ul><li><b>Um briefing validado com o cliente</b><small>a conversa que descobre o que ele realmente precisa</small></li>
+<li><b>Personas e análise de concorrência</b><small>decisões apoiadas em dados, não em achismo</small></li>
+<li><b>Requisitos priorizados e mapa do site</b><small>a planta baixa do que será construído</small></li>
+<li><b>Um protótipo navegável testado com usuários</b><small>o erro barato, antes do erro caro</small></li>
+<li><b>Uma proposta comercial defensável</b><small>porque projeto sem preço é hobby</small></li></ul></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">2</div></section>
+<section class="sl destaque" data-nota="Pausa dramática aqui. Deixe o slide respirar 10 segundos antes de comentar. Se a turma reagir, puxe: &#x27;vocês conhecem alguém que programa bem e ganha mal? Por quê?&#x27;"><div class="et">Abertura</div><div class="corpo"><div class="frase">Programar tem tutorial.<br><em>Entender o que precisa ser programado, não.</em></div><div class="apoio">É por isso que a UC1 abre o curso. O profissional que só executa depende de alguém para pensar o projeto — e essa dependência define quanto ele consegue cobrar.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">3</div></section>
+<section class="sl div-aula" data-nota="Chegue antes e organize a sala em ilhas de 4 lugares — a aula inteira é em grupo. Tenha cartolina e post-its prontos."><div class="corpo"><div class="n">Aula 1 · 4 horas</div><h1>Quem é o desenvolvedor mobile e o que é um projeto web</h1><div class="obj">Situar o aluno no perfil profissional e compreender as etapas de um projeto web antes de qualquer linha de código.</div><div class="meta"><span>Indicador I1 (introdução)</span><span>Avaliação diagnóstica</span><span>Formação dos grupos</span></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">4</div></section>
+<section class="sl pergunta" data-nota="&lt;b&gt;Avaliação diagnóstica — 40 min.&lt;/b&gt; Não corrija nada durante a produção. O objetivo é medir o repertório inicial e criar a lacuna que a aula vai preencher. Recolha os cartazes e guarde: na Aula 9 vale devolver para a turma comparar."><div class="corpo"><div class="rot">Para começar</div><div class="q">Como você faria o site de uma pizzaria?</div><p class="sub" style="margin-top:24px">Em grupo, no papel, sem consultar nada: escrevam o passo a passo, do primeiro contato até o site no ar.</p></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">5</div></section>
+<section class="sl" data-nota="Compare este fluxo com os cartazes que a turma produziu. Quase sempre eles pulam direto para &#x27;escolher as cores&#x27; ou &#x27;programar&#x27;. Nomeie a lacuna sem constranger ninguém: &lt;b&gt;é normal, e é exatamente o que viemos aprender&lt;/b&gt;."><div class="et">Aula 1</div><h2>O caminho que vamos percorrer</h2><div class="figs"><svg viewBox="0 0 760 210" role="img" aria-label="Fluxo das etapas do projeto web, do briefing ao documento final">
+  <defs>
+    <marker id="setaA" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#00447c"/></marker>
+  </defs>
+  <rect x="4" y="60" width="126" height="72" rx="9" fill="#e8f1f9" stroke="#00447c" stroke-width="1.5"/>
+  <text x="67" y="86" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#00447c">Descobrir</text>
+  <text x="67" y="105" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">briefing, mercado,</text>
+  <text x="67" y="118" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">público-alvo</text>
+
+  <rect x="162" y="60" width="126" height="72" rx="9" fill="#e8f1f9" stroke="#00447c" stroke-width="1.5"/>
+  <text x="225" y="86" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#00447c">Definir</text>
+  <text x="225" y="105" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">requisitos, escopo,</text>
+  <text x="225" y="118" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">tecnologia</text>
+
+  <rect x="320" y="60" width="126" height="72" rx="9" fill="#e8f1f9" stroke="#00447c" stroke-width="1.5"/>
+  <text x="383" y="86" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#00447c">Estruturar</text>
+  <text x="383" y="105" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">arquitetura da</text>
+  <text x="383" y="118" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">informação</text>
+
+  <rect x="478" y="60" width="126" height="72" rx="9" fill="#fdf0e3" stroke="#e8730c" stroke-width="1.5"/>
+  <text x="541" y="86" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#b85a08">Prototipar</text>
+  <text x="541" y="105" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">wireframe e</text>
+  <text x="541" y="118" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">protótipo navegável</text>
+
+  <rect x="636" y="60" width="120" height="72" rx="9" fill="#e6f4ee" stroke="#1d7a52" stroke-width="1.5"/>
+  <text x="696" y="86" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#1d7a52">Propor</text>
+  <text x="696" y="105" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">proposta, contrato</text>
+  <text x="696" y="118" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">e documento</text>
+
+  <line x1="132" y1="96" x2="158" y2="96" stroke="#00447c" stroke-width="1.6" marker-end="url(#setaA)"/>
+  <line x1="290" y1="96" x2="316" y2="96" stroke="#00447c" stroke-width="1.6" marker-end="url(#setaA)"/>
+  <line x1="448" y1="96" x2="474" y2="96" stroke="#00447c" stroke-width="1.6" marker-end="url(#setaA)"/>
+  <line x1="606" y1="96" x2="632" y2="96" stroke="#00447c" stroke-width="1.6" marker-end="url(#setaA)"/>
+
+  <text x="67" y="42" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#e8730c">I1</text>
+  <text x="225" y="42" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#e8730c">I1 · I2</text>
+  <text x="383" y="42" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#e8730c">I2</text>
+  <text x="541" y="42" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#e8730c">I3</text>
+  <text x="696" y="42" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#e8730c">I4</text>
+
+  <path d="M67 140 L67 172 L696 172 L696 142" fill="none" stroke="#8a97a8" stroke-width="1.2" stroke-dasharray="4 4"/>
+  <text x="383" y="192" text-anchor="middle" font-family="sans-serif" font-size="11.5" fill="#455060">validação com o cliente em todas as etapas — nada avança sem aprovação registrada</text>
+</svg><div class="figleg">Cada etapa alimenta a próxima. As letras I1 a I4 são os indicadores da competência — é o que será avaliado.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">6</div></section>
+<section class="sl" data-nota="Peça um exemplo concreto da vida deles: &#x27;já reformaram alguma coisa em casa e descobriram no meio que o projeto estava errado?&#x27;. A analogia da obra funciona muito bem com turmas de qualificação."><div class="et">Aula 1</div><h2>Por que investir tempo no início</h2><div class="figs"><svg viewBox="0 0 660 230" role="img" aria-label="Gráfico do custo de corrigir um erro conforme a fase do projeto">
+  <line x1="60" y1="185" x2="630" y2="185" stroke="#8a97a8" stroke-width="1.4"/>
+  <line x1="60" y1="185" x2="60" y2="25" stroke="#8a97a8" stroke-width="1.4"/>
+  <text x="24" y="105" font-family="sans-serif" font-size="11" fill="#455060" transform="rotate(-90 24 105)" text-anchor="middle">custo do reparo</text>
+  <rect x="88" y="171" width="66" height="14" fill="#1d7a52"/>
+  <rect x="200" y="157" width="66" height="28" fill="#4a9b6e"/>
+  <rect x="312" y="129" width="66" height="56" fill="#e8a355"/>
+  <rect x="424" y="73" width="66" height="112" fill="#e8730c"/>
+  <rect x="536" y="33" width="66" height="152" fill="#b3261e"/>
+  <text x="121" y="203" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">Levanta-</text>
+  <text x="121" y="215" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">mento</text>
+  <text x="233" y="203" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">Projeto</text>
+  <text x="345" y="203" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">Codificação</text>
+  <text x="457" y="203" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">Teste</text>
+  <text x="569" y="203" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">Produção</text>
+  <text x="121" y="164" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1d7a52">1x</text>
+  <text x="233" y="150" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1d7a52">~5x</text>
+  <text x="345" y="122" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#b85a08">~10x</text>
+  <text x="457" y="66" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#b85a08">~20x</text>
+  <text x="569" y="26" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#b3261e">~50x+</text>
+  <rect x="60" y="25" width="220" height="160" fill="#1d7a52" opacity=".05"/>
+  <text x="170" y="46" text-anchor="middle" font-family="sans-serif" font-size="11.5" font-weight="700" fill="#1d7a52">a UC1 vive aqui</text>
+</svg><div class="figleg">Ordem de grandeza do custo de corrigir um erro conforme a fase em que ele é descoberto.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">7</div></section>
+<section class="sl" data-nota="Marque no quadro: &lt;b&gt;as etapas 2 a 7 são a UC1 inteira&lt;/b&gt;. As demais aparecem nas próximas unidades. Isso ajuda o aluno a enxergar o curso como um todo e não como matérias soltas."><div class="et">Aula 1</div><h2>As dez etapas de um projeto web</h2><div class="corpo"><table><thead><tr><th>Etapa</th><th>O que acontece</th><th>Artefato</th></tr></thead><tbody><tr><td><b>1. Prospecção</b></td><td>Primeiro contato e qualificação do cliente</td><td>Registro de contato</td></tr><tr><td><b>2. Briefing</b></td><td>Levantamento estruturado da necessidade</td><td>Briefing validado</td></tr><tr><td><b>3. Pesquisa</b></td><td>Público, personas, concorrência, viabilidade</td><td>Personas e benchmarking</td></tr><tr><td><b>4. Requisitos</b></td><td>Tradução do desejo em especificação</td><td>Documento de requisitos</td></tr><tr><td><b>5. Arquitetura</b></td><td>Organização do conteúdo e navegação</td><td>Mapa do site</td></tr><tr><td><b>6. Prototipagem</b></td><td>Wireframe, protótipo e teste</td><td>Protótipo navegável</td></tr><tr><td><b>7. Proposta</b></td><td>Escopo, prazo, valor e contrato</td><td>Proposta assinada</td></tr><tr><td><b>8 a 10</b></td><td>Desenvolvimento, publicação e manutenção</td><td><i>UC3 a UC6</i></td></tr></tbody></table></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">8</div></section>
+<section class="sl" data-nota="Pergunte quem já ouviu falar de cada papel. Aproveite para introduzir vocabulário de mercado — a habilidade &#x27;utilizar termos técnicos na rotina de trabalho&#x27; aparece nas UCs seguintes e começa a ser construída aqui."><div class="et">Aula 1</div><h2>Quem faz o quê em uma equipe</h2><p class="sub">Em equipes pequenas, uma pessoa acumula vários desses papéis — inclusive você.</p><div class="cols"><div class="col a"><h3>Quem descobre e define</h3><ul><li><b>Analista de requisitos</b> — conversa e escreve o que o sistema deve fazer</li>
+<li><b>UX designer</b> — pesquisa, arquitetura da informação e fluxos</li>
+<li><b>UI designer</b> — cores, tipografia, componentes</li>
+<li><b>Gerente de projeto</b> — prazo, escopo e comunicação</li></ul></div><div class="col b"><h3>Quem constrói e entrega</h3><ul><li><b>Front-end</b> — a interface no navegador</li>
+<li><b>Back-end</b> — servidor, banco e APIs</li>
+<li><b>Mobile</b> — Android e iOS: o seu destino</li>
+<li><b>QA</b> — verifica se entregou o que foi pedido</li>
+<li><b>DevOps</b> — infraestrutura e publicação</li></ul></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">9</div></section>
+<section class="sl" data-nota="A pergunta certa nunca é &#x27;qual é a melhor tecnologia&#x27;. É &lt;b&gt;&#x27;qual é a adequada a este problema, com este orçamento, para este público, com esta equipe&#x27;&lt;/b&gt;. Escreva isso no quadro — cai na avaliação do indicador I2."><div class="et">Aula 1</div><h2>Escolher a tecnologia com critério</h2><div class="corpo"><table><thead><tr><th>Formato</th><th>Quando faz sentido</th><th>Cuidado</th></tr></thead><tbody><tr><td><b>Site institucional</b></td><td>Presença digital e captação de contato</td><td>Erro comum é superdimensionar</td></tr><tr><td><b>E-commerce</b></td><td>Venda direta com catálogo e pagamento</td><td>Antifraude, logística, obrigações legais</td></tr><tr><td><b>Sistema web</b></td><td>Cadastro, autenticação, relatórios</td><td>Escopo cresce rápido</td></tr><tr><td><b>PWA</b></td><td>Instala na tela inicial, roda offline, notifica</td><td>Acesso limitado a alguns recursos do aparelho</td></tr><tr><td><b>App híbrido</b></td><td>Uma base de código para Android e iOS</td><td>Publicação nas lojas tem processo próprio</td></tr><tr><td><b>App nativo</b></td><td>Desempenho máximo e uso intenso do aparelho</td><td>Duas bases de código: custo e prazo maiores</td></tr></tbody></table></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">10</div></section>
+<section class="sl" data-nota="Leia em voz alta, no personagem. A partir daqui você &lt;b&gt;é&lt;/b&gt; a Dona Ilza durante toda a unidade. Guarde a ficha secreta: verba de R$ 3.000 aprovada em assembleia, caderno de empréstimos na portaria, uma furadeira devolvida quebrada que gerou briga, 12 moradores sem smartphone. &lt;b&gt;Só revele o que perguntarem.&lt;/b&gt;"><div class="et">Aula 1</div><h2>Nosso cliente do semestre</h2><div class="corpo"><div class="fala">Toda semana tem gente no grupo do WhatsApp perguntando se alguém tem furadeira emprestada, escada, carrinho de bebê. O grupo vira uma bagunça, ninguém acha nada. Aí eu pensei: será que dá pra fazer um site, ou um aplicativo, sei lá? Só que tem que ser fácil, porque tem muito idoso aqui. E não pode ser caro. Quanto sai uma coisa dessas?<span class="quem">Dona Ilza · síndica do Condomínio Jardim das Palmeiras · 96 apartamentos</span></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">11</div></section>
+<section class="sl ativ" data-nota="Circule pelos grupos ouvindo. Se algum grupo escolher app nativo, pergunte quanto custa manter duas bases de código com verba de condomínio. Não dê a resposta: faça a pergunta que leva a ela."><div class="tempo">40 min · em grupo</div><span class="rot">Mão na massa</span><h2>Atividade 1 — Escolha da tecnologia</h2><ol><li>Discutam: o Empresta Aí deve ser um site responsivo, um PWA ou um aplicativo híbrido?</li><li>Justifiquem a escolha usando quatro critérios: perfil do público, orçamento provável, prazo e recursos do aparelho.</li><li>Escrevam a justificativa em no máximo oito linhas.</li><li>Apresentem para outro grupo, que vai tentar refutar a decisão.</li></ol><div class="entrega">Parágrafo de justificativa técnica — alimenta o indicador <b>I2</b></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">12</div></section>
+<section class="sl destaque" data-nota="Não pule a síntese, mesmo com o horário apertado. É nela que a aprendizagem se consolida e é dela que sai boa parte das suas evidências de acompanhamento."><div class="et">Aula 1</div><div class="corpo"><div class="frase">Antes de sair, uma frase:<br><em>o que você descobriu hoje que não sabia?</em></div><div class="apoio">Síntese de 20 minutos. Cada grupo escreve uma frase e lê para a turma. É o registro que fecha o encontro.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">13</div></section>
+<section class="sl div-aula" data-nota="Prepare com antecedência 6 a 8 fichas de personagem-cliente diferentes, uma por dupla. Cada ficha traz um negócio, uma necessidade e três informações que só saem se o aluno perguntar."><div class="corpo"><div class="n">Aula 2 · 4 horas</div><h1>Briefing: extrair do cliente o que ele não sabe explicar</h1><div class="obj">Elaborar e interpretar um briefing para projeto web, conduzindo a reunião com postura profissional.</div><div class="meta"><span>Indicador I1</span><span>Simulação em duplas invertidas</span><span>Entrega 1</span></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">14</div></section>
+<section class="sl destaque" data-nota="Conceito-chave da aula. Anote no quadro e deixe até o fim do encontro."><div class="et">Aula 2</div><div class="corpo"><div class="frase">Briefing é a conversa que descobre<br><em>o problema por trás do pedido.</em></div><div class="apoio">O cliente não pede o que precisa. Ele pede a solução que já imaginou — e quase sempre imaginou errado.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">15</div></section>
+<section class="sl" data-nota="A confusão entre briefing e requisito é a mais comum da unidade. Volte nela na Aula 7."><div class="et">Aula 2</div><h2>O que o briefing é e o que não é</h2><div class="cols"><div class="col a"><h3>Briefing é</h3><ul><li>A necessidade registrada <b>na linguagem do cliente</b></li>
+<li>O ponto de partida de todas as decisões</li>
+<li>A referência para julgar, no fim, se o projeto entregou</li>
+<li>Um documento <b>vivo</b>, que evolui com registro e aprovação</li></ul></div><div class="col r"><h3>Briefing não é</h3><ul><li>Um questionário burocrático de 40 campos</li>
+<li>O documento de requisitos — esse é a especificação técnica</li>
+<li>O contrato — briefing não obriga ninguém a nada</li>
+<li>Definitivo — mas mudar sem registrar é o que gera conflito</li></ul></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">16</div></section>
+<section class="sl" data-nota="Peça à turma outras frases vagas que a Dona Ilza disse (&#x27;não pode ser caro&#x27;, &#x27;que não dê confusão&#x27;) e traduzam juntos, no quadro. É o ensaio da Aula 7."><div class="et">Aula 2</div><h2>Uma frase vaga vira cinco requisitos</h2><div class="figs"><svg viewBox="0 0 680 200" role="img" aria-label="Do briefing ao requisito: transformação da linguagem do cliente em especificação técnica">
+  <rect x="10" y="30" width="200" height="140" rx="10" fill="#fdf0e3" stroke="#e8730c" stroke-width="1.5"/>
+  <text x="110" y="55" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#b85a08">BRIEFING</text>
+  <text x="110" y="73" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#7a5330">linguagem do cliente</text>
+  <text x="110" y="102" text-anchor="middle" font-family="sans-serif" font-size="11.5" font-style="italic" fill="#455060">"tem que ser fácil,</text>
+  <text x="110" y="118" text-anchor="middle" font-family="sans-serif" font-size="11.5" font-style="italic" fill="#455060">porque tem muito</text>
+  <text x="110" y="134" text-anchor="middle" font-family="sans-serif" font-size="11.5" font-style="italic" fill="#455060">idoso aqui"</text>
+
+  <path d="M222 100 L262 100" stroke="#00447c" stroke-width="2" marker-end="url(#setaB)"/>
+  <defs><marker id="setaB" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#00447c"/></marker></defs>
+  <text x="242" y="88" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#455060">análise</text>
+
+  <rect x="272" y="15" width="398" height="170" rx="10" fill="#e8f1f9" stroke="#00447c" stroke-width="1.5"/>
+  <text x="471" y="40" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#00447c">REQUISITOS</text>
+  <text x="471" y="58" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#3c6f9e">linguagem técnica, verificável</text>
+  <text x="292" y="84" font-family="sans-serif" font-size="11.5" fill="#1a1f26">RNF-01 · Corpo de texto com no mínimo 16px</text>
+  <text x="292" y="104" font-family="sans-serif" font-size="11.5" fill="#1a1f26">RNF-02 · Contraste mínimo de 4,5:1 (WCAG AA)</text>
+  <text x="292" y="124" font-family="sans-serif" font-size="11.5" fill="#1a1f26">RNF-03 · Área de toque de 44x44px ou maior</text>
+  <text x="292" y="144" font-family="sans-serif" font-size="11.5" fill="#1a1f26">RNF-04 · Cadastro concluído em até 3 telas</text>
+  <text x="292" y="164" font-family="sans-serif" font-size="11.5" fill="#1a1f26">RF-12 &nbsp;· Login por telefone, sem exigir e-mail</text>
+</svg><div class="figleg">O trabalho de análise é o que separa quem executa de quem projeta.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">17</div></section>
+<section class="sl" data-nota="O bloco 8 é o mais esquecido e o que mais gera problema depois: &lt;b&gt;site lindo entregue a cliente que não sabe trocar uma foto vira site desatualizado em três meses — e a culpa cai em você&lt;/b&gt;."><div class="et">Aula 2</div><h2>Os oito blocos de um briefing web</h2><div class="cards c4"><div class="cd"><span class="k">01</span><h4>Identificação</h4><p>Cliente, ramo, quem decide, canais que já usa</p></div><div class="cd"><span class="k">02</span><h4>Problema e objetivo</h4><p>O que motivou a procura e como o sucesso será medido</p></div><div class="cd"><span class="k">03</span><h4>Público</h4><p>Quem usa, idade, familiaridade digital, aparelho, conexão</p></div><div class="cd"><span class="k">04</span><h4>Conteúdo</h4><p>O que precisa existir e o que o cliente já tem pronto</p></div><div class="cd"><span class="k">05</span><h4>Referências</h4><p>Sites que admira, que detesta, manual de marca, tom</p></div><div class="cd"><span class="k">06</span><h4>Restrições</h4><p>Prazo, orçamento, exigências legais, integrações</p></div><div class="cd"><span class="k">07</span><h4>Concorrência</h4><p>Quem ele considera concorrente e o que o diferencia</p></div><div class="cd"><span class="k">08</span><h4>Manutenção</h4><p>Quem atualiza depois de pronto, com que frequência</p></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">18</div></section>
+<section class="sl" data-nota="Esta animação toca sozinha ao entrar no slide; tecle &lt;b&gt;R&lt;/b&gt; para repetir. Faça o exercício ao vivo com outro pedido inventado pela turma."><div class="et">Aula 2</div><h2>A técnica dos porquês</h2><div class="figs"><svg viewBox="0 0 700 250" role="img" aria-label="Cadeia de perguntas por quê levando do pedido do cliente ao problema real">
+  <g class="s1">
+    <rect x="8" y="42" width="152" height="58" rx="8" fill="#fdf0e3" stroke="#e8730c" stroke-width="1.4"/>
+    <text x="84" y="60" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#b85a08">O PEDIDO</text>
+    <text x="84" y="78" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1f26">"Quero um</text>
+    <text x="84" y="92" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1f26">aplicativo"</text>
+  </g>
+  <path id="pq-a" class="pq-seta" d="M164 71 L192 71" stroke="#00447c" stroke-width="1.8" fill="none" marker-end="url(#stPq)"/>
+  <defs><marker id="stPq" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#00447c"/></marker></defs>
+  <text x="178" y="32" text-anchor="middle" font-family="sans-serif" font-size="9.5" fill="#8a97a8">por quê?</text>
+  <g class="s2">
+    <rect x="196" y="42" width="152" height="58" rx="8" fill="#e8f1f9" stroke="#00447c" stroke-width="1.4"/>
+    <text x="272" y="66" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1f26">"O grupo do</text>
+    <text x="272" y="80" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1f26">WhatsApp virou</text>
+    <text x="272" y="94" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1f26">uma bagunça"</text>
+  </g>
+  <path id="pq-b" class="pq-seta" d="M352 71 L380 71" stroke="#00447c" stroke-width="1.8" fill="none" marker-end="url(#stPq)"/>
+  <text x="366" y="32" text-anchor="middle" font-family="sans-serif" font-size="9.5" fill="#8a97a8">por quê?</text>
+  <g class="s3">
+    <rect x="384" y="42" width="152" height="58" rx="8" fill="#e8f1f9" stroke="#00447c" stroke-width="1.4"/>
+    <text x="460" y="66" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1f26">"Ninguém acha</text>
+    <text x="460" y="80" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1f26">as mensagens</text>
+    <text x="460" y="94" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1f26">antigas"</text>
+  </g>
+  <path id="pq-c" class="pq-seta" d="M540 71 L568 71" stroke="#00447c" stroke-width="1.8" fill="none" marker-end="url(#stPq)"/>
+  <text x="554" y="32" text-anchor="middle" font-family="sans-serif" font-size="9.5" fill="#8a97a8">por quê?</text>
+  <g class="s4">
+    <rect x="572" y="42" width="120" height="58" rx="8" fill="#e8f1f9" stroke="#00447c" stroke-width="1.4"/>
+    <text x="632" y="66" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1f26">"As pessoas</text>
+    <text x="632" y="80" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1f26">desistem de</text>
+    <text x="632" y="94" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1f26">emprestar"</text>
+  </g>
+  <path d="M632 104 L632 132 L350 132 L350 152" fill="none" stroke="#8a97a8" stroke-width="1.3" stroke-dasharray="4 4"/>
+  <g id="pq-final">
+    <rect x="110" y="156" width="480" height="66" rx="10" fill="#e6f4ee" stroke="#1d7a52" stroke-width="1.8"/>
+    <text x="350" y="178" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="800" letter-spacing="1" fill="#1d7a52">O PROBLEMA REAL</text>
+    <text x="350" y="199" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a1f26">Perda de organização e de confiança entre vizinhos</text>
+    <text x="350" y="215" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">— e isso pode ter solução muito diferente de "um aplicativo"</text>
+  </g>
+</svg><div class="figleg">Descer três níveis costuma bastar para revelar o problema real por trás do pedido.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">19</div></section>
+<section class="sl" data-nota="Demonstre uma pergunta ruim e uma boa, no personagem. Exemplo de ruim: &#x27;você quer um site moderno?&#x27;. Boa: &#x27;me mostra um site que você acha bonito e me diz o que gosta nele&#x27;."><div class="et">Aula 2</div><h2>Como perguntar</h2><div class="corpo"><ul><li><b>Comece aberto, feche depois</b><small>'Me conta como funciona hoje' revela contexto; 'o pagamento pode ser só via Pix?' confirma detalhe</small></li>
+<li><b>Pergunte por quê pelo menos três vezes</b><small>cada porquê desce um nível em direção ao problema real</small></li>
+<li><b>Peça exemplos concretos</b><small>'me mostra a última vez que isso aconteceu' vale mais que qualquer adjetivo</small></li>
+<li><b>Confirme o entendimento em voz alta</b><small>antes de encerrar a reunião, repita o que entendeu</small></li>
+<li><b>Combine o próximo passo com data</b><small>reunião sem próximo passo definido é reunião perdida</small></li></ul></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">20</div></section>
+<section class="sl ativ" data-nota="Cronometre de verdade e anuncie os 5 minutos finais. A pressão de tempo é parte do aprendizado: reunião com cliente real também tem hora para acabar."><div class="tempo">80 min · em duplas</div><span class="rot">Mão na massa</span><h2>Atividade 2 — Simulação de briefing</h2><ol><li>Um aluno recebe uma ficha secreta de cliente e não pode mostrá-la ao colega.</li><li>O outro conduz a reunião usando o formulário de briefing — 20 minutos de cronômetro.</li><li>Invertem os papéis com outra ficha.</li><li>Cada dupla identifica: qual informação crítica quase passou despercebida e qual pergunta a destravou.</li><li>Em grupo, preencham o briefing do Empresta Aí e escrevam o contrabriefing.</li></ol><div class="entrega"><b>Entrega 1</b> — Briefing preenchido e contrabriefing validado · indicador <b>I1</b></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">21</div></section>
+<section class="sl destaque" data-nota="Mostre o modelo de contrabriefing da apostila. Combine que toda entrega da UC vem acompanhada de um registro escrito: é a atitude &#x27;responsabilidade e comprometimento com os acordos&#x27; sendo construída na prática."><div class="et">Aula 2</div><div class="corpo"><div class="frase">Contrabriefing:<br><em>devolva por escrito em até 24 horas.</em></div><div class="apoio">Reapresente ao cliente o que você entendeu, com suas palavras, e peça confirmação. Revela mal-entendidos enquanto ainda são baratos — e costuma ser o momento em que o cliente decide que confia em você.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">22</div></section>
+<section class="sl div-aula" data-nota="Material necessário: post-its de pelo menos duas cores, adesivos redondos para votação, canetas grossas. Sem material, a aula perde metade da força."><div class="corpo"><div class="n">Aula 3 · 4 horas</div><h1>Técnicas de criatividade aplicadas ao projeto</h1><div class="obj">Gerar e organizar ideias de solução a partir do briefing, com brainstorming, mapa mental e painel semântico.</div><div class="meta"><span>Indicadores I1 e I2</span><span>Brainwriting 6-3-5</span><span>Entrega 2</span></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">23</div></section>
+<section class="sl" data-nota="Basta uma pessoa dizer &#x27;isso não vai funcionar&#x27; cedo demais para o grupo parar de arriscar. Combine com a turma: durante a divergência, &lt;b&gt;crítica é proibida&lt;/b&gt; — e você vai apitar quem descumprir."><div class="et">Aula 3</div><h2>Divergir e convergir — nunca ao mesmo tempo</h2><div class="figs"><svg viewBox="0 0 620 190" role="img" aria-label="Duplo diamante: divergir e convergir duas vezes">
+  <path d="M30 95 L160 25 L290 95 L160 165 Z" fill="#e8f1f9" stroke="#00447c" stroke-width="1.6"/>
+  <path d="M320 95 L450 25 L580 95 L450 165 Z" fill="#fdf0e3" stroke="#e8730c" stroke-width="1.6"/>
+  <text x="160" y="92" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#00447c">PROBLEMA</text>
+  <text x="160" y="110" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">entender antes de resolver</text>
+  <text x="450" y="92" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#b85a08">SOLUÇÃO</text>
+  <text x="450" y="110" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">gerar e escolher</text>
+  <text x="95" y="18" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">divergir</text>
+  <text x="225" y="18" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">convergir</text>
+  <text x="385" y="18" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">divergir</text>
+  <text x="515" y="18" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">convergir</text>
+  <text x="160" y="185" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">briefing · pesquisa · personas</text>
+  <text x="450" y="185" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">brainstorming · protótipo · teste</text>
+</svg><div class="figleg">O erro mais comum de iniciante é pular o primeiro losango inteiro e começar direto pelas soluções.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">24</div></section>
+<section class="sl" data-nota="Imprima estas quatro regras em folha A3 e cole na parede durante a atividade. Funciona muito melhor do que só falar."><div class="et">Aula 3</div><h2>As quatro regras do brainstorming</h2><div class="cards c4"><div class="cd"><span class="k">01</span><h4>Sem crítica</h4><p>Julgamento fica para depois. Nenhuma ideia é descartada durante a geração.</p></div><div class="cd"><span class="k">02</span><h4>Quantidade</h4><p>Volume gera qualidade. Meta numérica ajuda: 50 ideias em 20 minutos.</p></div><div class="cd"><span class="k">03</span><h4>Ideias ousadas</h4><p>É mais fácil domar uma ideia selvagem do que animar uma sem graça.</p></div><div class="cd"><span class="k">04</span><h4>Combinar</h4><p>Pegar carona na ideia do outro e melhorá-la é o objetivo, não plágio.</p></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">25</div></section>
+<section class="sl" data-nota="Cronometre cada rodada de 5 minutos em voz alta. Se algum grupo travar na terceira rodada, é sinal de que o problema foi mal formulado — ajude a reescrever a pergunta."><div class="et">Aula 3</div><h2>Brainwriting 6-3-5: quando o grupo cala os tímidos</h2><p class="sub">No brainstorming falado, quem tem mais voz domina. O brainwriting corrige isso.</p><div class="cols"><div class="col a"><h3>Como funciona</h3><ul><li>Seis pessoas, uma folha cada</li>
+<li><b>Três ideias em cinco minutos</b></li>
+<li>Passa a folha para o lado</li>
+<li>Cada um desenvolve as ideias que recebeu</li>
+<li>Seis rodadas · até 108 ideias registradas</li></ul></div><div class="col v"><h3>Por que funciona</h3><ul><li>Ninguém é silenciado pelo colega mais falante</li>
+<li>Todas as ideias ficam registradas por escrito</li>
+<li>A ideia do outro serve de trampolim</li>
+<li>Trinta minutos produzem mais que uma hora de discussão</li></ul></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">26</div></section>
+<section class="sl" data-nota="Palavras-chave sugeridas para o Empresta Aí: confiável, simples, vizinhança, sem frescura. Peça que cada grupo defina as suas antes de coletar imagens."><div class="et">Aula 3</div><h2>Mapa mental e painel semântico</h2><div class="corpo"><ul><li><b>Mapa mental</b><small>centro é o projeto; ramos são grandes temas; palavras-chave, não frases; cores ajudam a memória</small></li>
+<li><b>Ele vira o rascunho do mapa do site</b><small>ramos viram seções, sub-ramos viram páginas — faça pensando nisso</small></li>
+<li><b>Painel semântico</b><small>colagem de referências visuais que traduz em imagem a sensação pretendida</small></li>
+<li><b>Resolve a discussão sobre 'moderno'</b><small>em vez de discutir palavras, o cliente aponta o que gosta</small></li>
+<li><b>Valide antes de desenhar qualquer tela</b><small>uma hora de painel economiza uma semana de retrabalho</small></li></ul></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">27</div></section>
+<section class="sl destaque" data-nota="&#x27;Respeito aos direitos de propriedade intelectual&#x27; é uma das atitudes/valores avaliadas nesta UC. Cobre o crédito das fontes na Entrega 2 — se não vier creditado, é PA."><div class="et">Aula 3</div><div class="corpo"><div class="frase">Imagem de referência<br><em>tem dono.</em></div><div class="apoio">Registre a fonte de cada imagem do painel. E jamais use referência no produto final sem licença: banco gratuito com licença permissiva, licença comprada ou produção própria. Usar imagem de terceiro sem autorização é infração de direito autoral (Lei 9.610/1998).</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">28</div></section>
+<section class="sl ativ" data-nota="Na curadoria final, force a decisão: &lt;b&gt;o que entra no projeto e o que vira &#x27;versão 2&#x27;&lt;/b&gt;. Essa conversa é o primeiro ensaio da priorização MoSCoW da Aula 7."><div class="tempo">100 min · em grupo</div><span class="rot">Mão na massa</span><h2>Atividade 3 — Da ideia à direção visual</h2><ol><li>Brainwriting 6-3-5 sobre 'como facilitar o empréstimo de objetos entre vizinhos' — meta de 40 ideias.</li><li>Agrupem por afinidade e votem: cada integrante distribui três adesivos.</li><li>Montem o mapa mental do projeto com os temas vencedores.</li><li>Produzam o painel semântico com 10 referências, cada uma com o link da fonte anotado.</li></ol><div class="entrega"><b>Entrega 2</b> — Mapa mental e painel semântico com fontes creditadas · indicador <b>I1</b></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">29</div></section>
+<section class="sl div-aula" data-nota="Avise na aula anterior que haverá pesquisa com pessoas reais. Se a turma for noturna e a saída da sala for inviável, oriente entrevistas por mensagem — o importante é que os dados não sejam inventados."><div class="corpo"><div class="n">Aula 4 · 4 horas</div><h1>Análise de mercado: cliente, público-alvo e concorrência</h1><div class="obj">Identificar o perfil do cliente e do público-alvo, construir personas e analisar concorrentes diretos e indiretos.</div><div class="meta"><span>Indicador I1</span><span>Pesquisa de campo</span><span>Entrega 3</span></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">30</div></section>
+<section class="sl destaque" data-nota="&#x27;Não concordo&#x27; é opinião contra opinião. &#x27;Entrevistamos oito moradores e seis não conseguiram concluir o cadastro&#x27; é evidência. Essa é a diferença entre discutir e decidir."><div class="et">Aula 4</div><div class="corpo"><div class="frase">Cliente e usuário<br><em>nem sempre são a mesma pessoa.</em></div><div class="apoio">A cliente é a Dona Ilza, que contrata. Os usuários são os 96 moradores — inclusive os que acham a ideia desnecessária. Quando os dois divergem, só dados sustentam a decisão.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">31</div></section>
+<section class="sl" data-nota="Quando a equipe discutir se o botão pode ser menor, é o Seu Antônio que responde. Persona é uma ferramenta de decisão, não um enfeite de apresentação."><div class="et">Aula 4</div><h2>Do público-alvo à persona</h2><div class="figs"><svg viewBox="0 0 700 270" role="img" aria-label="Do público-alvo genérico para uma persona específica">
+  <text x="20" y="28" font-family="sans-serif" font-size="12" font-weight="700" fill="#00447c">PÚBLICO-ALVO</text>
+  <text x="20" y="44" font-family="sans-serif" font-size="10.5" fill="#8a97a8">96 moradores, 25 a 70 anos, usuários de smartphone</text>
+  <g class="multidao" fill="#b6bfc9">
+    <g><circle cx="30" cy="74" r="8"/><path d="M16 100 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="76" cy="74" r="8"/><path d="M62 100 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="122" cy="74" r="8"/><path d="M108 100 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="214" cy="74" r="8"/><path d="M200 100 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="260" cy="74" r="8"/><path d="M246 100 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="306" cy="74" r="8"/><path d="M292 100 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="30" cy="140" r="8"/><path d="M16 166 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="76" cy="140" r="8"/><path d="M62 166 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="122" cy="140" r="8"/><path d="M108 166 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="214" cy="140" r="8"/><path d="M200 166 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="260" cy="140" r="8"/><path d="M246 166 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="306" cy="140" r="8"/><path d="M292 166 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="30" cy="206" r="8"/><path d="M16 232 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="76" cy="206" r="8"/><path d="M62 232 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="122" cy="206" r="8"/><path d="M108 232 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="168" cy="206" r="8"/><path d="M154 232 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="214" cy="206" r="8"/><path d="M200 232 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="260" cy="206" r="8"/><path d="M246 232 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="306" cy="206" r="8"/><path d="M292 232 a14 14 0 0 1 28 0 z"/></g>
+    <g><circle cx="168" cy="74" r="8"/><path d="M154 100 a14 14 0 0 1 28 0 z"/></g>
+  </g>
+  <g id="p-destaque" fill="#e8730c">
+    <circle cx="168" cy="140" r="10"/><path d="M151 168 a17 17 0 0 1 34 0 z"/>
+  </g>
+  <g id="p-cartao">
+    <rect x="360" y="30" width="330" height="212" rx="10" fill="#fff" stroke="#e8730c" stroke-width="1.8"/>
+    <text x="380" y="54" font-family="sans-serif" font-size="10.5" font-weight="800" letter-spacing="1" fill="#b85a08">PERSONA</text>
+    <text x="380" y="78" font-family="sans-serif" font-size="14" font-weight="700" fill="#1a1f26">Seu Antônio, 68 anos</text>
+    <text x="380" y="96" font-family="sans-serif" font-size="11" fill="#455060">Aposentado, ex-marceneiro, mora sozinho no bloco B</text>
+    <line x1="380" y1="108" x2="670" y2="108" stroke="#dfe4ea"/>
+    <text x="380" y="128" font-family="sans-serif" font-size="10.5" font-weight="700" fill="#00447c">OBJETIVO</text>
+    <text x="380" y="144" font-family="sans-serif" font-size="11" fill="#1a1f26">Emprestar suas ferramentas sem correr risco</text>
+    <text x="380" y="168" font-family="sans-serif" font-size="10.5" font-weight="700" fill="#b3261e">BARREIRA</text>
+    <text x="380" y="184" font-family="sans-serif" font-size="11" fill="#1a1f26">Não confia em cadastro na internet; tem medo</text>
+    <text x="380" y="198" font-family="sans-serif" font-size="11" fill="#1a1f26">de golpe e enxerga mal telas pequenas</text>
+    <text x="380" y="224" font-family="sans-serif" font-size="11" font-style="italic" fill="#455060">"Se for que nem essas coisas de banco, eu não uso."</text>
+  </g>
+</svg><div class="figleg">O público-alvo dimensiona o mercado; a persona toma decisões de interface.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">32</div></section>
+<section class="sl" data-nota="Cobre a origem dos dados na entrega: cada persona precisa dizer de qual entrevista ou observação ela nasceu. Persona sem origem declarada é PA."><div class="et">Aula 4</div><h2>Como montar uma persona que serve para alguma coisa</h2><div class="cols"><div class="col a"><h3>Precisa ter</h3><ul><li>Nome, idade e foto licenciada</li>
+<li><b>Contexto de uso</b>: onde, com que aparelho e conexão</li>
+<li><b>Objetivos</b>: o que quer conseguir, não o que quer clicar</li>
+<li><b>Frustrações</b>: o que hoje o impede</li>
+<li>Nível de familiaridade digital</li>
+<li>Uma frase que ela diria</li></ul></div><div class="col r"><h3>Não pode</h3><ul><li>Ser inventada na cabeça do time</li>
+<li>Confirmar apenas os preconceitos da equipe</li>
+<li>Virar um personagem caricato</li>
+<li>Passar de duas ou três por projeto — ninguém lembra</li>
+<li>Ficar linda no slide e nunca mais ser consultada</li></ul></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">33</div></section>
+<section class="sl" data-nota="Peça que a turma aponte, no gráfico, em que ponto uma funcionalidade específica atacaria o problema. Isso conecta pesquisa com requisito e evita funcionalidade sem propósito."><div class="et">Aula 4</div><h2>Jornada do usuário: onde estão os atritos</h2><div class="figs"><svg viewBox="0 0 700 240" role="img" aria-label="Jornada do usuário Seu Antônio em cinco etapas, com curva de satisfação">
+  <text x="20" y="24" font-family="sans-serif" font-size="12" font-weight="700" fill="#00447c">Jornada de Seu Antônio — precisa de uma escada</text>
+  <line x1="40" y1="150" x2="670" y2="150" stroke="#dfe4ea" stroke-width="1.2"/>
+  <polyline points="90,120 220,105 350,175 480,160 610,95" fill="none" stroke="#e8730c" stroke-width="2.4"/>
+  <circle cx="90" cy="120" r="5.5" fill="#e8730c"/><circle cx="220" cy="105" r="5.5" fill="#e8730c"/>
+  <circle cx="350" cy="175" r="5.5" fill="#b3261e"/><circle cx="480" cy="160" r="5.5" fill="#b3261e"/>
+  <circle cx="610" cy="95" r="5.5" fill="#1d7a52"/>
+  <text x="90" y="205" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#455060">Percebe a</text>
+  <text x="90" y="218" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#455060">necessidade</text>
+  <text x="220" y="205" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#455060">Pergunta no</text>
+  <text x="220" y="218" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#455060">grupo</text>
+  <text x="350" y="205" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#b3261e">Ninguém</text>
+  <text x="350" y="218" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#b3261e">responde</text>
+  <text x="480" y="205" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#b3261e">Desiste e</text>
+  <text x="480" y="218" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#b3261e">compra</text>
+  <text x="610" y="205" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#1d7a52">Empresta e</text>
+  <text x="610" y="218" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#1d7a52">devolve</text>
+  <text x="350" y="60" text-anchor="middle" font-family="sans-serif" font-size="11.5" fill="#b3261e" font-weight="700">↑ pontos de atrito: onde o projeto precisa atuar</text>
+  <path d="M350 66 L350 90 M350 90 L330 78 M350 90 L370 78" stroke="#b3261e" stroke-width="1.4" fill="none"/>
+  <text x="24" y="100" font-family="sans-serif" font-size="10" fill="#8a97a8">😀</text>
+  <text x="24" y="182" font-family="sans-serif" font-size="10" fill="#8a97a8">😞</text>
+</svg><div class="figleg">Cada vale na curva de satisfação é uma oportunidade de projeto — e uma justificativa concreta para uma funcionalidade.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">34</div></section>
+<section class="sl" data-nota="Insista: o verdadeiro adversário do Empresta Aí é a inércia de continuar no WhatsApp e a facilidade de comprar barato. &lt;b&gt;Se a solução não for mais fácil que o grupo de mensagens, ela não será usada&lt;/b&gt; — por melhor que seja."><div class="et">Aula 4</div><h2>Concorrente direto e indireto</h2><div class="cols"><div class="col a"><h3>Direto</h3><ul><li>Mesma solução, mesmo público</li>
+<li>Aplicativos de empréstimo entre pessoas</li>
+<li>Plataformas de economia compartilhada de bens</li></ul></div><div class="col r"><h3>Indireto — o que costuma matar o projeto</h3><ul><li>Resolve o mesmo problema de outro jeito</li>
+<li>O próprio grupo de WhatsApp</li>
+<li>O caderno da portaria</li>
+<li>A locadora de ferramentas do bairro</li>
+<li><b>Comprar a furadeira por R$ 89</b></li></ul></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">35</div></section>
+<section class="sl destaque" data-nota="Exemplo pronto: &#x27;Para moradores de condomínio que precisam de objetos de uso esporádico, o Empresta Aí é um aplicativo de empréstimo entre vizinhos que mostra em segundos quem tem o item. Diferente do grupo de WhatsApp, ele registra quem pegou, quando devolve e o histórico de confiança.&#x27;"><div class="et">Aula 4</div><div class="corpo"><div class="frase">Proposta de valor<br><em>em uma frase só.</em></div><div class="apoio"><b>Para</b> [público] <b>que</b> [problema], <b>o</b> [produto] <b>é um</b> [categoria] <b>que</b> [benefício]. <b>Diferente de</b> [alternativa atual], <b>ele</b> [diferencial].</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">36</div></section>
+<section class="sl ativ" data-nota="Critérios fixos para a matriz: proposta de valor, público, passos do cadastro, modelo de cobrança, mecanismo de confiança, acessibilidade percebida, o que copiar e o que evitar."><div class="tempo">100 min · em grupo</div><span class="rot">Mão na massa</span><h2>Atividade 4 — Pesquisa, personas e concorrência</h2><ol><li>Cada aluno entrevista duas pessoas reais do perfil aproximado, com cinco perguntas abertas.</li><li>Construam duas personas com base nas respostas — proibido inventar dados.</li><li>Montem a matriz de benchmarking com três concorrentes diretos e dois indiretos.</li><li>Escrevam a proposta de valor no formato do slide anterior.</li></ol><div class="entrega"><b>Entrega 3</b> — Público-alvo, duas personas e matriz de concorrência · indicador <b>I1</b></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">37</div></section>
+<section class="sl div-aula" data-nota="Aula que exige internet funcionando. Tenha um plano B: capturas de tela do Registro.br e de três planos de hospedagem, caso a rede caia."><div class="corpo"><div class="n">Aula 5 · 4 horas</div><h1>Domínios, hospedagem e serviços de internet</h1><div class="obj">Pesquisar disponibilidade de domínio e comparar serviços de hospedagem adequados ao projeto.</div><div class="meta"><span>Indicador I2</span><span>Laboratório com internet</span><span>Entrega 4</span></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">38</div></section>
+<section class="sl" data-nota="Consequência prática que o aluno precisa levar: &lt;b&gt;trocar de hospedagem sem trocar de domínio é rotina&lt;/b&gt; — basta atualizar os registros de DNS. Isso costuma impressionar clientes que acham que vão &#x27;perder o site&#x27;."><div class="et">Aula 5</div><h2>O que acontece quando alguém digita um endereço</h2><div class="figs"><svg viewBox="0 0 700 230" role="img" aria-label="Como o DNS resolve um nome de domínio em quatro passos">
+  <rect x="14" y="84" width="118" height="58" rx="9" fill="#fff" stroke="#00447c" stroke-width="1.5"/>
+  <text x="73" y="108" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#00447c">Navegador</text>
+  <text x="73" y="126" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">do usuário</text>
+
+  <rect x="200" y="84" width="140" height="58" rx="9" fill="#fff" stroke="#00447c" stroke-width="1.5"/>
+  <text x="270" y="108" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#00447c">Servidor DNS</text>
+  <text x="270" y="126" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">"quem é este nome?"</text>
+
+  <rect x="408" y="84" width="140" height="58" rx="9" fill="#e8f1f9" stroke="#00447c" stroke-width="1.5"/>
+  <text x="478" y="108" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#00447c">Endereço IP</text>
+  <text x="478" y="126" text-anchor="middle" font-family="monospace" font-size="11" fill="#455060">203.0.113.42</text>
+
+  <rect x="596" y="84" width="94" height="58" rx="9" fill="#e6f4ee" stroke="#1d7a52" stroke-width="1.5"/>
+  <text x="643" y="108" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#1d7a52">Servidor</text>
+  <text x="643" y="126" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">de hospedagem</text>
+
+  <defs><marker id="setaC" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#8a97a8"/></marker></defs>
+  <line x1="136" y1="113" x2="194" y2="113" stroke="#8a97a8" stroke-width="1.6" marker-end="url(#setaC)"/>
+  <line x1="344" y1="113" x2="402" y2="113" stroke="#8a97a8" stroke-width="1.6" marker-end="url(#setaC)"/>
+  <line x1="552" y1="113" x2="590" y2="113" stroke="#8a97a8" stroke-width="1.6" marker-end="url(#setaC)"/>
+  <text x="165" y="104" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#455060">1</text>
+  <text x="373" y="104" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#455060">2</text>
+  <text x="571" y="104" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#455060">3</text>
+  <path id="dns-volta" d="M643 146 L643 178 L73 178 L73 148" fill="none" stroke="#1d7a52" stroke-width="1.8" marker-end="url(#setaC)"/>
+  <text x="358" y="196" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1d7a52">4 · a página volta e é exibida na tela</text>
+  <text x="350" y="40" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#1a1f26">empresta-ai.com.br</text>
+  <g id="dns-pac" style="opacity:0"><circle cx="73" cy="62" r="8" fill="#e8730c"/><circle cx="73" cy="62" r="14" fill="#e8730c" opacity=".2"/></g>
+</svg><div class="figleg">O domínio não guarda o site: ele apenas aponta para onde o site está.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">39</div></section>
+<section class="sl" data-nota="Escreva um endereço completo no quadro e peça que a turma nomeie cada pedaço antes de você revelar a tabela."><div class="et">Aula 5</div><h2>Anatomia de um endereço</h2><div class="corpo"><table><thead><tr><th>Parte</th><th>Nome</th><th>Função</th></tr></thead><tbody><tr><td><code>https://</code></td><td>Protocolo</td><td>Como a comunicação acontece; o 's' indica conexão criptografada</td></tr><tr><td><code>loja</code></td><td>Subdomínio</td><td>Divisão dentro do mesmo domínio — gratuito e ilimitado</td></tr><tr><td><code>empresta-ai</code></td><td>Domínio de 2º nível</td><td>O nome propriamente dito: é o que se registra</td></tr><tr><td><code>com</code></td><td>Categoria</td><td>Natureza da atividade: com, org, net, edu, gov</td></tr><tr><td><code>br</code></td><td>Domínio de topo</td><td>Código do país — administrado pelo Registro.br / NIC.br</td></tr><tr><td><code>/catalogo</code></td><td>Caminho</td><td>Recurso dentro do site; não faz parte do domínio</td></tr></tbody></table></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">40</div></section>
+<section class="sl" data-nota="Faça a consulta ao vivo. Digite o nome que a turma sugerir e mostre o resultado — inclusive quando estiver ocupado, que é o mais comum e o mais instrutivo."><div class="et">Aula 5</div><h2>Registrar um domínio .br</h2><div class="corpo"><ul><li><b>R$ 40,00 por ano</b><small>valor público e igual para todos, com desconto para períodos maiores — não existe revenda oficial mais barata</small></li>
+<li><b>Exige CPF ou CNPJ válido</b><small>e há categorias restritas: .adv.br pede OAB, .med.br pede CRM, .gov.br é só órgão público</small></li>
+<li><b>Concedido por ordem de chegada</b><small>e precisa ser renovado: domínio vencido é liberado para qualquer pessoa</small></li>
+<li><b>WHOIS mostra titular e validade</b><small>ferramenta de consulta pública que todo profissional deveria saber usar</small></li></ul></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">41</div></section>
+<section class="sl destaque" data-nota="Este é o slide mais importante da aula em termos de carreira. Peça que anotem. Complemente: registre no contrato quem é o titular de &lt;b&gt;cada&lt;/b&gt; ativo digital do projeto."><div class="et">Aula 5</div><div class="corpo"><div class="frase">Registre o domínio no CPF do cliente.<br><em>Nunca no seu.</em></div><div class="apoio">Parece um favor; é uma bomba-relógio. Quando a relação com o cliente termina, o domínio precisa ser transferido — e disputas sobre isso são comuns e desgastantes. Se ele não souber fazer, faça junto, na conta dele, com a senha dele.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">42</div></section>
+<section class="sl" data-nota="Monte com a turma o &lt;b&gt;custo anual de operação&lt;/b&gt; separado do valor do desenvolvimento: domínio, hospedagem, e-mail, SSL. Cliente que descobre isso depois da entrega se sente enganado, e com alguma razão."><div class="et">Aula 5</div><h2>Escolher a hospedagem</h2><div class="cols"><div class="col a"><h3>Tipos</h3><ul><li><b>Compartilhada</b> — barata, limitada; sites institucionais</li>
+<li><b>VPS</b> — recursos garantidos; sistemas com banco</li>
+<li><b>Dedicada</b> — máquina inteira; alto tráfego</li>
+<li><b>Nuvem</b> — elástica, paga pelo uso</li>
+<li><b>Plataformas de deploy</b> — integradas ao repositório</li></ul></div><div class="col b"><h3>Critérios de comparação</h3><ul><li>Espaço, tráfego e o que acontece ao estourar</li>
+<li>Tecnologias e versões suportadas</li>
+<li>SSL incluso e renovação automática</li>
+<li>Backup: frequência, retenção e custo de restaurar</li>
+<li><b>Preço de renovação</b>, não só o do primeiro ano</li>
+<li>Onde ficam os dados — LGPD</li></ul></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">43</div></section>
+<section class="sl ativ" data-nota="Boas práticas de nome: curto, fácil de falar ao telefone, sem ambiguidade sonora, sem número, verificado no INPI e livre nas redes sociais."><div class="tempo">90 min · em grupo</div><span class="rot">Mão na massa</span><h2>Atividade 5 — Domínio e hospedagem</h2><ol><li>Listem cinco opções de domínio para o Empresta Aí e verifiquem a disponibilidade real no Registro.br.</li><li>Façam o WHOIS de um domínio já registrado e identifiquem titular e data de expiração.</li><li>Comparem três planos de hospedagem em planilha, usando os critérios definidos pela turma.</li><li>Escrevam a decisão final com justificativa e o custo total do primeiro ano.</li></ol><div class="entrega"><b>Entrega 4</b> — Ficha de decisão com justificativa e custo anual · indicador <b>I2</b></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">44</div></section>
+<section class="sl div-aula" data-nota="Corte 20 fichas de cartolina por grupo antes da aula, ou peça que a turma escreva em post-its grandes. Fita crepe para colar na parede."><div class="corpo"><div class="n">Aula 6 · 4 horas</div><h1>Arquitetura da informação e estruturas de navegação</h1><div class="obj">Estruturar a arquitetura dos elementos de conteúdo do site, produzindo mapa do site e definindo a navegação.</div><div class="meta"><span>Indicador I2</span><span>Card sorting com fichas físicas</span><span>Entrega 5</span></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">45</div></section>
+<section class="sl pergunta" data-nota="Escolha um site público notoriamente confuso e projete. Depois pergunte: &lt;b&gt;o problema era a informação não existir, ou não dar para encontrar?&lt;/b&gt; É a definição de arquitetura da informação chegando pela experiência."><div class="corpo"><div class="rot">Para começar</div><div class="q">Ache o telefone da ouvidoria neste site.</div><p class="sub" style="margin-top:24px">Cronômetro ligado. Quem achar primeiro levanta a mão.</p></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">46</div></section>
+<section class="sl" data-nota="Referência clássica: Rosenfeld, Morville e Arango. Mencione o livro — alunos que querem se aprofundar precisam saber onde procurar."><div class="et">Aula 6</div><h2>Os quatro sistemas da arquitetura da informação</h2><div class="cards c4"><div class="cd"><span class="k">01</span><h4>Organização</h4><p>Como o conteúdo é agrupado: por assunto, por público, por tarefa, por ordem</p></div><div class="cd"><span class="k">02</span><h4>Rotulagem</h4><p>Que palavras nomeiam cada grupo — 'Serviços' ou 'O que fazemos'?</p></div><div class="cd"><span class="k">03</span><h4>Navegação</h4><p>Como a pessoa se move: menus, trilha, links contextuais, filtros</p></div><div class="cd"><span class="k">04</span><h4>Busca</h4><p>Campo de busca, filtros, ordenação e o tratamento do resultado vazio</p></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">47</div></section>
+<section class="sl" data-nota="Aberto (o participante cria as categorias), fechado (as categorias já existem) ou híbrido. Com 5 a 8 participantes os padrões já aparecem. &lt;b&gt;O que interessa não é a média — é a divergência.&lt;/b&gt;"><div class="et">Aula 6</div><h2>Card sorting: o usuário agrupa, você descobre a estrutura</h2><div class="figs"><svg viewBox="0 0 700 290" role="img" aria-label="Fichas de conteúdo sendo agrupadas em três categorias durante um card sorting">
+  <g class="cs-col">
+    <rect x="16" y="30" width="210" height="240" rx="10" fill="#f6f8fa" stroke="#dfe4ea" stroke-width="1.3"/>
+    <rect x="16" y="30" width="210" height="30" rx="10" fill="#e8f1f9"/>
+    <text x="121" y="50" text-anchor="middle" font-family="sans-serif" font-size="11.5" font-weight="700" fill="#00447c">Sobre os itens</text>
+    <rect x="245" y="30" width="210" height="240" rx="10" fill="#f6f8fa" stroke="#dfe4ea" stroke-width="1.3"/>
+    <rect x="245" y="30" width="210" height="30" rx="10" fill="#fdf0e3"/>
+    <text x="350" y="50" text-anchor="middle" font-family="sans-serif" font-size="11.5" font-weight="700" fill="#b85a08">Sobre o empréstimo</text>
+    <rect x="474" y="30" width="210" height="240" rx="10" fill="#f6f8fa" stroke="#dfe4ea" stroke-width="1.3"/>
+    <rect x="474" y="30" width="210" height="30" rx="10" fill="#e6f4ee"/>
+    <text x="579" y="50" text-anchor="middle" font-family="sans-serif" font-size="11.5" font-weight="700" fill="#1d7a52">Sobre confiança</text>
+  </g>
+  <g font-family="sans-serif" font-size="11" fill="#1a1f26">
+    <g id="cs1" class="cs-move"><rect x="30" y="78" width="182" height="34" rx="6" fill="#fff" stroke="#bcc7d3"/><text x="46" y="100">Cadastrar um item</text></g>
+    <g id="cs2" class="cs-move"><rect x="30" y="122" width="182" height="34" rx="6" fill="#fff" stroke="#bcc7d3"/><text x="46" y="144">Buscar por nome</text></g>
+    <g id="cs3" class="cs-move"><rect x="30" y="166" width="182" height="34" rx="6" fill="#fff" stroke="#bcc7d3"/><text x="46" y="188">Ver detalhe do item</text></g>
+    <g id="cs4" class="cs-move"><rect x="259" y="78" width="182" height="34" rx="6" fill="#fff" stroke="#bcc7d3"/><text x="275" y="100">Solicitar empréstimo</text></g>
+    <g id="cs5" class="cs-move"><rect x="259" y="122" width="182" height="34" rx="6" fill="#fff" stroke="#bcc7d3"/><text x="275" y="144">Confirmar devolução</text></g>
+    <g id="cs6" class="cs-move"><rect x="259" y="166" width="182" height="34" rx="6" fill="#fff" stroke="#bcc7d3"/><text x="275" y="188">Meus pedidos</text></g>
+    <g id="cs7" class="cs-move"><rect x="488" y="78" width="182" height="34" rx="6" fill="#fff" stroke="#bcc7d3"/><text x="504" y="100">Avaliar o vizinho</text></g>
+    <g id="cs8" class="cs-move"><rect x="488" y="122" width="182" height="34" rx="6" fill="#fff" stroke="#bcc7d3"/><text x="504" y="144">Histórico do item</text></g>
+    <g id="cs9" class="cs-move"><rect x="488" y="166" width="182" height="34" rx="6" fill="#fff" stroke="#bcc7d3"/><text x="504" y="188">Regras do condomínio</text></g>
+  </g>
+  <text x="350" y="240" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">As fichas que cada participante coloca em lugares diferentes são as mais valiosas:</text>
+  <text x="350" y="256" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#b3261e">elas denunciam rótulos ambíguos que precisam ser reescritos.</text>
+</svg><div class="figleg">As fichas que cada participante coloca em lugares diferentes são as mais valiosas: denunciam rótulos ambíguos.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">48</div></section>
+<section class="sl" data-nota="Regra prática: três níveis costumam bastar em projetos pequenos, e nada essencial deve ficar a mais de três cliques da tela inicial. Equilíbrio entre largura e profundidade."><div class="et">Aula 6</div><h2>Mapa do site do Empresta Aí</h2><div class="figs"><svg viewBox="0 0 700 330" role="img" aria-label="Mapa do site do Empresta Aí em três níveis hierárquicos">
+  <rect x="290" y="14" width="120" height="40" rx="8" fill="#00447c"/>
+  <text x="350" y="39" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#fff">1.0 Início</text>
+
+  <g font-family="sans-serif" font-size="11.5" fill="#1a1f26">
+    <rect x="24" y="112" width="124" height="38" rx="7" fill="#e8f1f9" stroke="#00447c" stroke-width="1.3"/>
+    <text x="86" y="136" text-anchor="middle">2.0 Itens</text>
+    <rect x="172" y="112" width="124" height="38" rx="7" fill="#e8f1f9" stroke="#00447c" stroke-width="1.3"/>
+    <text x="234" y="136" text-anchor="middle">3.0 Meus pedidos</text>
+    <rect x="320" y="112" width="124" height="38" rx="7" fill="#e8f1f9" stroke="#00447c" stroke-width="1.3"/>
+    <text x="382" y="136" text-anchor="middle">4.0 Cadastrar item</text>
+    <rect x="468" y="112" width="124" height="38" rx="7" fill="#e8f1f9" stroke="#00447c" stroke-width="1.3"/>
+    <text x="530" y="136" text-anchor="middle">5.0 Meu perfil</text>
+    <rect x="608" y="112" width="80" height="38" rx="7" fill="#f4f6f8" stroke="#8a97a8" stroke-width="1.3"/>
+    <text x="648" y="130" text-anchor="middle" font-size="10.5">6.0 Ajuda</text>
+    <text x="648" y="144" text-anchor="middle" font-size="9" fill="#8a97a8">(rodapé)</text>
+  </g>
+
+  <g font-family="sans-serif" font-size="10.5" fill="#455060">
+    <rect x="24" y="196" width="124" height="30" rx="6" fill="#fff" stroke="#bcc7d3" stroke-width="1.1"/>
+    <text x="86" y="215" text-anchor="middle">2.1 Buscar / filtrar</text>
+    <rect x="24" y="234" width="124" height="30" rx="6" fill="#fff" stroke="#bcc7d3" stroke-width="1.1"/>
+    <text x="86" y="253" text-anchor="middle">2.2 Detalhe do item</text>
+    <rect x="24" y="272" width="124" height="30" rx="6" fill="#fff" stroke="#bcc7d3" stroke-width="1.1"/>
+    <text x="86" y="291" text-anchor="middle">2.3 Solicitar</text>
+
+    <rect x="172" y="196" width="124" height="30" rx="6" fill="#fff" stroke="#bcc7d3" stroke-width="1.1"/>
+    <text x="234" y="215" text-anchor="middle">3.1 Emprestados</text>
+    <rect x="172" y="234" width="124" height="30" rx="6" fill="#fff" stroke="#bcc7d3" stroke-width="1.1"/>
+    <text x="234" y="253" text-anchor="middle">3.2 Recebidos</text>
+    <rect x="172" y="272" width="124" height="30" rx="6" fill="#fff" stroke="#bcc7d3" stroke-width="1.1"/>
+    <text x="234" y="291" text-anchor="middle">3.3 Confirmar devolução</text>
+
+    <rect x="468" y="196" width="124" height="30" rx="6" fill="#fff" stroke="#bcc7d3" stroke-width="1.1"/>
+    <text x="530" y="215" text-anchor="middle">5.1 Meus itens</text>
+    <rect x="468" y="234" width="124" height="30" rx="6" fill="#fff" stroke="#bcc7d3" stroke-width="1.1"/>
+    <text x="530" y="253" text-anchor="middle">5.2 Avaliações</text>
+    <rect x="468" y="272" width="124" height="30" rx="6" fill="#fff" stroke="#bcc7d3" stroke-width="1.1"/>
+    <text x="530" y="291" text-anchor="middle">5.3 Sair</text>
+  </g>
+
+  <g stroke="#8a97a8" stroke-width="1.2" fill="none">
+    <path d="M350 56 L350 82 M86 82 L648 82"/>
+    <path d="M86 82 L86 110 M234 82 L234 110 M382 82 L382 110 M530 82 L530 110 M648 82 L648 110"/>
+    <path d="M86 152 L86 194 M86 226 L86 232 M86 264 L86 270"/>
+    <path d="M234 152 L234 194 M234 226 L234 232 M234 264 L234 270"/>
+    <path d="M530 152 L530 194 M530 226 L530 232 M530 264 L530 270"/>
+  </g>
+  <text x="350" y="322" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#8a97a8">níveis: 1 · início &nbsp;|&nbsp; 2 · seções do menu &nbsp;|&nbsp; 3 · páginas internas</text>
+</svg><div class="figleg">Numerar os nós facilita referenciá-los no documento de requisitos e no protótipo.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">49</div></section>
+<section class="sl" data-nota="No Empresta Aí: hierárquica no menu, banco de dados na lista de itens, linear no fluxo de solicitação. Peça que identifiquem as três no mapa do site do slide anterior."><div class="et">Aula 6</div><h2>Quatro estruturas de navegação</h2><div class="figs"><svg viewBox="0 0 700 250" role="img" aria-label="Quatro estruturas de navegação: linear, hierárquica, matricial e orientada a banco de dados">
+  <g font-family="sans-serif">
+    <text x="88" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="#00447c">Linear</text>
+    <g fill="#e8f1f9" stroke="#00447c" stroke-width="1.3">
+      <rect x="20" y="44" width="34" height="24" rx="5"/><rect x="71" y="44" width="34" height="24" rx="5"/><rect x="122" y="44" width="34" height="24" rx="5"/>
+    </g>
+    <g stroke="#8a97a8" stroke-width="1.2"><line x1="54" y1="56" x2="71" y2="56"/><line x1="105" y1="56" x2="122" y2="56"/></g>
+    <text x="88" y="96" text-anchor="middle" font-size="10.5" fill="#455060">passo a passo, ordem fixa</text>
+    <text x="88" y="111" text-anchor="middle" font-size="10" fill="#8a97a8">cadastro, checkout, tutorial</text>
+
+    <text x="262" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="#00447c">Hierárquica</text>
+    <g fill="#e8f1f9" stroke="#00447c" stroke-width="1.3">
+      <rect x="245" y="34" width="34" height="22" rx="5"/>
+      <rect x="200" y="76" width="34" height="22" rx="5"/><rect x="245" y="76" width="34" height="22" rx="5"/><rect x="290" y="76" width="34" height="22" rx="5"/>
+    </g>
+    <g stroke="#8a97a8" stroke-width="1.2" fill="none"><path d="M262 56 L262 66 M217 66 L307 66 M217 66 L217 76 M262 66 L262 76 M307 66 L307 76"/></g>
+    <text x="262" y="118" text-anchor="middle" font-size="10.5" fill="#455060">árvore, do geral ao específico</text>
+    <text x="262" y="133" text-anchor="middle" font-size="10" fill="#8a97a8">a mais comum na web</text>
+
+    <text x="452" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="#00447c">Matricial (teia)</text>
+    <g fill="#e8f1f9" stroke="#00447c" stroke-width="1.3">
+      <rect x="405" y="40" width="32" height="22" rx="5"/><rect x="470" y="40" width="32" height="22" rx="5"/>
+      <rect x="405" y="86" width="32" height="22" rx="5"/><rect x="470" y="86" width="32" height="22" rx="5"/>
+    </g>
+    <g stroke="#8a97a8" stroke-width="1.1"><line x1="437" y1="51" x2="470" y2="51"/><line x1="437" y1="97" x2="470" y2="97"/><line x1="421" y1="62" x2="421" y2="86"/><line x1="486" y1="62" x2="486" y2="86"/><line x1="437" y1="62" x2="470" y2="86"/><line x1="470" y1="62" x2="437" y2="86"/></g>
+    <text x="452" y="128" text-anchor="middle" font-size="10.5" fill="#455060">todos ligados a todos</text>
+    <text x="452" y="143" text-anchor="middle" font-size="10" fill="#8a97a8">wiki, glossário; risco de desorientar</text>
+
+    <text x="612" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="#00447c">Banco de dados</text>
+    <g fill="#e8f1f9" stroke="#00447c" stroke-width="1.3">
+      <rect x="570" y="36" width="84" height="18" rx="4"/><rect x="570" y="60" width="84" height="18" rx="4"/><rect x="570" y="84" width="84" height="18" rx="4"/>
+    </g>
+    <text x="612" y="118" text-anchor="middle" font-size="10.5" fill="#455060">filtros e busca definem o caminho</text>
+    <text x="612" y="133" text-anchor="middle" font-size="10" fill="#8a97a8">catálogos, e-commerce, listagens</text>
+  </g>
+  <rect x="20" y="168" width="660" height="64" rx="9" fill="#fdf0e3" stroke="#e8730c" stroke-width="1.3"/>
+  <text x="350" y="192" text-anchor="middle" font-family="sans-serif" font-size="11.5" font-weight="700" fill="#b85a08">Projetos reais quase sempre combinam estruturas</text>
+  <text x="350" y="212" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">Empresta Aí: hierárquica no menu principal + banco de dados na lista de itens +</text>
+  <text x="350" y="226" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">linear no fluxo de solicitação de empréstimo</text>
+</svg><div class="figleg">Projetos reais quase sempre combinam mais de uma estrutura no mesmo produto.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">50</div></section>
+<section class="sl" data-nota="Bônus de mercado: arquitetura da informação bem feita também é SEO. Estrutura clara, URLs legíveis e rótulos com as palavras que as pessoas buscam melhoram o posicionamento, sem truque nenhum."><div class="et">Aula 6</div><h2>Rotulagem: as palavras importam</h2><div class="corpo"><ul><li><b>Use a linguagem do usuário</b><small>'Meus pedidos' é melhor que 'Gestão de solicitações'</small></li>
+<li><b>Seja consistente</b><small>se em um lugar é 'item', em nenhum outro pode ser 'produto' ou 'objeto'</small></li>
+<li><b>Prefira o específico ao genérico</b><small>'Como funciona' diz mais que 'Saiba mais'</small></li>
+<li><b>Evite jargão interno e siglas</b><small>que só a equipe entende</small></li>
+<li><b>Teste os rótulos</b><small>mostre só o menu e pergunte: onde você clicaria para devolver uma furadeira?</small></li></ul></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">51</div></section>
+<section class="sl ativ" data-nota="Lembrete para o inventário: conteúdo é a parte do projeto que mais atrasa. Coloque prazo de entrega de conteúdo no cronograma e no contrato, com consequência explícita."><div class="tempo">110 min · em grupo</div><span class="rot">Mão na massa</span><h2>Atividade 6 — Arquitetura da informação</h2><ol><li>Façam o inventário de conteúdo do Empresta Aí com no mínimo 15 itens.</li><li>Escrevam cada item em uma ficha e conduzam um card sorting aberto com integrantes de outro grupo.</li><li>Desenhem o mapa do site com numeração.</li><li>Definam a estrutura de navegação de cada área.</li><li>Testem os rótulos com três pessoas de fora do grupo e ajustem.</li></ol><div class="entrega"><b>Entrega 5</b> — Mapa do site e navegação, com registro do card sorting · indicador <b>I2</b></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">52</div></section>
+<section class="sl div-aula" data-nota="Aula mais densa da unidade em conteúdo novo. Não tente cobrir tudo em exposição: 45 minutos de teoria, o resto é oficina."><div class="corpo"><div class="n">Aula 7 · 4 horas</div><h1>Análise de requisitos e organização do trabalho</h1><div class="obj">Identificar requisitos técnicos do projeto e organizar arquivos e atividades por etapas.</div><div class="meta"><span>Indicadores I2 e I4</span><span>Priorização MoSCoW</span><span>Entrega 6</span></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">53</div></section>
+<section class="sl destaque" data-nota="Critério único que resolve 90% das dúvidas da turma. Escreva no quadro e volte nele toda vez que aparecer requisito vago."><div class="et">Aula 7</div><div class="corpo"><div class="frase">Se não dá para responder<br><em>"isso foi atendido, sim ou não?"</em><br>ainda não é um requisito.</div><div class="apoio">Requisito é a tradução técnica do desejo do cliente em algo verificável.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">54</div></section>
+<section class="sl" data-nota="Para o público idoso do Empresta Aí, os requisitos não funcionais são tão decisivos quanto as funcionalidades. Some a isso a regra de negócio: &#x27;cada morador pode manter no máximo dois empréstimos em aberto&#x27; existe mesmo sem software."><div class="et">Aula 7</div><h2>Funcional, não funcional e regra de negócio</h2><div class="figs"><svg viewBox="0 0 680 210" role="img" aria-label="Comparação entre requisitos funcionais e não funcionais">
+  <rect x="14" y="16" width="320" height="180" rx="10" fill="#e8f1f9" stroke="#00447c" stroke-width="1.4"/>
+  <text x="174" y="42" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#00447c">FUNCIONAIS — o que faz</text>
+  <g font-family="sans-serif" font-size="11.5" fill="#1a1f26">
+    <text x="34" y="70">· cadastrar item com foto</text>
+    <text x="34" y="92">· buscar item por nome ou categoria</text>
+    <text x="34" y="114">· solicitar empréstimo</text>
+    <text x="34" y="136">· confirmar devolução</text>
+    <text x="34" y="158">· avaliar o vizinho após a devolução</text>
+    <text x="34" y="180">· notificar quando o prazo vencer</text>
+  </g>
+  <rect x="348" y="16" width="318" height="180" rx="10" fill="#fdf0e3" stroke="#e8730c" stroke-width="1.4"/>
+  <text x="507" y="42" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#b85a08">NÃO FUNCIONAIS — como faz</text>
+  <g font-family="sans-serif" font-size="11.5" fill="#1a1f26">
+    <text x="368" y="70">· fonte mínima de 16px no corpo</text>
+    <text x="368" y="92">· contraste mínimo 4,5:1 (WCAG AA)</text>
+    <text x="368" y="114">· funciona em Android 8 ou superior</text>
+    <text x="368" y="136">· cadastro concluído em até 3 telas</text>
+    <text x="368" y="158">· dados pessoais tratados conforme a LGPD</text>
+    <text x="368" y="180">· disponível 99% do tempo no mês</text>
+  </g>
+</svg><div class="figleg">Os RNF costumam ser esquecidos no levantamento e cobrados na entrega.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">55</div></section>
+<section class="sl" data-nota="Aquele caderno da portaria é ouro puro: revela quem empresta, por quanto tempo e quais itens dão problema. Ensine a pergunta mágica: &lt;b&gt;&#x27;como vocês fazem isso hoje?&#x27;&lt;/b&gt; — e peça para ver."><div class="et">Aula 7</div><h2>Técnicas de elicitação</h2><div class="corpo"><table><thead><tr><th>Técnica</th><th>Como funciona</th><th>Boa para</th></tr></thead><tbody><tr><td><b>Entrevista</b></td><td>Conversa estruturada com cliente e usuários</td><td>Entender contexto, motivos e exceções</td></tr><tr><td><b>Questionário</b></td><td>Formulário aplicado a muitas pessoas</td><td>Confirmar hipóteses; ruim para descobrir o inesperado</td></tr><tr><td><b>Observação</b></td><td>Acompanhar a pessoa executando a tarefa real</td><td>Revelar o que ela faz e não sabe explicar</td></tr><tr><td><b>Análise de documentos</b></td><td>Estudar planilhas, cadernos e sistemas atuais</td><td>Descobrir regras de negócio já existentes</td></tr><tr><td><b>Prototipagem</b></td><td>Mostrar versão navegável e coletar reação</td><td>Fazer emergir requisitos não verbalizados</td></tr><tr><td><b>Workshop</b></td><td>Reunião facilitada com vários envolvidos</td><td>Resolver divergências e alinhar prioridades</td></tr></tbody></table></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">56</div></section>
+<section class="sl" data-nota="Exercício rápido de aquecimento: projete &#x27;o site tem que ser rápido&#x27; e peça que a turma reescreva. Resposta possível: &#x27;toda página deve completar o carregamento em até 3 segundos em conexão 4G de 10 Mbps&#x27;."><div class="et">Aula 7</div><h2>Escrever requisitos que funcionam</h2><div class="cols"><div class="col v"><h3>Um bom requisito é</h3><ul><li><b>Claro</b> — uma única interpretação</li>
+<li><b>Verificável</b> — dá para testar</li>
+<li><b>Necessário</b> — se removido, faz falta</li>
+<li><b>Atômico</b> — trata de uma coisa só</li>
+<li><b>Rastreável</b> — tem código e origem</li>
+<li><b>Viável</b> — cabe no prazo e na verba</li></ul></div><div class="col r"><h3>Palavras proibidas</h3><ul><li>rápido · amigável · intuitivo</li>
+<li>moderno · flexível · robusto</li>
+<li>fácil · eficiente · se possível · etc.</li>
+<li><b>Cada uma delas é uma discussão futura sobre quem tinha razão.</b></li></ul></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">57</div></section>
+<section class="sl" data-nota="Formato &#x27;dado que / quando / então&#x27; é o que torna o critério testável. Nas próximas UCs ele vira teste automatizado — vale antecipar essa ponte."><div class="et">Aula 7</div><h2>História de usuário e critério de aceite</h2><div class="corpo"><ul><li><b>Como [usuário], quero [ação], para que [benefício]</b><small>o formato mantém o foco no valor entregue a alguém</small></li>
+<li><b>US-04 · Como morador que precisa de uma ferramenta, quero ver quem no prédio tem o item disponível, para que eu não precise perguntar no grupo</b></li>
+<li><b>Dado que existem itens cadastrados, quando eu buscar por 'furadeira', então devo ver a lista com foto, bloco do dono e disponibilidade</b></li>
+<li><b>Quando o item estiver emprestado, então a data prevista de devolução deve ser exibida</b></li>
+<li><b>Quando não houver resultado, então o sistema deve oferecer avisar quando alguém cadastrar o item</b></li></ul></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">58</div></section>
+<section class="sl" data-nota="&lt;b&gt;Scope creep&lt;/b&gt;: cada pedido isolado parece pequeno (&#x27;só coloca um botãozinho&#x27;), e a soma estoura prazo e orçamento. Defesa: escopo escrito, lista de Won&#x27;t acordada e procedimento formal de mudança."><div class="et">Aula 7</div><h2>Priorizar é decidir o que fica de fora</h2><div class="figs"><svg viewBox="0 0 700 260" role="img" aria-label="Requisitos caindo de uma pilha para as quatro faixas do MoSCoW">
+  <text x="350" y="26" text-anchor="middle" font-family="sans-serif" font-size="11.5" font-weight="700" fill="#455060">pilha de requisitos levantados</text>
+  <g class="cs-col">
+    <rect x="15" y="100" width="160" height="130" rx="9" fill="#b3261e" opacity=".07" stroke="#b3261e" stroke-width="1.3"/>
+    <text x="95" y="122" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#b3261e">MUST</text>
+    <rect x="190" y="100" width="160" height="130" rx="9" fill="#e8730c" opacity=".09" stroke="#e8730c" stroke-width="1.3"/>
+    <text x="270" y="122" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#b85a08">SHOULD</text>
+    <rect x="365" y="100" width="160" height="130" rx="9" fill="#00447c" opacity=".07" stroke="#00447c" stroke-width="1.3"/>
+    <text x="445" y="122" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#00447c">COULD</text>
+    <rect x="540" y="100" width="145" height="130" rx="9" fill="#8a97a8" opacity=".13" stroke="#8a97a8" stroke-width="1.3"/>
+    <text x="612" y="122" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#5a6675">WON'T</text>
+  </g>
+  <g font-family="sans-serif" font-size="10" fill="#1a1f26">
+    <g id="mo1" class="mo-card"><rect x="25" y="150" width="140" height="30" rx="5" fill="#fff" stroke="#d3aaa7"/><text x="95" y="169" text-anchor="middle">Buscar item</text></g>
+    <g id="mo2" class="mo-card"><rect x="25" y="190" width="140" height="30" rx="5" fill="#fff" stroke="#d3aaa7"/><text x="95" y="209" text-anchor="middle">Solicitar empréstimo</text></g>
+    <g id="mo3" class="mo-card"><rect x="200" y="150" width="140" height="30" rx="5" fill="#fff" stroke="#eac49b"/><text x="270" y="169" text-anchor="middle">Lembrete de devolução</text></g>
+    <g id="mo4" class="mo-card"><rect x="200" y="190" width="140" height="30" rx="5" fill="#fff" stroke="#eac49b"/><text x="270" y="209" text-anchor="middle">Avaliar vizinho</text></g>
+    <g id="mo5" class="mo-card"><rect x="375" y="150" width="140" height="30" rx="5" fill="#fff" stroke="#b3c9dd"/><text x="445" y="169" text-anchor="middle">Chat interno</text></g>
+    <g id="mo6" class="mo-card"><rect x="545" y="150" width="135" height="30" rx="5" fill="#fff" stroke="#c3cad2"/><text x="612" y="169" text-anchor="middle">Pagamento de caução</text></g>
+  </g>
+  <g opacity=".5">
+    <rect x="290" y="38" width="120" height="12" rx="3" fill="#fff" stroke="#bcc7d3"/>
+    <rect x="284" y="52" width="132" height="12" rx="3" fill="#fff" stroke="#bcc7d3"/>
+    <rect x="292" y="66" width="116" height="12" rx="3" fill="#fff" stroke="#bcc7d3"/>
+  </g>
+</svg><div class="figleg">A faixa Won't não é lista de fracassos: é o acordo explícito que impede o escopo de crescer sozinho.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">59</div></section>
+<section class="sl" data-nota="Monte a estrutura de pastas ao vivo, na máquina projetada. Parece banal e é a habilidade &#x27;organizar arquivos e atividades por etapas do projeto&#x27;, explícita no plano de curso."><div class="et">Aula 7</div><h2>Organizar o trabalho</h2><div class="cols"><div class="col a"><h3>Arquivos por etapa</h3><ul><li>Pastas numeradas: 01_briefing, 02_pesquisa, 03_requisitos...</li>
+<li>Data no formato <b>AAAA-MM-DD</b> — ordena sozinha</li>
+<li>Sem acento, sem espaço, sem caractere especial</li>
+<li>Versão explícita: v1, v2 — nunca 'final2'</li>
+<li>Nome que diz o conteúdo</li></ul></div><div class="col b"><h3>Por que isso importa</h3><ul><li>Você vai precisar provar o que foi combinado e quando</li>
+<li>Outra pessoa pode assumir o projeto</li>
+<li>O cliente vai pedir 'aquela versão de antes'</li>
+<li>É o embrião do versionamento com Git das próximas UCs</li></ul></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">60</div></section>
+<section class="sl ativ" data-nota="Se o tempo apertar, corte a estrutura de pastas e o Kanban para o início da Aula 8 — mas não corte a priorização, que é o coração da atividade."><div class="tempo">105 min · em grupo</div><span class="rot">Mão na massa</span><h2>Atividade 7 — Requisitos e escopo</h2><ol><li>Extraiam do briefing e das personas ao menos 15 requisitos, classificados em RF, RNF ou RN, com código.</li><li>Reescrevam os três mais vagos até ficarem verificáveis.</li><li>Escrevam cinco histórias de usuário com critérios de aceite.</li><li>Classifiquem tudo em MoSCoW e definam o escopo da versão 1, com a lista de Won't explícita.</li><li>Montem a estrutura de pastas do projeto e o quadro Kanban da equipe.</li></ol><div class="entrega"><b>Entrega 6</b> — Documento de requisitos priorizado · indicadores <b>I2</b> e <b>I4</b></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">61</div></section>
+<section class="sl div-aula" data-nota="Peça que criem conta no Figma &lt;b&gt;antes&lt;/b&gt; da aula — cadastro em sala consome 20 minutos preciosos. Plano gratuito basta; docentes e alunos podem solicitar o plano Education."><div class="corpo"><div class="n">Aula 8 · 4 horas</div><h1>Prototipagem: do wireframe ao protótipo navegável</h1><div class="obj">Elaborar protótipo do site de acordo com o briefing, aplicando princípios de usabilidade e acessibilidade.</div><div class="meta"><span>Indicador I3</span><span>Laboratório com Figma</span><span>Entrega 7</span></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">62</div></section>
+<section class="sl destaque" data-nota="Retome a Figura do custo do erro da Aula 1. O protótipo é o instrumento que mantém o erro na faixa barata da curva."><div class="et">Aula 8</div><div class="corpo"><div class="frase">O protótipo é<br><em>a forma mais barata de errar.</em></div><div class="apoio">Ele permite testar uma ideia com pessoas reais antes que ela custe semanas de programação.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">63</div></section>
+<section class="sl" data-nota="Ponto central: &lt;b&gt;quanto mais bonito o protótipo, menos as pessoas criticam a estrutura&lt;/b&gt; — passam a comentar cor e fonte. Por isso wireframe existe: para forçar a conversa certa no momento certo."><div class="et">Aula 8</div><h2>Níveis de fidelidade</h2><div class="figs"><svg viewBox="0 0 700 260" role="img" aria-label="Evolução da fidelidade: esboço, wireframe, mockup e protótipo">
+  <g>
+    <text x="90" y="20" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#455060">Esboço</text>
+    <rect x="34" y="32" width="112" height="180" rx="8" fill="#fff" stroke="#8a97a8" stroke-width="1.4" stroke-dasharray="4 3"/>
+    <path d="M48 52 L132 52 M48 62 L110 62" stroke="#b6bfc9" stroke-width="3" stroke-linecap="round"/>
+    <path d="M48 86 L132 86 M48 96 L132 96 M48 106 L100 106" stroke="#d3d9df" stroke-width="3" stroke-linecap="round"/>
+    <rect x="48" y="124" width="84" height="30" rx="4" fill="none" stroke="#b6bfc9" stroke-width="1.6"/>
+    <path d="M48 172 L132 172 M48 182 L120 182" stroke="#d3d9df" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <g>
+    <text x="256" y="20" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#00447c">Wireframe</text>
+    <rect x="200" y="32" width="112" height="180" rx="8" fill="#fff" stroke="#00447c" stroke-width="1.4"/>
+    <rect x="200" y="32" width="112" height="24" rx="8" fill="#e8f1f9"/>
+    <rect x="210" y="40" width="40" height="8" rx="2" fill="#a9c2d8"/>
+    <rect x="212" y="68" width="88" height="34" rx="4" fill="#eef2f6"/>
+    <text x="256" y="90" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#8a97a8">buscar item</text>
+    <rect x="212" y="112" width="42" height="46" rx="4" fill="#eef2f6"/><rect x="258" y="112" width="42" height="46" rx="4" fill="#eef2f6"/>
+    <rect x="212" y="164" width="42" height="46" rx="4" fill="#eef2f6"/><rect x="258" y="164" width="42" height="46" rx="4" fill="#eef2f6"/>
+  </g>
+  <g>
+    <text x="422" y="20" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#b85a08">Mockup</text>
+    <rect x="366" y="32" width="112" height="180" rx="8" fill="#fff" stroke="#e8730c" stroke-width="1.4"/>
+    <rect x="366" y="32" width="112" height="24" rx="8" fill="#00447c"/>
+    <text x="376" y="48" font-family="sans-serif" font-size="9" font-weight="700" fill="#fff">Empresta Aí</text>
+    <rect x="378" y="68" width="88" height="30" rx="15" fill="#f0f3f6" stroke="#d3d9df"/>
+    <text x="392" y="87" font-family="sans-serif" font-size="9" fill="#8a97a8">Buscar item...</text>
+    <rect x="378" y="108" width="42" height="48" rx="6" fill="#e8f1f9"/><rect x="424" y="108" width="42" height="48" rx="6" fill="#fdf0e3"/>
+    <rect x="378" y="160" width="42" height="48" rx="6" fill="#e6f4ee"/><rect x="424" y="160" width="42" height="48" rx="6" fill="#f1ebfa"/>
+  </g>
+  <g>
+    <text x="600" y="20" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#1d7a52">Protótipo</text>
+    <rect x="544" y="32" width="112" height="180" rx="8" fill="#fff" stroke="#1d7a52" stroke-width="1.4"/>
+    <rect x="544" y="32" width="112" height="24" rx="8" fill="#00447c"/>
+    <rect x="556" y="68" width="88" height="30" rx="15" fill="#f0f3f6" stroke="#d3d9df"/>
+    <rect x="556" y="108" width="42" height="48" rx="6" fill="#e8f1f9"/><rect x="602" y="108" width="42" height="48" rx="6" fill="#fdf0e3"/>
+    <rect x="556" y="160" width="42" height="48" rx="6" fill="#e6f4ee"/><rect x="602" y="160" width="42" height="48" rx="6" fill="#f1ebfa"/>
+    <circle cx="618" cy="130" r="9" fill="#1d7a52" opacity=".85"/>
+    <path d="M614 126 L622 130 L616 132 L618 137 Z" fill="#fff"/>
+    <path d="M600 96 Q660 96 660 128" fill="none" stroke="#1d7a52" stroke-width="1.4" stroke-dasharray="3 3"/>
+  </g>
+  <line x1="34" y1="236" x2="666" y2="236" stroke="#dfe4ea" stroke-width="1.4"/>
+  <text x="60" y="252" font-family="sans-serif" font-size="10.5" fill="#8a97a8">menos esforço, mais liberdade</text>
+  <text x="640" y="252" text-anchor="end" font-family="sans-serif" font-size="10.5" fill="#8a97a8">mais esforço, mais precisão</text>
+</svg><div class="figleg">Cada etapa serve a uma conversa diferente: estrutura no wireframe, identidade no mockup, fluxo no protótipo.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">64</div></section>
+<section class="sl" data-nota="Animação: toca ao entrar no slide, tecle &lt;b&gt;R&lt;/b&gt; para repetir. Aproveite para desmontar o mito de que &#x27;protótipo é coisa de designer&#x27; — o desenvolvedor mobile prototipa o tempo todo."><div class="et">Aula 8</div><h2>A mesma tela ganhando fidelidade</h2><div class="figs"><svg viewBox="0 0 700 300" role="img" aria-label="A mesma tela evoluindo de esboço para wireframe, mockup e protótipo">
+  <rect x="262" y="26" width="176" height="248" rx="16" fill="#fff" stroke="#455060" stroke-width="2"/>
+  <rect x="318" y="32" width="64" height="7" rx="3.5" fill="#dfe4ea"/>
+  <g id="fid-1" style="opacity:0">
+    <path d="M282 62 L418 62 M282 74 L380 74" stroke="#b6bfc9" stroke-width="4" stroke-linecap="round"/>
+    <rect x="282" y="96" width="136" height="34" rx="4" fill="none" stroke="#b6bfc9" stroke-width="2"/>
+    <rect x="282" y="146" width="62" height="52" rx="4" fill="none" stroke="#c9d0d7" stroke-width="2"/>
+    <rect x="356" y="146" width="62" height="52" rx="4" fill="none" stroke="#c9d0d7" stroke-width="2"/>
+    <rect x="282" y="206" width="62" height="52" rx="4" fill="none" stroke="#c9d0d7" stroke-width="2"/>
+    <rect x="356" y="206" width="62" height="52" rx="4" fill="none" stroke="#c9d0d7" stroke-width="2"/>
+  </g>
+  <g id="fid-2" style="opacity:0">
+    <rect x="262" y="48" width="176" height="30" fill="#e8f1f9"/>
+    <rect x="276" y="58" width="60" height="9" rx="3" fill="#a9c2d8"/>
+    <rect x="282" y="94" width="136" height="32" rx="4" fill="#eef2f6"/>
+    <rect x="292" y="105" width="70" height="8" rx="3" fill="#c9d3dc"/>
+    <rect x="282" y="140" width="62" height="56" rx="4" fill="#eef2f6"/><rect x="356" y="140" width="62" height="56" rx="4" fill="#eef2f6"/>
+    <rect x="282" y="204" width="62" height="56" rx="4" fill="#eef2f6"/><rect x="356" y="204" width="62" height="56" rx="4" fill="#eef2f6"/>
+  </g>
+  <g id="fid-3" style="opacity:0">
+    <rect x="262" y="48" width="176" height="30" fill="#00447c"/>
+    <text x="276" y="68" font-family="sans-serif" font-size="11" font-weight="700" fill="#fff">Empresta Aí</text>
+    <rect x="282" y="94" width="136" height="32" rx="16" fill="#f4f6f8" stroke="#dfe4ea"/>
+    <text x="298" y="114" font-family="sans-serif" font-size="10" fill="#8a97a8">Buscar item...</text>
+    <rect x="282" y="140" width="62" height="56" rx="7" fill="#e8f1f9"/><rect x="356" y="140" width="62" height="56" rx="7" fill="#fdf0e3"/>
+    <rect x="282" y="204" width="62" height="56" rx="7" fill="#e6f4ee"/><rect x="356" y="204" width="62" height="56" rx="7" fill="#f1ebfa"/>
+    <text x="290" y="188" font-family="sans-serif" font-size="8.5" fill="#455060">Furadeira</text>
+    <text x="364" y="188" font-family="sans-serif" font-size="8.5" fill="#455060">Escada</text>
+    <text x="290" y="252" font-family="sans-serif" font-size="8.5" fill="#455060">Carrinho</text>
+    <text x="364" y="252" font-family="sans-serif" font-size="8.5" fill="#455060">Serra</text>
+  </g>
+  <g id="fid-4">
+    <rect x="262" y="48" width="176" height="30" fill="#00447c"/>
+    <text x="276" y="68" font-family="sans-serif" font-size="11" font-weight="700" fill="#fff">Empresta Aí</text>
+    <rect x="282" y="94" width="136" height="32" rx="16" fill="#f4f6f8" stroke="#dfe4ea"/>
+    <text x="298" y="114" font-family="sans-serif" font-size="10" fill="#8a97a8">Buscar item...</text>
+    <rect x="282" y="140" width="62" height="56" rx="7" fill="#e8f1f9"/><rect x="356" y="140" width="62" height="56" rx="7" fill="#fdf0e3"/>
+    <rect x="282" y="204" width="62" height="56" rx="7" fill="#e6f4ee"/><rect x="356" y="204" width="62" height="56" rx="7" fill="#f1ebfa"/>
+    <text x="290" y="188" font-family="sans-serif" font-size="8.5" fill="#455060">Furadeira</text>
+    <text x="364" y="188" font-family="sans-serif" font-size="8.5" fill="#455060">Escada</text>
+    <text x="290" y="252" font-family="sans-serif" font-size="8.5" fill="#455060">Carrinho</text>
+    <text x="364" y="252" font-family="sans-serif" font-size="8.5" fill="#455060">Serra</text>
+    <g id="fid-toque"><circle cx="313" cy="168" r="15" fill="#1d7a52" opacity=".22"/><circle cx="313" cy="168" r="7" fill="#1d7a52"/></g>
+  </g>
+  <g font-family="sans-serif" font-size="13" font-weight="700">
+    <text id="fid-rot1" x="130" y="150" text-anchor="middle" fill="#8a97a8" style="opacity:0">1 · Esboço</text>
+    <text id="fid-rot2" x="130" y="150" text-anchor="middle" fill="#00447c" style="opacity:0">2 · Wireframe</text>
+    <text id="fid-rot3" x="130" y="150" text-anchor="middle" fill="#b85a08" style="opacity:0">3 · Mockup</text>
+    <text id="fid-rot4" x="130" y="150" text-anchor="middle" fill="#1d7a52">4 · Protótipo</text>
+  </g>
+  <text x="130" y="176" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#8a97a8">papel → estrutura → visual → clicável</text>
+  <text x="576" y="144" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">quanto mais bonito,</text>
+  <text x="576" y="160" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">menos as pessoas</text>
+  <text x="576" y="176" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">criticam a estrutura</text>
+</svg><div class="figleg">Papel → estrutura → visual → clicável.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">65</div></section>
+<section class="sl" data-nota="No Empresta Aí acessibilidade é &lt;b&gt;requisito de negócio&lt;/b&gt;: se o Seu Antônio não consegue usar, o produto falha. Some o argumento legal: Lei Brasileira de Inclusão, 13.146/2015."><div class="et">Aula 8</div><h2>Os princípios que orientam o desenho</h2><div class="cols"><div class="col a"><h3>Usabilidade</h3><ul><li>Visibilidade do estado do sistema</li>
+<li>Linguagem do usuário, não do sistema</li>
+<li>Saída de emergência: dá para voltar e cancelar</li>
+<li>Consistência em todo o produto</li>
+<li>Prevenção de erro antes de mensagem de erro</li>
+<li>Reconhecer em vez de lembrar</li></ul></div><div class="col v"><h3>Acessibilidade</h3><ul><li>Contraste mínimo de 4,5:1 (WCAG AA)</li>
+<li>Corpo de texto a partir de 16px</li>
+<li>Área de toque confortável e espaçada</li>
+<li>Cor nunca como única informação</li>
+<li>Texto alternativo em imagem informativa</li>
+<li>Rótulo visível e persistente nos campos</li></ul></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">66</div></section>
+<section class="sl" data-nota="Faça um tutorial guiado de 50 minutos, ao vivo, com a turma acompanhando na própria máquina. Vá devagar no auto layout: é onde todo mundo trava."><div class="et">Aula 8</div><h2>Figma: o mínimo para começar</h2><div class="corpo"><table><thead><tr><th>Recurso</th><th>Para que serve</th></tr></thead><tbody><tr><td><b>Frame</b></td><td>A tela do dispositivo. Comece pelo tamanho de celular real</td></tr><tr><td><b>Auto layout</b></td><td>Elementos se reorganizam quando o conteúdo muda — o conceito mais parecido com CSS</td></tr><tr><td><b>Componente</b></td><td>Elemento reutilizável; alterar o principal atualiza todas as cópias</td></tr><tr><td><b>Estilos</b></td><td>Cores e textos salvos com nome — base do design system</td></tr><tr><td><b>Modo protótipo</b></td><td>Onde se ligam as telas: origem, destino, gatilho e transição</td></tr><tr><td><b>Compartilhar</b></td><td>Gera o link que você entrega ao cliente e envia na avaliação</td></tr></tbody></table></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">67</div></section>
+<section class="sl" data-nota="Se o laboratório tiver internet instável, o plano B é wireframe em papel fotografado e montado em fluxo. O indicador I3 pede protótipo &#x27;de acordo com o briefing&#x27;: a coerência importa mais que a ferramenta."><div class="et">Aula 8</div><h2>Como um protótipo navegável funciona</h2><div class="figs"><svg viewBox="0 0 700 250" role="img" aria-label="Três telas ligadas por conexões formando um fluxo navegável, percorridas por um cursor">
+  <g class="s1">
+    <rect x="26" y="30" width="150" height="180" rx="10" fill="#fff" stroke="#455060" stroke-width="1.6"/>
+    <rect x="26" y="30" width="150" height="24" rx="10" fill="#00447c"/>
+    <text x="38" y="47" font-family="sans-serif" font-size="9" font-weight="700" fill="#fff">Empresta Aí</text>
+    <rect x="38" y="66" width="126" height="26" rx="13" fill="#f4f6f8" stroke="#dfe4ea"/>
+    <text x="50" y="83" font-family="sans-serif" font-size="9" fill="#8a97a8">Buscar item...</text>
+    <rect x="38" y="104" width="58" height="44" rx="6" fill="#e8f1f9"/><rect x="106" y="104" width="58" height="44" rx="6" fill="#fdf0e3"/>
+    <rect x="38" y="156" width="58" height="44" rx="6" fill="#e6f4ee"/><rect x="106" y="156" width="58" height="44" rx="6" fill="#f1ebfa"/>
+    <text x="101" y="228" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="700" fill="#455060">1 · Início</text>
+  </g>
+  <g class="s2">
+    <rect x="256" y="30" width="150" height="180" rx="10" fill="#fff" stroke="#455060" stroke-width="1.6"/>
+    <rect x="256" y="30" width="150" height="24" rx="10" fill="#00447c"/>
+    <text x="268" y="47" font-family="sans-serif" font-size="9" font-weight="700" fill="#fff">Resultados</text>
+    <g id="pt-t2" style="opacity:1">
+      <rect x="268" y="66" width="126" height="34" rx="6" fill="#f6f8fa" stroke="#dfe4ea"/>
+      <rect x="274" y="72" width="22" height="22" rx="4" fill="#c9d3dc"/>
+      <text x="304" y="80" font-family="sans-serif" font-size="8.5" fill="#1a1f26">Furadeira · bloco B</text>
+      <text x="304" y="92" font-family="sans-serif" font-size="8" fill="#1d7a52">disponível</text>
+      <rect x="268" y="108" width="126" height="34" rx="6" fill="#f6f8fa" stroke="#dfe4ea"/>
+      <rect x="274" y="114" width="22" height="22" rx="4" fill="#c9d3dc"/>
+      <text x="304" y="122" font-family="sans-serif" font-size="8.5" fill="#1a1f26">Furadeira · bloco A</text>
+      <text x="304" y="134" font-family="sans-serif" font-size="8" fill="#b3261e">volta em 12/04</text>
+    </g>
+    <text x="331" y="228" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="700" fill="#455060">2 · Lista de itens</text>
+  </g>
+  <g class="s3">
+    <rect x="486" y="30" width="150" height="180" rx="10" fill="#fff" stroke="#455060" stroke-width="1.6"/>
+    <rect x="486" y="30" width="150" height="24" rx="10" fill="#00447c"/>
+    <text x="498" y="47" font-family="sans-serif" font-size="9" font-weight="700" fill="#fff">Detalhe</text>
+    <g id="pt-t3" style="opacity:1">
+      <rect x="498" y="66" width="126" height="52" rx="6" fill="#e8f1f9"/>
+      <text x="498" y="136" font-family="sans-serif" font-size="9.5" font-weight="700" fill="#1a1f26">Furadeira Bosch</text>
+      <text x="498" y="150" font-family="sans-serif" font-size="8.5" fill="#455060">Antônio · bloco B · apto 34</text>
+      <rect x="498" y="162" width="126" height="30" rx="15" fill="#1d7a52"/>
+      <text x="561" y="181" text-anchor="middle" font-family="sans-serif" font-size="9.5" font-weight="700" fill="#fff">Solicitar empréstimo</text>
+    </g>
+    <text x="561" y="228" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="700" fill="#455060">3 · Solicitação</text>
+  </g>
+  <defs><marker id="stPt" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#e8730c"/></marker></defs>
+  <path id="pt-l1" class="pt-liga" d="M180 92 L250 92" stroke="#e8730c" stroke-width="1.8" fill="none" marker-end="url(#stPt)"/>
+  <path id="pt-l2" class="pt-liga" d="M410 124 L480 124" stroke="#e8730c" stroke-width="1.8" fill="none" marker-end="url(#stPt)"/>
+  <text x="215" y="84" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#b85a08">ao tocar</text>
+  <text x="445" y="116" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#b85a08">ao tocar</text>
+  <g id="pt-cursor"><path d="M96 74 L96 96 L102 90 L107 100 L112 97 L107 88 L114 87 Z" fill="#1a1f26" stroke="#fff" stroke-width="1.2"/></g>
+</svg><div class="figleg">Prototipar é ligar telas por gatilhos — e com isso já dá para testar o fluxo com um usuário real.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">68</div></section>
+<section class="sl" data-nota="Regra de ouro do facilitador: &lt;b&gt;fique calado&lt;/b&gt;. É a parte mais difícil e a mais reveladora. Combine que você vai circular apitando quem começar a explicar o próprio protótipo."><div class="et">Aula 8</div><h2>Teste de corredor</h2><div class="corpo"><ul><li><b>Defina a tarefa, não o caminho</b><small>'Você precisa de uma escada emprestada' — e não 'clique no menu Itens'</small></li>
+<li><b>Peça para pensar em voz alta</b><small>enquanto navega</small></li>
+<li><b>Fique calado</b><small>cada vez que você sentir vontade de explicar, anote: ali existe um problema de interface</small></li>
+<li><b>Anote o que a pessoa faz</b><small>não o que ela diz que faria</small></li>
+<li><b>Cinco pessoas bastam</b><small>para revelar a maior parte dos problemas graves</small></li></ul></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">69</div></section>
+<section class="sl ativ" data-nota="Tabela de registro do teste: tarefa, concluiu?, tempo, onde travou, o que disse, gravidade de 1 a 3. O modelo está na apostila do aluno."><div class="tempo">150 min · em grupo</div><span class="rot">Mão na massa</span><h2>Atividade 8 — Do esboço ao protótipo testado</h2><ol><li>Crazy 8: oito esboços da tela principal em oito minutos, individualmente, no papel.</li><li>Wireframe de 4 a 6 telas cobrindo o fluxo prioritário definido no MoSCoW.</li><li>Montem o protótipo navegável no Figma, com componentes e estilos.</li><li>Teste de corredor com três pessoas de outros grupos, registrando em tabela.</li><li>Apliquem os dois ajustes mais críticos identificados.</li></ol><div class="entrega"><b>Entrega 7</b> — Protótipo navegável com link + relato do teste · indicador <b>I3</b></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">70</div></section>
+<section class="sl div-aula" data-nota="Reserve os 30 minutos finais para planejamento de carreira, como recomenda o plano de curso. Prepare também duas propostas comerciais reais anonimizadas para a análise crítica de abertura."><div class="corpo"><div class="n">Aula 9 · 4 horas</div><h1>Proposta comercial, contrato e apresentação do projeto</h1><div class="obj">Redigir o projeto da aplicação web e defendê-lo diante do cliente, com proposta e contrato coerentes.</div><div class="meta"><span>Indicadores I2 e I4</span><span>Banca simulada</span><span>Entrega final</span></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">71</div></section>
+<section class="sl destaque" data-nota="Comece pela análise crítica das duas propostas anonimizadas: peça que a turma identifique o que falta em cada uma antes de você apresentar a estrutura ideal."><div class="et">Aula 9</div><div class="corpo"><div class="frase">A proposta vende.<br><em>O contrato protege.</em></div><div class="apoio">São dois documentos com funções diferentes, e confundi-los custa caro nos dois sentidos.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">72</div></section>
+<section class="sl" data-nota="Duas dicas de redação: escreva &lt;b&gt;investimento&lt;/b&gt; em vez de custo, e apresente o &lt;b&gt;valor antes do preço&lt;/b&gt;. Não é truque de venda — é ordem lógica de argumentação."><div class="et">Aula 9</div><h2>Estrutura da proposta comercial</h2><div class="corpo"><table><thead><tr><th>Seção</th><th>O que contém</th></tr></thead><tbody><tr><td><b>Entendimento do problema</b></td><td>Demonstra que você entendeu — costuma ser a seção que ganha o contrato</td></tr><tr><td><b>Solução proposta</b></td><td>O que será feito, em linguagem de cliente, com justificativa</td></tr><tr><td><b>Escopo detalhado</b></td><td>Lista de entregas, tela por tela ou funcionalidade por funcionalidade</td></tr><tr><td><b>Fora do escopo</b></td><td>O que <b>não</b> está incluído. Curta, obrigatória e valiosa</td></tr><tr><td><b>Cronograma</b></td><td>Etapas, prazos e marcos, com as dependências do cliente explícitas</td></tr><tr><td><b>Investimento</b></td><td>Valor, pagamento e custos recorrentes de domínio e hospedagem</td></tr><tr><td><b>Premissas</b></td><td>O que se assume como verdadeiro para o prazo e o valor valerem</td></tr><tr><td><b>Próximos passos</b></td><td>O que o cliente precisa fazer para começar</td></tr></tbody></table></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">73</div></section>
+<section class="sl" data-nota="Erro clássico do iniciante: dividir o salário pretendido por 160 horas. Faça a conta correta no quadro com a turma — costuma ser um choque produtivo."><div class="et">Aula 9</div><h2>Quanto cobrar</h2><div class="cols"><div class="col a"><h3>Formas de precificação</h3><ul><li><b>Por hora</b> — justo com escopo incerto; gera insegurança no cliente</li>
+<li><b>Escopo fechado</b> — previsível para o cliente; o risco da estimativa é seu</li>
+<li><b>Valor percebido</b> — ligado ao resultado gerado; exige reputação</li></ul></div><div class="col b"><h3>O que entra no valor da hora</h3><ul><li>Custos fixos: internet, energia, equipamento, softwares</li>
+<li>Impostos sobre o faturamento</li>
+<li>Horas não faturáveis: só 50% a 70% do tempo é faturável</li>
+<li>Provisões: férias, período sem cliente</li>
+<li><b>Lucro</b> — além de cobrir custos e remunerar o trabalho</li></ul></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">74</div></section>
+<section class="sl" data-nota="Estimativa em três cenários — otimista, provável, pessimista — com média ponderada (O + 4P + Pe) ÷ 6 acerta mais que um número único. E some 20% a 30% de tempo invisível."><div class="et">Aula 9</div><h2>Cronograma com as dependências à vista</h2><div class="figs"><svg viewBox="0 0 700 250" role="img" aria-label="Cronograma de Gantt simplificado do projeto em seis semanas">
+  <text x="16" y="20" font-family="sans-serif" font-size="12" font-weight="700" fill="#00447c">Cronograma — Empresta Aí (6 semanas)</text>
+  <g font-family="sans-serif" font-size="10.5" fill="#8a97a8">
+    <text x="212" y="42">S1</text><text x="290" y="42">S2</text><text x="368" y="42">S3</text><text x="446" y="42">S4</text><text x="524" y="42">S5</text><text x="602" y="42">S6</text>
+  </g>
+  <g stroke="#eef1f4" stroke-width="1"><line x1="200" y1="48" x2="200" y2="230"/><line x1="278" y1="48" x2="278" y2="230"/><line x1="356" y1="48" x2="356" y2="230"/><line x1="434" y1="48" x2="434" y2="230"/><line x1="512" y1="48" x2="512" y2="230"/><line x1="590" y1="48" x2="590" y2="230"/><line x1="668" y1="48" x2="668" y2="230"/></g>
+  <g font-family="sans-serif" font-size="11" fill="#1a1f26">
+    <text x="16" y="66">Briefing e alinhamento</text>
+    <rect x="200" y="56" width="70" height="14" rx="4" fill="#00447c"/>
+    <text x="16" y="92">Pesquisa e personas</text>
+    <rect x="240" y="82" width="90" height="14" rx="4" fill="#00447c"/>
+    <text x="16" y="118">Requisitos</text>
+    <rect x="300" y="108" width="80" height="14" rx="4" fill="#00447c"/>
+    <text x="16" y="144">Arquitetura da informação</text>
+    <rect x="356" y="134" width="80" height="14" rx="4" fill="#00447c"/>
+    <text x="16" y="170">Prototipagem</text>
+    <rect x="412" y="160" width="120" height="14" rx="4" fill="#e8730c"/>
+    <text x="16" y="196">Aprovação do cliente</text>
+    <rect x="512" y="186" width="60" height="14" rx="4" fill="#8a97a8"/>
+    <text x="16" y="222">Proposta e contrato</text>
+    <rect x="556" y="212" width="90" height="14" rx="4" fill="#1d7a52"/>
+  </g>
+  <rect x="512" y="186" width="60" height="14" rx="4" fill="none" stroke="#b3261e" stroke-width="1.4" stroke-dasharray="3 2"/>
+  <text x="600" y="197" font-family="sans-serif" font-size="10" fill="#b3261e">depende do cliente</text>
+</svg><div class="figleg">Marcar em cinza as etapas que dependem do cliente deixa visível, desde o início, quem é responsável por cada atraso.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">75</div></section>
+<section class="sl" data-nota="Deixe claro: modelo de contrato é ponto de partida, não garantia jurídica. Para valores relevantes, orientação de advogado. E cite as leis: 9.609/1998 (software) e 9.610/1998 (direitos autorais)."><div class="et">Aula 9</div><h2>Cláusulas que não podem faltar no contrato</h2><div class="cards c4"><div class="cd"><h4>Objeto e prazos</h4><p>O que será entregue, quando, e o efeito do atraso de cada parte</p></div><div class="cd"><h4>Obrigações do contratante</h4><p>Entregar conteúdo, aprovar em prazo, dar acessos</p></div><div class="cd"><h4>Revisões incluídas</h4><p>Quantas rodadas de ajuste e como se cobra a partir da próxima</p></div><div class="cd"><h4>Propriedade intelectual</h4><p>Quem fica com código, arte, arquivos-fonte e domínio após o pagamento</p></div><div class="cd"><h4>Licenças de terceiros</h4><p>Fontes, imagens e bibliotecas: quem compra e em nome de quem</p></div><div class="cd"><h4>Confidencialidade e LGPD</h4><p>Papéis de controlador e operador, finalidade e responsabilidades</p></div><div class="cd"><h4>Garantia e suporte</h4><p>Período de correção de defeitos e o que é defeito x nova funcionalidade</p></div><div class="cd"><h4>Rescisão e foro</h4><p>Como encerrar, com que aviso, e o que acontece com o já executado</p></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">76</div></section>
+<section class="sl" data-nota="Na banca, seja um cliente difícil mas justo. Três perguntas reveladoras: &lt;b&gt;&#x27;por que eu não uso só o WhatsApp mesmo?&#x27;&lt;/b&gt;, &lt;b&gt;&#x27;e se eu quiser cobrar aluguel, quanto custa a mais?&#x27;&lt;/b&gt; e &lt;b&gt;&#x27;quem é o dono do que vocês fizeram, se eu não seguir com vocês?&#x27;&lt;/b&gt; — cobrem proposta de valor, escopo e propriedade intelectual."><div class="et">Aula 9</div><h2>Apresentando o projeto em oito minutos</h2><div class="corpo"><ul><li><b>1 min · Problema</b><small>mostre que entendeu a dor do cliente, usando as palavras dele</small></li>
+<li><b>1 min · Quem sofre com isso</b><small>apresente a persona; dê rosto ao problema</small></li>
+<li><b>2 min · A solução</b><small>o que foi projetado e por quê</small></li>
+<li><b>2 min · Demonstração</b><small>navegue no protótipo executando uma tarefa real, do início ao fim</small></li>
+<li><b>1 min · Como e quando</b><small>cronograma, tecnologia e investimento</small></li>
+<li><b>1 min · Próximo passo</b><small>o que você precisa do cliente para começar</small></li></ul></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">77</div></section>
+<section class="sl ativ" data-nota="Devolva os cartazes do diagnóstico da Aula 1 antes da banca. Comparar o ponto de partida com o resultado é o fechamento mais potente que essa unidade tem."><div class="tempo">160 min · em grupo</div><span class="rot">Mão na massa</span><h2>Atividade 9 — Proposta, documento e defesa</h2><ol><li>Elaborem a proposta comercial do Empresta Aí com estimativa de horas.</li><li>Consolidem o documento de projeto usando o checklist final da apostila.</li><li>Preparem a defesa de oito minutos seguindo o roteiro.</li><li>Apresentem na banca simulada e respondam à arguição do cliente.</li></ol><div class="entrega"><b>Entrega final</b> — Documento de projeto, proposta e apresentação · indicadores <b>I2</b> e <b>I4</b></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">78</div></section>
+<section class="sl" data-nota="Conversa aberta, sem entrega formal. Muitos alunos nunca fizeram essas perguntas em voz alta. Vale registrar as respostas para retomar na UC2, que aprofunda carreira e empreendedorismo."><div class="et">Aula 9</div><h2>Antes de encerrar: sua carreira</h2><p class="sub">O plano de curso recomenda tratar planejamento de carreira já nas primeiras unidades. Trinta minutos, três perguntas.</p><div class="cols"><div class="col a"><h3>Ponto de partida</h3><ul><li>Em que momento da vida você está?</li>
+<li>Que competências você já tem?</li>
+<li>Como está seu currículo?</li>
+<li>Quanto o mercado paga hoje na sua região?</li></ul></div><div class="col v"><h3>Objetivos e estratégias</h3><ul><li>O que você quer em 1, 3 e 5 anos?</li>
+<li>O que precisa aprender para chegar lá?</li>
+<li>Que projetos você pode fazer para construir portfólio?</li>
+<li>Quem já faz o que você quer fazer — e como chegou lá?</li></ul></div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">79</div></section>
+<section class="sl destaque" data-nota="Último slide. Feche mostrando o mapa do curso inteiro e onde a turma está. Recolha as autoavaliações e agende as devolutivas individuais."><div class="et">Encerramento</div><div class="corpo"><div class="frase">O que você fez aqui<br><em>não termina nesta unidade.</em></div><div class="apoio">O documento de projeto vira insumo direto da UC2 — organização do processo de trabalho. O protótipo é a base do que você vai implementar na UC3, quando começar a desenvolver a interface para dispositivos móveis. Guarde tudo, versionado e organizado.</div></div><div class="marca">UC1 · Elaborar projetos de aplicações para web</div><div class="pag">80</div></section><div class="faixa"><i></i></div></div></div>
+<div id="toque"><div></div><div></div></div>
+<div id="notas"></div>
+<div id="mapa"><h3>Mapa de slides — clique para ir</h3><div class="g" id="gmapa"></div></div>
+<div id="ajuda"><div class="cx">
+  <div><kbd>&larr;</kbd><kbd>&rarr;</kbd> navegar entre slides</div>
+  <div><kbd>N</kbd> mostrar e ocultar as notas do apresentador</div>
+  <div><kbd>R</kbd> repetir a animação do slide</div>
+  <div><kbd>M</kbd> mapa de slides</div>
+  <div><kbd>F</kbd> tela cheia</div>
+  <div><kbd>0-9</kbd> digite o número e vá direto ao slide</div>
+  <div><kbd>Home</kbd><kbd>End</kbd> primeiro e último slide</div>
+  <div><kbd>?</kbd> abrir e fechar esta ajuda</div>
+  <div style="margin-top:18px;color:#94a1b0;font-size:14px">Ctrl+P gera um PDF com um slide por página, para distribuir como material impresso.</div>
+</div></div>
+<script>
+var slides = Array.prototype.slice.call(document.querySelectorAll('.sl'));
+var atual = 0;
+var elNotas = document.getElementById('notas');
+var elBarra = document.querySelector('.faixa i');
+
+function escala(){
+  var m = 0.94;
+  var k = Math.min(window.innerWidth / 1280, window.innerHeight / 720) * m;
+  document.getElementById('slide').style.transform = 'scale(' + k + ')';
+}
+window.addEventListener('resize', escala); escala();
+
+function mostrar(n, semHash){
+  n = Math.max(0, Math.min(slides.length - 1, n));
+  slides[atual].classList.remove('on');
+  atual = n;
+  var s = slides[atual];
+  s.classList.add('on');
+  elBarra.style.width = ((atual) / (slides.length - 1) * 100) + '%';
+  elNotas.innerHTML = '<div class="cab">Notas do apresentador &middot; slide ' + (atual+1) + ' de ' + slides.length + '</div>' + (s.dataset.nota || '<i>sem notas</i>');
+  var fig = s.querySelector('.anim, svg');
+  var alvo = s.querySelector('[id^="an-"]') || s;
+  animar(s);
+  if (!semHash) history.replaceState(null, '', '#' + (atual + 1));
+}
+function animar(s){
+  var f = s.querySelector('.figs');
+  if (!f) return;
+  s.classList.remove('tocando'); void s.offsetWidth; s.classList.add('tocando');
+}
+function proximo(){ mostrar(atual + 1); }
+function anterior(){ mostrar(atual - 1); }
+
+document.addEventListener('keydown', function(e){
+  var k = e.key;
+  if (k === 'ArrowRight' || k === 'PageDown' || k === ' ' || k === 'Enter'){ e.preventDefault(); proximo(); }
+  else if (k === 'ArrowLeft' || k === 'PageUp'){ e.preventDefault(); anterior(); }
+  else if (k === 'Home'){ mostrar(0); }
+  else if (k === 'End'){ mostrar(slides.length - 1); }
+  else if (k === 'n' || k === 'N'){ elNotas.classList.toggle('on'); }
+  else if (k === 'r' || k === 'R'){ animar(slides[atual]); }
+  else if (k === 'm' || k === 'M'){ document.getElementById('mapa').classList.toggle('on'); }
+  else if (k === '?'){ document.getElementById('ajuda').classList.toggle('on'); }
+  else if (k === 'f' || k === 'F'){ if (!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
+  else if (k === 'Escape'){ document.getElementById('mapa').classList.remove('on'); document.getElementById('ajuda').classList.remove('on'); }
+  else if (/^[0-9]$/.test(k)){ pulo += k; clearTimeout(tmr); tmr = setTimeout(function(){ if (pulo) mostrar(parseInt(pulo,10) - 1); pulo=''; }, 700); }
+});
+var pulo = '', tmr = null;
+
+document.getElementById('toque').addEventListener('click', function(e){
+  var x = e.clientX / window.innerWidth;
+  if (x < 0.28) anterior(); else if (x > 0.32) proximo();
+});
+
+// mapa de slides
+var g = document.getElementById('gmapa');
+slides.forEach(function(s, i){
+  var t = s.querySelector('h1, h2, .q, .frase');
+  var txt = 'slide';
+  if (t){
+    var tmp = t.cloneNode(true);
+    Array.prototype.slice.call(tmp.querySelectorAll('br')).forEach(function(b){ b.parentNode.replaceChild(document.createTextNode(' '), b); });
+    txt = tmp.textContent.replace(/\s+/g, ' ').trim().slice(0, 68);
+  }
+  var d = document.createElement('div');
+  d.className = 'm';
+  d.innerHTML = '<span>' + (i + 1) + '</span>' + txt;
+  d.onclick = function(){ document.getElementById('mapa').classList.remove('on'); mostrar(i); };
+  g.appendChild(d);
+});
+
+var inicial = parseInt((location.hash || '#1').slice(1), 10);
+mostrar(isNaN(inicial) ? 0 : inicial - 1, true);
+</script>
+</body>
+</html>

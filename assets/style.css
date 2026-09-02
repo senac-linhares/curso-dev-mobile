@@ -1,0 +1,102 @@
+/* Desenvolvedor Mobile — Senac Linhares
+   Estilo compartilhado do portal do curso */
+
+:root{
+  --azul:#00447c; --azul-esc:#00305a; --azul-claro:#e8f1f9;
+  --laranja:#e8730c; --laranja-claro:#fdf0e3;
+  --verde:#1d7a52; --verde-claro:#e6f4ee;
+  --roxo:#6b3fa0; --roxo-claro:#f1ebfa;
+  --tinta:#12181f; --tinta2:#4a5563; --linha:#dfe4ea; --fundo2:#f6f8fa;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; font-family:var(--sans); color:var(--tinta); background:#fff;
+  line-height:1.55;
+}
+a{color:var(--azul)}
+img{max-width:100%}
+
+.topo{
+  background:linear-gradient(135deg,#00305a,#00447c 55%,#0b6ab0);
+  color:#fff; padding:48px 20px 56px;
+}
+.topo .faixa-conteudo{max-width:960px;margin:0 auto}
+.topo .tag{
+  display:inline-block; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.32);
+  padding:5px 14px; border-radius:99px; font-size:13px; font-weight:700; letter-spacing:1px;
+  text-transform:uppercase; margin-bottom:18px;
+}
+.topo h1{margin:0 0 10px; font-size:clamp(28px,5vw,42px); color:#fff}
+.topo p{margin:0; font-size:17px; color:rgba(255,255,255,.9); max-width:60ch}
+.topo .voltar{
+  display:inline-block; margin-bottom:18px; color:rgba(255,255,255,.85); text-decoration:none; font-size:14px;
+}
+.topo .voltar:hover{text-decoration:underline}
+
+main{max-width:960px; margin:0 auto; padding:36px 20px 60px}
+
+.grade-unidades{display:grid; grid-template-columns:1fr; gap:18px; margin-top:8px}
+@media(min-width:640px){.grade-unidades{grid-template-columns:1fr 1fr}}
+
+.cartao{
+  display:block; border:1px solid var(--linha); border-radius:14px; padding:22px;
+  text-decoration:none; color:var(--tinta); background:#fff;
+  transition:box-shadow .15s ease, transform .15s ease;
+}
+.cartao:hover{box-shadow:0 10px 30px rgba(0,0,0,.08); transform:translateY(-2px)}
+.cartao .rot{
+  display:inline-block; font-size:12px; font-weight:800; letter-spacing:1px; text-transform:uppercase;
+  padding:4px 10px; border-radius:99px; margin-bottom:12px;
+}
+.rot.azul{color:var(--azul); background:var(--azul-claro)}
+.rot.laranja{color:var(--laranja); background:var(--laranja-claro)}
+.rot.verde{color:var(--verde); background:var(--verde-claro)}
+.rot.roxo{color:var(--roxo); background:var(--roxo-claro)}
+.cartao h3{margin:0 0 8px; font-size:19px; color:var(--tinta)}
+.cartao p{margin:0; font-size:14.5px; color:var(--tinta2)}
+
+.cartao-unidade{
+  border:1px solid var(--linha); border-radius:16px; padding:26px; margin-bottom:20px;
+}
+.cartao-unidade h2{margin:0 0 6px; color:var(--azul-esc); font-size:22px}
+.cartao-unidade .desc{color:var(--tinta2); margin:0 0 18px}
+.cartao-unidade.em-breve{background:var(--fundo2); color:var(--tinta2)}
+.cartao-unidade.em-breve h2{color:var(--tinta2)}
+
+.aviso{
+  background:var(--fundo2); border:1px solid var(--linha); border-radius:12px;
+  padding:16px 18px; font-size:14.5px; color:var(--tinta2); margin-top:28px;
+}
+
+footer{
+  text-align:center; padding:28px 20px 40px; color:var(--tinta2); font-size:13.5px;
+}
+
+/* Conteúdo em texto corrido (ex.: página do simulador convertida de markdown) */
+.conteudo{max-width:760px; margin:0 auto; padding:36px 20px 60px}
+.conteudo h1{color:var(--azul-esc); font-size:clamp(24px,4vw,32px)}
+.conteudo h2{color:var(--azul); margin-top:2.2em; border-top:1px solid var(--linha); padding-top:1em}
+.conteudo h3{color:var(--laranja); margin-top:1.6em}
+.conteudo blockquote{
+  margin:1.2em 0; padding:10px 18px; border-left:3px solid var(--laranja); background:var(--laranja-claro);
+  color:var(--tinta2); border-radius:0 8px 8px 0;
+}
+.conteudo pre{background:var(--fundo2); border:1px solid var(--linha); border-radius:8px; padding:14px; overflow-x:auto}
+.conteudo code{font-family:"SF Mono",Consolas,"Liberation Mono",Menlo,monospace; font-size:.92em}
+.conteudo hr{border:none; border-top:1px solid var(--linha); margin:2.2em 0}
+.conteudo table{width:100%; border-collapse:collapse; margin:1.2em 0}
+.conteudo th,.conteudo td{border:1px solid var(--linha); padding:8px 10px; text-align:left; font-size:14.5px}
+
+.caixa-download{
+  background:var(--azul-claro); border:1px solid #bfd8ec; border-radius:12px;
+  padding:18px 20px; margin:0 0 2em; font-size:15px; color:var(--tinta2);
+}
+.caixa-download strong{color:var(--azul-esc)}
+.botao-download{
+  display:inline-block; background:var(--azul); color:#fff; text-decoration:none;
+  font-weight:700; font-size:14.5px; padding:10px 18px; border-radius:8px; margin-top:4px;
+}
+.botao-download:hover{background:var(--azul-esc)}
