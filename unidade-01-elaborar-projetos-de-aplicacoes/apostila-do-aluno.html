@@ -1078,7 +1078,29 @@ footer{border-top:1px solid var(--linha);margin-top:60px;padding:26px 0 60px;fon
 <div class="card"><h4>Sinais de problema</h4><ul style="margin-bottom:0"><li>Ambiguidade sonora ("x" ou "ch"? "s" ou "z"?)</li><li>Nome que limita o crescimento do negócio</li><li>Semelhança com marca existente — risco jurídico real</li><li>Domínio livre mas com histórico ruim de uso anterior</li><li>Depender de acento ou cedilha para fazer sentido</li></ul></div>
 </div>
 
-<h3>5.3 Serviços de hospedagem</h3>
+<h3>5.3 Descobrir quem é o dono de um domínio: WHOIS na prática</h3>
+<p>Antes de negociar a compra de um domínio já registrado — ou para confirmar se um cliente é mesmo o titular do domínio que diz ser dele — existe uma ferramenta pública e gratuita: o <b>WHOIS</b>. Qualquer pessoa pode consultar, sem precisar de conta ou senha.</p>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:190px">Onde consultar</th><th>Serve para</th></tr></thead>
+<tbody>
+<tr><td><a href="https://registro.br/tecnologia/ferramentas/whois/">WHOIS do Registro.br</a></td><td>Domínios <code>.br</code> (<code>.com.br</code>, <code>.net.br</code> etc.). Domínio de pessoa física costuma vir com dados do titular ocultos por padrão, por causa da LGPD — é preciso fazer login no Registro.br para ver mais detalhes, e ainda assim alguns campos ficam restritos ao próprio titular.</td></tr>
+<tr><td><a href="https://lookup.icann.org/">ICANN Lookup</a></td><td>Ponto de partida oficial para qualquer domínio do mundo (<code>.com</code>, <code>.net</code>, <code>.org</code>, <code>.io</code> etc.) — identifica o registrador responsável e traz os dados disponíveis.</td></tr>
+<tr><td><a href="https://www.whois.com/whois/">Whois.com</a></td><td>Consulta alternativa, útil como segunda fonte quando outro serviço está fora do ar.</td></tr>
+<tr><td>Terminal (<code>whois nome-do-dominio.com</code>)</td><td>No Linux e no macOS o comando já vem instalado; no Windows é preciso instalar um pacote específico, ou simplesmente usar um dos sites acima.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Uma consulta WHOIS típica revela:</p>
+<ul>
+<li><b>Titular (registrante)</b> — nome ou razão social, quando não estiver oculto por proteção de privacidade.</li>
+<li><b>Datas de criação, última atualização e expiração</b> — essencial para saber se um domínio está prestes a vencer e ficar livre para qualquer pessoa registrar.</li>
+<li><b>Servidores DNS (nameservers)</b> em uso — indica, por exemplo, em qual hospedagem ou plataforma o domínio está apontado hoje.</li>
+<li><b>Status do domínio</b> — ativo, bloqueado contra transferência, suspenso por falta de pagamento ou em disputa.</li>
+</ul>
+<div class="box mercado"><span class="rot">No mercado</span><p>Antes de aceitar um projeto que já tem domínio, faça o WHOIS. Se o titular não for o cliente — foi registrado por uma agência anterior, por um funcionário que já saiu da empresa, ou por outro desenvolvedor em um projeto antigo — resolva isso <b>antes</b> de continuar o trabalho. É comum encontrar domínios "reféns" de quem prestou o serviço antes e cobra para liberar a transferência.</p></div>
+
+<h3>5.4 Serviços de hospedagem</h3>
 <div class="tab-wrap">
 <table>
 <thead><tr><th style="width:150px">Tipo</th><th>Como funciona</th><th>Indicado para</th></tr></thead>
@@ -1105,6 +1127,41 @@ footer{border-top:1px solid var(--linha);margin-top:60px;padding:26px 0 60px;fon
 </ul>
 
 <div class="box mercado"><span class="rot">No mercado</span><p>Monte para o cliente um quadro de <b>custo anual de operação</b> separado do valor do desenvolvimento: domínio, hospedagem, e-mail, certificado e eventuais serviços de terceiros. Cliente que descobre esses custos só depois da entrega se sente enganado — e com alguma razão.</p></div>
+
+<h3>5.5 Publicar o projeto: apontando o domínio para a hospedagem</h3>
+<p>Ter domínio registrado e hospedagem contratada não é suficiente: alguém precisa dizer ao DNS para onde esse domínio deve apontar. Colocar um projeto "no ar" segue, em geral, os mesmos quatro passos:</p>
+<ol>
+<li><b>Enviar os arquivos para a hospedagem</b> — pelo painel de controle, por FTP, ou automaticamente a cada <code>git push</code>, no caso das plataformas de deploy.</li>
+<li><b>Apontar o domínio para a hospedagem</b> — configurando os registros de DNS (tabela abaixo), geralmente feito no painel do Registro.br ou de onde o domínio foi registrado — não necessariamente na hospedagem.</li>
+<li><b>Emitir o certificado SSL</b> — a maioria das hospedagens e plataformas de deploy atuais faz isso automaticamente assim que detecta o domínio corretamente apontado.</li>
+<li><b>Aguardar a propagação e testar</b> — ver seção 5.6, a seguir.</li>
+</ol>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:170px">Registro de DNS</th><th>Para que serve</th></tr></thead>
+<tbody>
+<tr><td><b>Registro A</b></td><td>Aponta o domínio diretamente para um endereço IP (ex.: <code>203.0.113.42</code>). Usado quando a hospedagem informa um IP fixo.</td></tr>
+<tr><td><b>Registro CNAME</b></td><td>Aponta um nome — geralmente um subdomínio, como <code>www</code> ou <code>loja</code> — para outro nome de domínio. Muito comum em plataformas de deploy, que fornecem um endereço próprio para o projeto apontar.</td></tr>
+<tr><td><b>Nameservers (NS)</b></td><td>Em vez de configurar registro por registro, transfere a administração inteira do DNS do domínio para os servidores da hospedagem. É a opção mais simples quando a hospedagem oferece um painel de DNS completo.</td></tr>
+<tr><td><b>Registro MX</b></td><td>Direciona o e-mail do domínio (ex.: <code>contato@empresta-ai.com.br</code>) para o serviço responsável pelo e-mail — que costuma ser diferente do serviço que hospeda o site.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="box dica"><span class="rot">Conceito-chave</span><p>Domínio e hospedagem podem ficar em empresas diferentes o tempo todo — e frequentemente ficam. O registrador do domínio só precisa saber <b>para onde apontar</b>; quem entrega o conteúdo é a hospedagem. É por isso que trocar de hospedagem sem trocar de domínio é rotina: basta atualizar o registro de DNS.</p></div>
+
+<h3>5.6 Verificar se o DNS já propagou</h3>
+<p>Depois de alterar o DNS, a mudança não chega a todo mundo ao mesmo tempo. Cada provedor de internet e cada servidor DNS pelo mundo guarda a resposta antiga em cache por um tempo chamado <b>TTL</b> (<i>Time To Live</i>). Esse período costuma variar de minutos a 48 horas — é comum o site já funcionar no computador de quem fez a alteração e ainda não funcionar no celular de outra pessoa, na mesma hora, e isso não é sinal de erro.</p>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:190px">Ferramenta</th><th>Para que serve</th></tr></thead>
+<tbody>
+<tr><td><a href="https://www.whatsmydns.net/">whatsmydns.net</a></td><td>Consulta o registro de DNS de um domínio em dezenas de servidores espalhados pelo mundo ao mesmo tempo e mostra, local por local, se já propagou.</td></tr>
+<tr><td><a href="https://dnschecker.org/">dnschecker.org</a></td><td>Alternativa equivalente, com suporte a mais tipos de registro (A, CNAME, MX, NS, TXT).</td></tr>
+<tr><td>Terminal (<code>nslookup dominio.com</code> ou <code>dig dominio.com</code>)</td><td>Mostra a resposta que o próprio computador está recebendo agora — útil para saber se o problema é local (cache do navegador ou do sistema operacional) ou realmente do DNS.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="box atencao"><span class="rot">Atenção</span><p>Não prometa ao cliente "o site no ar em 10 minutos" só porque o DNS foi alterado. Diga a verdade: pode levar até 48 horas para todo mundo enxergar a mudança, e isso não é falha de ninguém — é assim que a internet funciona. Combine esse prazo <b>antes</b> de alterar o DNS, não depois de o cliente reclamar.</p></div>
 
 <div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 5 (90 min, em grupo).</b> (a) Liste 5 opções de domínio para o Empresta Aí e verifique a disponibilidade real de cada uma no Registro.br. (b) Faça o WHOIS de um domínio já registrado e identifique titular e data de expiração. (c) Compare 3 planos de hospedagem em planilha usando os critérios acima. (d) Escreva a decisão final com justificativa e o custo total do primeiro ano. <b>Entrega 4.</b></p></div>
 <h2 id="c6"><span class="num">Capítulo 6</span>Arquitetura da informação</h2>
@@ -2288,14 +2345,18 @@ anote aqui - ali existe um problema de interface.</pre>
 <tr><td><b>Mapa do site</b></td><td>Representação hierárquica das páginas e suas relações.</td></tr>
 <tr><td><b>Mockup</b></td><td>Representação estática da aparência final da interface.</td></tr>
 <tr><td><b>MoSCoW</b></td><td>Método de priorização: <i>Must</i>, <i>Should</i>, <i>Could</i>, <i>Won't</i>.</td></tr>
+<tr><td><b>Nameserver (NS)</b></td><td>Servidor que responde pelas informações de DNS de um domínio. Apontar os nameservers para a hospedagem transfere para ela toda a administração do DNS.</td></tr>
 <tr><td><b>Painel semântico</b></td><td>Colagem de referências visuais que traduz a sensação pretendida pelo projeto. Também chamado de <i>moodboard</i>.</td></tr>
 <tr><td><b>Persona</b></td><td>Personagem semifictício baseado em dados que representa um segmento de usuários.</td></tr>
+<tr><td><b>Propagação de DNS</b></td><td>Tempo que servidores DNS ao redor do mundo levam para atualizar o cache com uma mudança de registro. Pode levar de minutos a 48 horas.</td></tr>
 <tr><td><b>Protótipo</b></td><td>Versão navegável da interface, usada para testar fluxos antes de programar.</td></tr>
 <tr><td><b>PWA</b></td><td><i>Progressive Web App</i>: aplicação web que se comporta como aplicativo instalado.</td></tr>
+<tr><td><b>Registro DNS (A, CNAME, MX)</b></td><td>Entrada que diz ao DNS o que fazer com um domínio ou subdomínio: <b>A</b> aponta para um IP, <b>CNAME</b> aponta para outro nome, <b>MX</b> direciona o e-mail.</td></tr>
 <tr><td><b>Requisito funcional</b></td><td>O que o sistema deve fazer.</td></tr>
 <tr><td><b>Requisito não funcional</b></td><td>Como o sistema deve se comportar: desempenho, segurança, usabilidade, acessibilidade.</td></tr>
 <tr><td><b>Scope creep</b></td><td>Crescimento não controlado do escopo ao longo do projeto.</td></tr>
 <tr><td><b>SSL/TLS</b></td><td>Protocolos de criptografia que permitem conexão segura (<code>https</code>).</td></tr>
+<tr><td><b>TTL (Time To Live)</b></td><td>Tempo que um servidor DNS guarda uma resposta em cache antes de consultar novamente. Define a velocidade da propagação de uma mudança de DNS.</td></tr>
 <tr><td><b>Usabilidade</b></td><td>Facilidade com que a pessoa alcança seu objetivo usando o sistema.</td></tr>
 <tr><td><b>WCAG</b></td><td>Diretrizes internacionais de acessibilidade para conteúdo web, publicadas pelo W3C.</td></tr>
 <tr><td><b>WHOIS</b></td><td>Consulta pública que informa titular e situação de um domínio registrado.</td></tr>
@@ -2324,6 +2385,8 @@ anote aqui - ali existe um problema de interface.</pre>
 <h3>Ferramentas</h3>
 <ul>
 <li><a href="https://registro.br/">Registro.br</a> — consulta e registro de domínios <code>.br</code>. Registro a partir de R$ 40,00 por ano.</li>
+<li><a href="https://lookup.icann.org/">ICANN Lookup</a> — WHOIS oficial para domínios internacionais (.com, .net, .org, .io e outros).</li>
+<li><a href="https://www.whatsmydns.net/">whatsmydns.net</a> e <a href="https://dnschecker.org/">dnschecker.org</a> — verificam se a propagação de um registro de DNS já chegou a diferentes partes do mundo.</li>
 <li><a href="https://www.figma.com/education/">Figma Education</a> — plano gratuito para estudantes e docentes, com recursos para uso em sala de aula.</li>
 <li><a href="https://www.figma.com/">Figma</a> — prototipagem colaborativa no navegador, com plano gratuito.</li>
 <li>Ferramentas de mapa mental, quadros Kanban e diagramação: escolha uma e padronize com a turma.</li>
