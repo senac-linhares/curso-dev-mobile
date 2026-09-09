@@ -87,6 +87,24 @@ hr{border:0;border-top:1px solid var(--linha);margin:34px 0}
 .docente{background:var(--roxo-claro);border-color:var(--roxo)} .docente .rot{color:var(--roxo)}
 .mercado{background:var(--laranja-claro);border-color:var(--laranja)} .mercado .rot{color:var(--laranja)}
 
+/* ---------- Comparativo certo x errado ---------- */
+.comparativo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
+.comparativo .certo,.comparativo .errado{border-radius:var(--raio);padding:15px 18px;border:1.5px solid}
+.comparativo .certo{background:var(--verde-claro);border-color:#bde0cf}
+.comparativo .errado{background:var(--vermelho-claro);border-color:#f3c6c2}
+.comparativo h4{margin:0 0 9px;font-size:12.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.comparativo h4::before{content:"";width:9px;height:9px;border-radius:99px;flex:none}
+.comparativo .certo h4{color:var(--verde)} .comparativo .certo h4::before{background:var(--verde)}
+.comparativo .errado h4{color:var(--vermelho)} .comparativo .errado h4::before{background:var(--vermelho)}
+.comparativo ul{margin:0;padding-left:19px;font-size:14.5px}
+.comparativo li{margin-bottom:6px}
+.comparativo p{font-size:14.5px}
+.comparativo p:last-child{margin-bottom:0}
+
+/* ---------- Figuras fotográficas reais ---------- */
+figure.foto img{display:block;margin:0 auto;max-width:100%;border-radius:6px;border:1px solid var(--linha);background:#fff}
+.creditos{display:block;margin-top:6px;opacity:.72;font-size:12px;font-style:italic}
+
 /* ---------- Tabelas ---------- */
 .tab-wrap{overflow-x:auto;margin:18px 0}
 table{border-collapse:collapse;width:100%;font-size:15px}
@@ -144,7 +162,7 @@ footer{border-top:1px solid var(--linha);margin-top:60px;padding:26px 0 60px;fon
 @media (max-width:980px){
   .wrap{grid-template-columns:1fr;gap:0}
   nav.sumario{position:static;max-height:none;border-bottom:1px solid var(--linha);margin-bottom:10px}
-  .g3,.g4,.g2{grid-template-columns:1fr}
+  .g3,.g4,.g2,.comparativo{grid-template-columns:1fr}
   .capa{padding:28px 22px}.capa h1{font-size:28px}
   h1{font-size:27px}h2{font-size:22px}
   .aula dl{grid-template-columns:1fr}
@@ -1178,7 +1196,29 @@ footer{border-top:1px solid var(--linha);margin-top:60px;padding:26px 0 60px;fon
 <div class="card"><h4>Sistema de busca</h4><p>Como a pessoa procura diretamente: campo de busca, filtros, ordenação, apresentação e tratamento do resultado vazio.</p></div>
 </div>
 
-<h3>6.2 Inventário de conteúdo</h3>
+<p>Os quatro sistemas não funcionam isolados: um rótulo ruim (rotulagem) esconde um grupo bem pensado (organização); um menu bem nomeado, mas enterrado no quinto nível (navegação), não é encontrado; e uma busca que não entende "furadeira" quando o item foi cadastrado como "parafusadeira" devolve zero resultados mesmo com o conteúdo existindo. Por isso, o exercício mental mais útil em arquitetura da informação é sempre o mesmo: <b>o problema é a informação não existir, ou ela existir e não dar para encontrar?</b> São defeitos diferentes, com soluções diferentes — o primeiro se resolve produzindo conteúdo; o segundo, reorganizando o que já existe.</p>
+
+<div class="comparativo">
+<div class="certo"><h4>Informação encontrável</h4><p>O regulamento do condomínio existe, está rotulado como "Regras do Empresta Aí" (não "Documento normativo 003/2024") e aparece no menu "Ajuda" e no rodapé.</p></div>
+<div class="errado"><h4>Informação perdida</h4><p>O mesmo PDF existe, mas está linkado só dentro de uma notícia antiga de três meses atrás, sem estar em nenhum menu. Existir no servidor não é o mesmo que existir para quem procura.</p></div>
+</div>
+
+<h3>6.2 Sistema de busca: o mais esquecido dos quatro</h3>
+<p>Em projetos pequenos, o sistema de busca costuma ser tratado como um campo de texto qualquer — e é aí que mora o problema. A busca é o único sistema que o próprio usuário controla: ele escreve a palavra que faz sentido <b>para ele</b>, não a que a equipe escolheu no sistema de rotulagem. Por isso ela expõe, mais rápido que qualquer outro sistema, se o vocabulário do site está alinhado com o vocabulário de quem usa.</p>
+<div class="grid g3">
+<div class="card"><h4>Campo e sugestões</h4><p>Autocompletar reduz erro de digitação e ensina o vocabulário do sistema enquanto a pessoa ainda está escrevendo.</p></div>
+<div class="card"><h4>Ordenação e filtros</h4><p>Relevância, mais recente, mais próximo, menor preço — a ordem padrão comunica o que o produto valoriza.</p></div>
+<div class="card"><h4>Resultado vazio</h4><p>O momento mais frequentemente esquecido no design: o que a pessoa vê quando a busca não encontra nada.</p></div>
+</div>
+
+<div class="comparativo">
+<div class="certo"><h4>Busca sem resultado, bem tratada</h4><ul><li>"Não encontramos 'parafusadeira'. Você quis dizer <b>furadeira</b>?"</li><li>Sugere categorias próximas ou os itens mais emprestados</li><li>Mantém a busca preenchida para a pessoa ajustar o termo</li></ul></div>
+<div class="errado"><h4>Busca sem resultado, mal tratada</h4><ul><li>Tela em branco com "Nenhum resultado encontrado." e nada mais</li><li>Some com o termo digitado, obrigando a pessoa a lembrar o que escreveu</li><li>Não sugere nada — o beco sem saída empurra o usuário para fora do site</li></ul></div>
+</div>
+
+<div class="box atencao"><span class="rot">Atenção</span><p>Sinônimos são a causa mais comum de "zero resultado" em busca interna. Antes de programar qualquer coisa, faça uma lista de como o público real chama cada item — não como a equipe do projeto chama. No Empresta Aí, "furadeira", "parafusadeira" e "furadeira de impacto" provavelmente precisam apontar para o mesmo cadastro.</p></div>
+
+<h3>6.3 Inventário de conteúdo</h3>
 <p>Antes de organizar, é preciso saber o que existe. O inventário lista todo o conteúdo previsto ou existente, com origem e responsável.</p>
 <div class="tab-wrap">
 <table>
@@ -1195,16 +1235,23 @@ footer{border-top:1px solid var(--linha);margin-top:60px;padding:26px 0 60px;fon
 
 <div class="box atencao"><span class="rot">Atenção</span><p>Conteúdo é a parte do projeto que mais atrasa. O cliente promete enviar os textos "na semana que vem" e some. Coloque prazo de entrega de conteúdo no cronograma e no contrato, com consequência explícita: a etapa seguinte só começa quando o conteúdo chegar.</p></div>
 
-<h3>6.3 Card sorting</h3>
+<h3>6.4 Card sorting</h3>
 <p>Técnica em que participantes agrupam fichas com nomes de conteúdo, revelando como <b>eles</b> — e não a equipe — entendem a organização.</p>
 <ul>
 <li><b>Aberto:</b> o participante cria e nomeia os próprios grupos. Descobre categorias e vocabulário.</li>
 <li><b>Fechado:</b> as categorias já existem e o participante distribui as fichas. Valida uma estrutura proposta.</li>
 <li><b>Híbrido:</b> categorias sugeridas, mas com liberdade de criar novas.</li>
 </ul>
-<p>Com 5 a 8 participantes já aparecem os padrões principais. O que interessa não é a média: são as fichas que <b>todo mundo colocou em lugares diferentes</b> — elas indicam rótulos ambíguos que precisam ser reescritos.</p>
 
-<h3>6.4 Mapa do site</h3>
+<div class="comparativo">
+<div class="certo"><h4>Quando usar cada tipo</h4><ul><li><b>Aberto</b> no início do projeto, quando ainda não existe estrutura nenhuma</li><li><b>Fechado</b> perto do fim, para validar um mapa do site já desenhado</li></ul></div>
+<div class="errado"><h4>Erro comum</h4><ul><li>Rodar card sorting fechado logo no início, sem ter perguntado nada aos usuários antes</li><li>Isso só confirma o que a equipe já pensava — não descobre nada novo</li></ul></div>
+</div>
+
+<p>Com 5 a 8 participantes já aparecem os padrões principais. O que interessa não é a média: são as fichas que <b>todo mundo colocou em lugares diferentes</b> — elas indicam rótulos ambíguos que precisam ser reescritos.</p>
+<p>Para analisar um card sorting aberto com mais rigor, monte uma <b>matriz de similaridade</b>: uma tabela onde cada linha e cada coluna é um item, e cada célula mostra em quantos grupos os dois itens ficaram juntos. Itens que sempre aparecem juntos são candidatos fortes a uma mesma categoria; itens que nunca se encontram provavelmente pertencem a seções diferentes. Ferramentas online de card sorting remoto (como OptimalSort ou Miro com um template de agrupamento) geram esse cálculo automaticamente — mas o exercício com fichas físicas, feito à mão, ensina o raciocínio por trás do número.</p>
+
+<h3>6.5 Mapa do site</h3>
 <p>Representação hierárquica das páginas e das relações entre elas. É o artefato central desta unidade curricular e uma das evidências mais visíveis do indicador I2.</p>
 
 <figure>
@@ -1261,9 +1308,30 @@ footer{border-top:1px solid var(--linha);margin-top:60px;padding:26px 0 60px;fon
 <figcaption>Mapa do site do caso Empresta Aí. Numerar os nós (1.0, 2.1, 2.2) facilita referenciá-los no documento de requisitos e no protótipo.</figcaption>
 </figure>
 
+<h4>6.5.1 Como isso aparece em produtos reais</h4>
+<p>O mapa do site desenhado à mão parece um exercício de sala de aula, mas é exatamente o que equipes profissionais produzem antes de programar qualquer coisa. Compare dois exemplos reais de mapa do site, feitos com o mesmo objetivo — enxergar a estrutura inteira de um produto antes de navegar nele — mas em escalas muito diferentes.</p>
+
+<div class="grid g2">
+<figure class="foto">
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Sitemap_google.jpg" alt="Mapa do site do Google em 2006, mostrando a página inicial ramificando em serviços como busca, imagens, notícias e outros produtos" loading="lazy">
+<figcaption>Mapa do site do Google (2006), com a busca no topo e os demais produtos organizados como ramificações.<span class="creditos">Fonte: Regina777, licença CC BY-SA 3.0 / GFDL, via Wikimedia Commons.</span></figcaption>
+</figure>
+<figure class="foto">
+<img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Main_Page_Usability.png" alt="Diagrama mostrando dezenas de caminhos possíveis que um usuário pode seguir a partir da página principal da Wikipédia em inglês, com muitas linhas cruzadas" loading="lazy">
+<figcaption>Caminhos que um usuário podia seguir a partir da página principal da Wikipédia em inglês (2005). Repare como a falta de uma hierarquia única gera uma teia difícil de acompanhar.<span class="creditos">Fonte: Trevor MacInnis, licença CC BY-SA 3.0 / GFDL, via Wikimedia Commons.</span></figcaption>
+</figure>
+</div>
+
+<div class="comparativo">
+<div class="certo"><h4>Mapa que ajuda</h4><ul><li>Um ponto de entrada claro no topo (como no exemplo do Google)</li><li>Poucos ramos por nível, cada um com um rótulo específico</li><li>Dá para apontar o dedo e dizer "essa página está aqui" em dois segundos</li></ul></div>
+<div class="errado"><h4>Mapa que confunde</h4><ul><li>Várias entradas possíveis, sem uma hierarquia dominante (como no exemplo da Wikipédia)</li><li>Linhas cruzando em todas as direções — sinal de estrutura matricial não intencional</li><li>Cresceu ficha por ficha, ao longo dos anos, sem ninguém revisar o conjunto</li></ul></div>
+</div>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>Existe também o <b>sitemap.xml</b>: um arquivo técnico, sem visual nenhum, que lista todas as URLs do site para os mecanismos de busca. Ele não substitui o mapa do site visual desta seção — serve a um público diferente (o rastreador do Google, não a pessoa navegando) e normalmente é gerado automaticamente pela própria plataforma ou pelo CMS.</p></div>
+
 <div class="box dica"><span class="rot">Conceito-chave — regra dos 7±2 e a profundidade</span><p>Menus com muitos itens sobrecarregam a memória de trabalho; hierarquias muito profundas escondem o conteúdo. A busca é por equilíbrio entre <b>largura</b> (itens por nível) e <b>profundidade</b> (níveis até o conteúdo). Em projetos pequenos, três níveis costumam bastar, e nada essencial deve ficar a mais de três cliques da tela inicial.</p></div>
 
-<h3>6.5 Estruturas de navegação</h3>
+<h3>6.6 Estruturas de navegação</h3>
 <figure>
 <svg viewBox="0 0 700 250" role="img" aria-label="Quatro estruturas de navegação: linear, hierárquica, matricial e orientada a banco de dados">
   <g font-family="sans-serif">
@@ -1308,7 +1376,42 @@ footer{border-top:1px solid var(--linha);margin-top:60px;padding:26px 0 60px;fon
 <figcaption>As quatro estruturas clássicas de navegação e como elas convivem em um mesmo produto.</figcaption>
 </figure>
 
-<h3>6.6 Rotulagem: as palavras importam</h3>
+<h3>6.7 Trilha de navegação (breadcrumb)</h3>
+<p>A trilha de navegação — em inglês, <i>breadcrumb</i>, numa referência ao conto de João e Maria, que deixava migalhas de pão para achar o caminho de volta — mostra, em uma linha horizontal, onde a página atual está dentro da hierarquia do site. É um componente pequeno, mas resolve um problema grande: sem ele, a única forma de "subir um nível" é apertar voltar no navegador repetidas vezes, ou recomeçar pelo menu principal.</p>
+
+<div class="grid g2">
+<div class="card"><h4>Baseada em localização</h4><p>Mostra sempre o mesmo caminho, definido pela posição da página na hierarquia do mapa do site. É a mais usada e a mais simples de implementar — normalmente é gerada automaticamente a partir da URL.</p></div>
+<div class="card"><h4>Baseada em caminho percorrido</h4><p>Mostra a sequência de páginas que a própria pessoa visitou, como o histórico do navegador. Muda de pessoa para pessoa e é mais rara, porque confunde quando a mesma página é referenciada de formas diferentes.</p></div>
+</div>
+
+<figure class="foto">
+<img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/A_breadcrumb.png" alt="Trilha de navegação real de um sistema web mostrando o caminho hierárquico entre seções em formato de texto separado por símbolos" loading="lazy" style="max-width:420px">
+<figcaption>Trilha de navegação do ERP5, um sistema de gestão livre — um exemplo real e simples do componente em produção.<span class="creditos">Fonte: Bartek.gorny, licença GPL, via Wikimedia Commons.</span></figcaption>
+</figure>
+
+<div class="comparativo">
+<div class="certo"><h4>Trilha que ajuda</h4><ul><li>Usa os mesmos rótulos do menu — nunca um sinônimo diferente</li><li>Cada nível é clicável, exceto a página atual</li><li>Aparece só a partir do segundo nível (a home não precisa de trilha para si mesma)</li></ul></div>
+<div class="errado"><h4>Trilha que atrapalha</h4><ul><li>"Início &gt; Catálogo &gt; Produtos" quando o menu principal diz "Itens", não "Catálogo"</li><li>Texto sem link, só decorativo — obriga a pessoa a usar o menu de novo</li><li>Presente até na página inicial, ocupando espaço sem informar nada</li></ul></div>
+</div>
+
+<h3>6.8 Arquitetura da informação em telas pequenas</h3>
+<p>Neste curso o produto final costuma ser pensado primeiro para celular — e no mobile o espaço de tela força decisões que no desktop passam despercebidas. A mais comum é o <b>menu hambúrguer</b>: o ícone de três linhas que esconde a navegação principal atrás de um toque, liberando a tela para o conteúdo.</p>
+
+<figure class="foto">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Wikipedia_mobile_navigation.PNG" alt="Menu de navegação mobile da Wikipédia aberto, mostrando a lista de links do menu hambúrguer sobre o conteúdo da página" loading="lazy" style="max-width:320px">
+<figcaption>Menu hambúrguer do site mobile da Wikipédia: a navegação inteira some até que a pessoa toque no ícone.<span class="creditos">Fonte: Maryana (Wikimedia Foundation), licença CC BY-SA 3.0, via Wikimedia Commons.</span></figcaption>
+</figure>
+
+<p>O hambúrguer resolve o problema do espaço, mas cria outro: pesquisas de usabilidade mostram, de forma consistente, que navegação escondida é usada e descoberta com menos frequência do que navegação visível — simplesmente porque a pessoa não vê as opções que existem. É o preço pago pela tela limpa.</p>
+
+<div class="comparativo">
+<div class="certo"><h4>Hambúrguer funciona bem quando</h4><ul><li>As opções escondidas são secundárias (configurações, sobre, ajuda)</li><li>A ação principal da tela já está visível fora do menu (um botão "Solicitar", uma barra de busca)</li><li>Existe uma barra de abas fixa (tab bar) para as 3 a 5 ações mais usadas, e o hambúrguer só guarda o resto</li></ul></div>
+<div class="errado"><h4>Hambúrguer atrapalha quando</h4><ul><li>Esconde a ação que a pessoa mais precisa fazer naquela tela</li><li>É usado também no desktop, onde sobra espaço de tela e esconder o menu não economiza nada</li><li>É a única forma de navegar — sem atalhos, sem busca, sem tab bar</li></ul></div>
+</div>
+
+<div class="box dica"><span class="rot">Padrão alternativo</span><p>Em aplicativos mobile, a <b>barra de abas inferior</b> (tab bar) costuma vencer o hambúrguer para as seções mais usadas, porque mantém a navegação sempre visível e ao alcance do polegar. É comum combinar as duas coisas: tab bar para as 3 a 5 seções principais, hambúrguer ou tela de perfil para o restante. No Empresta Aí, "Itens", "Meus pedidos" e "Perfil" são fortes candidatos à tab bar; "Ajuda" e "Configurações" podem ficar em um menu secundário.</p></div>
+
+<h3>6.9 Rotulagem: as palavras importam</h3>
 <ul>
 <li><b>Use a linguagem do usuário, não a da empresa.</b> "Meus pedidos" é melhor que "Gestão de solicitações".</li>
 <li><b>Seja consistente.</b> Se em um lugar é "item", em nenhum outro pode ser "produto" ou "objeto".</li>
@@ -1316,6 +1419,11 @@ footer{border-top:1px solid var(--linha);margin-top:60px;padding:26px 0 60px;fon
 <li><b>Evite jargão interno e siglas</b> que só a equipe entende.</li>
 <li><b>Teste os rótulos</b>: mostre só o menu e pergunte "onde você clicaria para devolver uma furadeira?".</li>
 </ul>
+
+<div class="comparativo">
+<div class="certo"><h4>Rótulo que funciona</h4><ul><li>"Meus pedidos" — linguagem do dia a dia</li><li>"Como funciona" — específico, promete uma explicação</li><li>"Devolver um item" — nomeia a tarefa, não o sistema por trás dela</li></ul></div>
+<div class="errado"><h4>Rótulo que confunde</h4><ul><li>"Gestão de solicitações" — jargão administrativo</li><li>"Saiba mais" — genérico, não diz mais o quê</li><li>"Módulo de devolução" — nomeia a arquitetura interna, que não interessa a quem usa</li></ul></div>
+</div>
 
 <div class="box mercado"><span class="rot">No mercado</span><p>Arquitetura da informação bem feita também é SEO. Estrutura clara, URLs legíveis, hierarquia de títulos coerente e rótulos que usam as palavras que as pessoas realmente buscam melhoram o posicionamento em mecanismos de busca — sem nenhum truque.</p></div>
 
@@ -1350,7 +1458,18 @@ footer{border-top:1px solid var(--linha);margin-top:60px;padding:26px 0 60px;fon
 <figcaption>Card sorting aberto. Note que os nomes das colunas não foram dados pela equipe: eles emergiram do agrupamento dos próprios participantes — e viram candidatos naturais a itens de menu.</figcaption>
 </figure>
 
-<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 6 (110 min, em grupo).</b> (a) Faça o inventário de conteúdo do Empresta Aí com no mínimo 15 itens. (b) Escreva cada item em uma ficha e conduza um card sorting aberto com integrantes de outro grupo. (c) Desenhe o mapa do site com numeração. (d) Defina a estrutura de navegação de cada área. (e) Faça o teste de rótulos com três pessoas de fora do grupo e ajuste. <b>Entrega 5.</b></p></div>
+<h3>6.10 Checklist rápido de arquitetura da informação</h3>
+<p>Antes de considerar a arquitetura da informação pronta, confira se ela resiste às perguntas abaixo — cada uma corresponde a um dos comparativos vistos neste capítulo.</p>
+<ul class="check">
+<li>Todo conteúdo importante está a, no máximo, três cliques da tela inicial?</li>
+<li>Os rótulos do menu usam a linguagem de quem usa, não a linguagem interna da equipe?</li>
+<li>A trilha de navegação (quando existir) usa exatamente as mesmas palavras do menu?</li>
+<li>A busca tem tratamento pensado para quando não encontra nada?</li>
+<li>Se existe menu hambúrguer, as ações mais frequentes continuam visíveis sem abri-lo?</li>
+<li>O mapa do site tem uma hierarquia clara, sem virar uma teia de links cruzados?</li>
+</ul>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 6 (110 min, em grupo).</b> (a) Faça o inventário de conteúdo do Empresta Aí com no mínimo 15 itens. (b) Escreva cada item em uma ficha e conduza um card sorting aberto com integrantes de outro grupo. (c) Desenhe o mapa do site com numeração. (d) Defina a estrutura de navegação de cada área, incluindo a trilha de navegação e o que entra ou não no menu hambúrguer da versão mobile. (e) Faça o teste de rótulos com três pessoas de fora do grupo e ajuste. (f) Rode o checklist acima na estrutura final e anote o que ainda falha. <b>Entrega 5.</b></p></div>
 <h2 id="c7"><span class="num">Capítulo 7</span>Análise de requisitos</h2>
 
 <p class="lede">Requisito é a tradução técnica do desejo do cliente em algo verificável. Se não dá para responder objetivamente "isso foi atendido, sim ou não?", ainda não é um requisito.</p>
@@ -2333,6 +2452,7 @@ anote aqui - ali existe um problema de interface.</pre>
 <tr><td style="width:210px"><b>Acessibilidade</b></td><td>Conjunto de práticas que garante que pessoas com diferentes capacidades consigam perceber, entender e operar uma interface.</td></tr>
 <tr><td><b>Arquitetura da informação</b></td><td>Projeto estrutural de organização, rotulagem, navegação e busca do conteúdo de um sistema.</td></tr>
 <tr><td><b>Benchmarking</b></td><td>Análise comparativa estruturada de concorrentes e referências, com critérios definidos.</td></tr>
+<tr><td><b>Breadcrumb (trilha de navegação)</b></td><td>Componente que mostra, em uma linha, a posição da página atual dentro da hierarquia do site.</td></tr>
 <tr><td><b>Briefing</b></td><td>Documento que reúne as informações necessárias para orientar um projeto, na linguagem do cliente.</td></tr>
 <tr><td><b>Card sorting</b></td><td>Técnica em que participantes agrupam conteúdos em fichas, revelando como entendem a organização.</td></tr>
 <tr><td><b>ccTLD</b></td><td>Domínio de topo de código de país, como <code>.br</code>.</td></tr>
@@ -2343,6 +2463,7 @@ anote aqui - ali existe um problema de interface.</pre>
 <tr><td><b>Hospedagem</b></td><td>Serviço que mantém os arquivos e sistemas do site acessíveis na internet.</td></tr>
 <tr><td><b>LGPD</b></td><td>Lei Geral de Proteção de Dados (Lei 13.709/2018), que regula o tratamento de dados pessoais no Brasil.</td></tr>
 <tr><td><b>Mapa do site</b></td><td>Representação hierárquica das páginas e suas relações.</td></tr>
+<tr><td><b>Menu hambúrguer</b></td><td>Ícone de três linhas que esconde a navegação principal atrás de um toque, comum em telas pequenas.</td></tr>
 <tr><td><b>Mockup</b></td><td>Representação estática da aparência final da interface.</td></tr>
 <tr><td><b>MoSCoW</b></td><td>Método de priorização: <i>Must</i>, <i>Should</i>, <i>Could</i>, <i>Won't</i>.</td></tr>
 <tr><td><b>Nameserver (NS)</b></td><td>Servidor que responde pelas informações de DNS de um domínio. Apontar os nameservers para a hospedagem transfere para ela toda a administração do DNS.</td></tr>
