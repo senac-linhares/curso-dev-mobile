@@ -27,6 +27,7 @@ Por enquanto este repositório guarda só os materiais das aulas. Mas ao longo d
 
 | Unidade | Conteúdo |
 |---|---|
+| **Nivelamento — Lógica de Programação com Dart** | Introdução ao Flutter, montagem do ambiente (Flutter Web) e os conceitos básicos de lógica, com exemplos de código e atividades |
 | **UC 01 — Elaborar Projetos de Aplicações** | Apresentação das aulas, apostila do aluno e o simulador de reunião de briefing |
 
 Novas unidades vão sendo adicionadas ao longo do curso — tanto materiais de aula quanto, mais adiante, código de projetos.

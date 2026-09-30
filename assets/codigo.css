@@ -1,0 +1,110 @@
+/* Desenvolvedor Mobile — Senac Linhares
+   Blocos de código com a aparência do editor (paleta Dark+ do VS Code).
+
+   ---------------------------------------------------------------------------
+   COMO USAR NUMA PÁGINA NOVA
+
+   1. Ligue os dois arquivos (o .js faz a coloração):
+
+        <link rel="stylesheet" href="../assets/codigo.css">
+        <script defer src="../assets/codigo.js"></script>
+
+      Se a página tiver CSS próprio num <style>, ligue este arquivo ANTES dele,
+      assim as regras da própria página continuam podendo sobrescrever daqui.
+
+   2. Marque o que é código com a classe "codigo". Duas formas:
+
+      Bloco com cabeçalho (janela de editor):
+
+        <div class="tpl codigo">
+          <div class="tpl-head"><h4>lib/main.dart</h4></div>
+          <pre>void main() {}</pre>
+        </div>
+
+      Trecho solto, sem cabeçalho:
+
+        <pre class="codigo">int idade = 32;</pre>
+
+   3. Dentro do <pre>, escreva o código normalmente, mas escape os sinais de
+      maior e menor como &lt; e &gt; (senão o navegador tenta ler List<String>
+      como uma tag HTML e o bloco quebra).
+
+   ---------------------------------------------------------------------------
+   POR QUE A CLASSE "codigo" É OBRIGATÓRIA
+
+   De propósito: sem ela, qualquer <pre> da página seria colorido. Num texto em
+   português isso faria bagunça, porque "final", "do", "as" e "in" também são
+   palavras-chave do Dart, todo número seria pintado e toda palavra que começa
+   com maiúscula viraria nome de classe. Marcando só o que é código de verdade,
+   uma mesma página pode ter um modelo de texto para o aluno preencher e um
+   exemplo de Dart, cada um com a aparência certa.
+   --------------------------------------------------------------------------- */
+
+:root{
+  --cod-fundo:#1e1e1e; --cod-barra:#252526; --cod-borda:#2d2d30;
+  --cod-barra-linha:#333336; --cod-texto:#d4d4d4; --cod-barra-texto:#cfcfcf;
+  /* usa a fonte monoespaçada da página, se ela definir uma */
+  --cod-mono:var(--mono,"SF Mono",Consolas,"Liberation Mono",Menlo,monospace);
+}
+
+/* ---------- Moldura: janela de editor ---------- */
+.tpl.codigo{
+  border:1px solid var(--cod-borda); border-radius:10px; margin:20px 0;
+  overflow:hidden; box-shadow:0 1px 2px rgba(16,24,40,.1),0 6px 18px rgba(16,24,40,.06);
+}
+.tpl.codigo .tpl-head{
+  display:flex; align-items:center; gap:10px; padding:9px 14px;
+  background:var(--cod-barra); border-bottom:1px solid var(--cod-barra-linha);
+}
+.tpl.codigo .tpl-head h4{
+  margin:0; font-family:var(--cod-mono); font-size:13px; font-weight:600;
+  color:var(--cod-barra-texto);
+}
+.tpl.codigo .tpl-head .bg{
+  margin-left:auto; background:rgba(255,255,255,.07); border-color:rgba(255,255,255,.15);
+}
+.tpl.codigo .tpl-head .bg-i{color:#9cdcfe}
+.tpl.codigo .tpl-head .bg-h{color:#b5cea8}
+.tpl.codigo .tpl-head .bg-t{color:#dcdcaa}
+.tpl.codigo .tpl-head .bg-a{color:#c586c0}
+
+/* ---------- O código ---------- */
+.tpl.codigo pre, pre.codigo{
+  margin:0; padding:16px 18px; background:var(--cod-fundo); color:var(--cod-texto);
+  font-family:var(--cod-mono); font-size:13.2px; line-height:1.65;
+  white-space:pre-wrap; overflow-x:auto;
+}
+/* trecho solto: menor e com cantos próprios, já que não tem cabeçalho */
+pre.codigo{border-radius:6px; padding:9px 12px; font-size:13px}
+
+/* ---------- Cores de sintaxe (paleta Dark+ do VS Code) ----------
+   As classes c-* são escritas pelo codigo.js. */
+.c-com{color:#6a9955; font-style:italic}  /* comentários */
+.c-str{color:#ce9178}                     /* textos entre aspas */
+.c-int{color:#9cdcfe}                     /* $variavel dentro do texto */
+.c-num{color:#b5cea8}                     /* números */
+.c-kw{color:#c586c0}                      /* if, for, return... */
+.c-dec{color:#569cd6}                     /* class, void, var, final, true... */
+.c-tipo{color:#4ec9b0}                    /* String, int, Widget... */
+.c-fn{color:#dcdcaa}                      /* nomes de função */
+.c-ano{color:#dcdcaa}                     /* @override */
+.c-prop{color:#9cdcfe}                    /* nomes de parâmetro */
+
+/* ---------- Impressão ----------
+   No papel o código vira claro: fundo escuro gasta tinta e vários navegadores
+   descartam fundos ao imprimir, o que deixaria texto claro em papel branco. */
+@media print{
+  .tpl.codigo{border-color:#dfe4ea; box-shadow:none}
+  .tpl.codigo .tpl-head{background:#f6f8fa; border-bottom-color:#dfe4ea}
+  .tpl.codigo .tpl-head h4{color:#1a1f26}
+  .tpl.codigo .tpl-head .bg{background:#fff; border-color:#dfe4ea; color:#455060}
+  .tpl.codigo pre, pre.codigo{background:#fff; color:#1a1f26; border:1px solid #dfe4ea}
+  .c-com{color:#2f6b34}
+  .c-str{color:#9a3412}
+  .c-int,.c-prop{color:#13507f}
+  .c-num{color:#2b6a2b}
+  .c-kw{color:#8a2a86}
+  .c-dec{color:#11487f}
+  .c-tipo{color:#0d6357}
+  .c-fn,.c-ano{color:#7a6400}
+}
