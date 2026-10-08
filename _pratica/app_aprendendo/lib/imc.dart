@@ -70,8 +70,6 @@ class _TelaImc extends State<TelaImc>{
                 fontFamily: "Arial",
               ),
             ),
-
-            Image(image: AssetImage("$imagemImc"))  
           ],
         )
       ),

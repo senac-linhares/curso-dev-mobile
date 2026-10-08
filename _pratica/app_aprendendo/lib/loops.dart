@@ -16,18 +16,18 @@ class _TelaLoop extends State<TelaLoop> {
 
     if (numeroDigitado == null) {
       setState(() {
-        resultado = ["Digite um número valido"];        
+        resultado = ["Digite um número valido"];
       });
     } else if (numeroDigitado < 0 || numeroDigitado > 10) {
       setState(() {
         resultado = ["Digite um número entre 0 e 10"];
       });
     }
-    
-    List<String>lista = [];
 
-    for (int i = 0; i < 10; i++) {
-      lista.add("$numeroDigitado * i");
+    List<String> lista = [];
+
+    for (int i = 0; i <= 10; i++) {
+      lista.add("$numeroDigitado x $i = ${numeroDigitado! * i}");
     }
 
     setState(() {
@@ -50,16 +50,23 @@ class _TelaLoop extends State<TelaLoop> {
             ),
 
             ElevatedButton(onPressed: calcular, child: Text("Calcular")),
-            
-            Expanded(child: ListView.builder(
-              itemCount: resultado.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Text(resultado[index]);
-              },
+
+            Expanded(
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(30),
+                  child: ListView.builder(
+                    itemCount: resultado.length,
+                    itemBuilder: (context, index) {
+                      return Text(resultado[index]);
+                    },
+                  ),
+                ),
+              ),
             ),
+          ],
         ),
-      ])
-      )
+      ),
     );
   }
 }

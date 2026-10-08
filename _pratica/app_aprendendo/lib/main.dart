@@ -1,4 +1,3 @@
-import 'package:app_aprendendo/imc.dart';
 import 'package:app_aprendendo/loops.dart';
 import 'package:flutter/material.dart';
 
