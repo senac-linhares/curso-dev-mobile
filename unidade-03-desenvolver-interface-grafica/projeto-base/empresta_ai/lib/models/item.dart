@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
-
-/// Camada Model: só dados, nenhuma tela.
+/// Camada Model: só dados, em Dart puro.
+/// Não importa nada do Flutter — como o item aparece na tela
+/// (ícone, cor) é decisão da View.
 class Item {
   final String id;
   final String nome;
   final String categoria;
   final String dono;
   final String apartamento;
-  final IconData icone;
   bool disponivel;
 
   Item({
@@ -16,7 +15,6 @@ class Item {
     required this.categoria,
     required this.dono,
     required this.apartamento,
-    required this.icone,
     this.disponivel = true,
   });
 }

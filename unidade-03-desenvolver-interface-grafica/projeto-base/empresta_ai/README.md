@@ -11,19 +11,24 @@ lib/
 ├── main.dart                 ponto de partida: runApp(...)
 ├── app.dart                  MaterialApp, tema e primeira tela
 ├── tema/tema.dart            guia de estilo em código: cores, espaçamentos, botões
-├── models/item.dart          MODEL — os dados de um item
+├── models/item.dart          MODEL — os dados de um item, em Dart puro
 ├── dados/itens_exemplo.dart  itens de mentira para preencher as telas
-├── controllers/
-│   └── itens_controller.dart CONTROLLER — busca, pedir, devolver
+├── controllers/              CONTROLLER — regras e estado, um por assunto
+│   ├── itens_controller.dart busca, pedir, devolver
+│   └── sessao_controller.dart entrar, sair e regras de validação
 ├── views/                    VIEW — uma tela por arquivo
-│   ├── entrada_view.dart     tela de entrada (formulário + validação)
+│   ├── entrada_view.dart     tela de entrada (formulário; usa as regras da sessão)
 │   ├── inicio_view.dart      navegação inferior com 3 abas
 │   ├── itens_view.dart       lista de itens com busca
 │   ├── item_detalhe_view.dart detalhe + confirmação + SnackBar
 │   ├── pedidos_view.dart     itens que o morador pegou
 │   └── perfil_view.dart      perfil e menu secundário
-└── widgets/item_card.dart    componente reutilizável (com Semantics)
-test/widget_test.dart         testes de tela e de acessibilidade
+└── widgets/                  VIEW — pedaços reutilizáveis de tela
+    ├── item_card.dart        cartão de item (com Semantics)
+    └── icone_categoria.dart  qual ícone representa cada categoria
+test/
+├── controllers_test.dart     testes das regras, sem abrir tela
+└── widget_test.dart          testes de tela e de acessibilidade
 ```
 
 ## Como rodar

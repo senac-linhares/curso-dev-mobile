@@ -21,7 +21,8 @@ void main() {
   });
 
   // Aula 15: o Flutter verifica alvos de toque e contraste automaticamente.
-  testWidgets('Tela de entrada segue as diretrizes de acessibilidade', (tester) async {
+  testWidgets('Tela de entrada segue as diretrizes de acessibilidade',
+      (tester) async {
     final handle = tester.ensureSemantics();
     await tester.pumpWidget(const EmprestaAiApp());
     await expectLater(tester, meetsGuideline(androidTapTargetGuideline));

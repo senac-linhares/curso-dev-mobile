@@ -508,7 +508,7 @@ Text('Olá, $nome!');           // um widget</pre></div>
 
 <p><a class="btn btn-p" href="https://github.com/senac-linhares/curso-dev-mobile/tree/main/unidade-03-desenvolver-interface-grafica/projeto-base/empresta_ai" target="_blank" rel="noopener">Abrir o projeto-base no GitHub</a></p>
 
-<p>Ele serve para <b>consultar</b>: quando a aula falar de validação de formulário, abra <code>entrada_view.dart</code> e veja como foi feito; quando falar de MVC, compare as pastas <code>models</code>, <code>views</code> e <code>controllers</code>. O aplicativo da sua squad você constrói do zero, com os requisitos e wireframes do seu projeto.</p>
+<p>Ele serve para <b>consultar</b>: quando a aula falar de validação de formulário, abra <code>entrada_view.dart</code> (a tela) e <code>sessao_controller.dart</code> (as regras) e veja como foi feito; quando falar de MVC, compare as pastas <code>models</code>, <code>views</code> e <code>controllers</code>. O aplicativo da sua squad você constrói do zero, com os requisitos e wireframes do seu projeto.</p>
 
 <div class="codigo"><div class="codigo-head"><span>terminal — rodar o projeto-base</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="sh">cd C:\projetos\empresta_ai
 flutter create .
@@ -941,9 +941,10 @@ SingleChildScrollView(
 ├── main.dart          só chama runApp()
 ├── app.dart           MaterialApp, tema, primeira tela
 ├── models/            MODEL: classes de dados (item.dart)
-├── controllers/       CONTROLLER: regras e estado (itens_controller.dart)
+├── controllers/       CONTROLLER: regras e estado, um por assunto
+│                      (itens_controller.dart, sessao_controller.dart)
 ├── views/             VIEW: uma tela por arquivo (itens_view.dart)
-├── widgets/           pedaços reutilizáveis de tela (item_card.dart)
+├── widgets/           VIEW: pedaços reutilizáveis de tela (item_card.dart)
 └── tema/              cores, fontes e espaçamentos (tema.dart)</pre></div>
 
 <p>O <b>model</b> é uma classe Dart comum, sem nada de tela:</p>
@@ -960,6 +961,13 @@ SingleChildScrollView(
     this.disponivel = true,
   });
 }</pre></div>
+
+<div class="box atencao"><span class="rot">Atenção: três erros comuns de MVC</span>
+<ul>
+<li><b>Model que importa o Flutter.</b> Se <code>item.dart</code> tem <code>import 'package:flutter/material.dart'</code> para guardar um ícone ou uma cor, a camada de dados passou a depender da tela. Guarde só o dado (a categoria) e deixe a View decidir o ícone. No projeto-base, isso fica em <code>widgets/icone_categoria.dart</code>.</li>
+<li><b>Regra de negócio dentro da tela.</b> "Apartamento tem o formato A-302" é regra do sistema, não da tela. Ela mora no controller, e a View só usa: <code>validator: sessao.validarApartamento</code>. Assim a regra pode ser testada sem abrir tela nenhuma (veja <code>test/controllers_test.dart</code>).</li>
+<li><b>Um controller que faz tudo.</b> Itens e login são assuntos diferentes, por isso o projeto-base tem <code>ItensController</code> e <code>SessaoController</code>.</li>
+</ul></div>
 
 <p>O <b>controller</b> herda de <code>ChangeNotifier</code>, uma classe do próprio Flutter que sabe avisar quem estiver ouvindo:</p>
 <div class="codigo"><div class="codigo-head"><span>lib/controllers/itens_controller.dart (resumido)</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">import 'package:flutter/foundation.dart';
@@ -1430,7 +1438,7 @@ final confirmou = await Navigator.of(context).push&lt;bool&gt;(
 
 <h3>11.3 Navegação inferior com abas</h3>
 <p>Para as seções principais, a <code>NavigationBar</code> (Aula 5) troca o conteúdo do corpo sem empilhar telas. A aba selecionada é estado local, então usamos <code>StatefulWidget</code> e <code>setState</code>:</p>
-<div class="codigo"><div class="codigo-head"><span>lib/views/inicio_view.dart (versão simplificada; no projeto-base as abas recebem o controller)</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">class InicioView extends StatefulWidget {
+<div class="codigo"><div class="codigo-head"><span>lib/views/inicio_view.dart (versão simplificada; no projeto-base as abas recebem os controllers)</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">class InicioView extends StatefulWidget {
   const InicioView({super.key});
 
   @override
@@ -1595,6 +1603,8 @@ class _CadastroItemViewState extends State&lt;CadastroItemView&gt; {
     <div class="rodape-fone">SnackBar confirmando a ação, sem interromper o usuário.</div>
   </figure>
 </div>
+
+<div class="box dica"><span class="rot">E o MVC?</span><p>No exemplo acima, as regras ficaram dentro do <code>validator</code> só para o código caber num bloco. No aplicativo da squad, faça como no projeto-base: as regras vão para um controller (<code>sessao_controller.dart</code>), que devolve a mensagem de erro ou <code>null</code>, e o campo só aponta para ela: <code>validator: sessao.validarApartamento</code>.</p></div>
 
 <h3>12.3 Feedback ao usuário</h3>
 <div class="tab-wrap">

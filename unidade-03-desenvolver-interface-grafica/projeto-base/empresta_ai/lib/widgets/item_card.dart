@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/item.dart';
+import 'icone_categoria.dart';
 
 /// Componente reutilizável: um cartão de item (Aula 9).
 /// Semantics junta tudo em uma frase só para o leitor de tela (Aula 15).
@@ -30,22 +31,25 @@ class ItemCard extends StatelessWidget {
                 CircleAvatar(
                   radius: 26,
                   backgroundColor: cores.primaryContainer,
-                  child: Icon(item.icone, color: cores.onPrimaryContainer),
+                  child: Icon(iconeDaCategoria(item.categoria),
+                      color: cores.onPrimaryContainer),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(item.nome, style: Theme.of(context).textTheme.titleMedium),
+                      Text(item.nome,
+                          style: Theme.of(context).textTheme.titleMedium),
                       Text('${item.dono} · ${item.apartamento}'),
                     ],
                   ),
                 ),
                 Chip(
                   label: Text(situacao),
-                  backgroundColor:
-                      item.disponivel ? cores.secondaryContainer : cores.errorContainer,
+                  backgroundColor: item.disponivel
+                      ? cores.secondaryContainer
+                      : cores.errorContainer,
                 ),
               ],
             ),

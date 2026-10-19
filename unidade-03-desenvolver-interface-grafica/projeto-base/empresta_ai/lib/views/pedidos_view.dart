@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../controllers/itens_controller.dart';
 import '../tema/tema.dart';
+import '../widgets/icone_categoria.dart';
 
 /// Itens que o morador pegou emprestado.
 class PedidosView extends StatelessWidget {
@@ -29,11 +30,12 @@ class PedidosView extends StatelessWidget {
         return ListView(
           padding: const EdgeInsets.all(TemaEmprestaAi.espacoM),
           children: [
-            Text('Meus pedidos', style: Theme.of(context).textTheme.headlineSmall),
+            Text('Meus pedidos',
+                style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: TemaEmprestaAi.espacoM),
             for (final item in pedidos)
               ListTile(
-                leading: Icon(item.icone),
+                leading: Icon(iconeDaCategoria(item.categoria)),
                 title: Text(item.nome),
                 subtitle: Text('Com você · devolver para ${item.dono}'),
                 trailing: TextButton(

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-import '../controllers/itens_controller.dart';
+import '../controllers/sessao_controller.dart';
 import '../tema/tema.dart';
 
 /// Dados do morador e menu secundário (Ajuda, Regras).
 class PerfilView extends StatelessWidget {
-  const PerfilView({super.key, required this.controller});
+  const PerfilView({super.key, required this.sessao});
 
-  final ItensController controller;
+  final SessaoController sessao;
 
   @override
   Widget build(BuildContext context) {
     final textos = Theme.of(context).textTheme;
-    final apartamento = controller.apartamentoLogado ?? '-';
+    final apartamento = sessao.apartamento ?? '-';
     return ListView(
       padding: const EdgeInsets.all(TemaEmprestaAi.espacoM),
       children: [

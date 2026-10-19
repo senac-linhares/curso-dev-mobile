@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import '../controllers/itens_controller.dart';
 import '../models/item.dart';
 import '../tema/tema.dart';
+import '../widgets/icone_categoria.dart';
 
 /// Detalhe do item com ação principal e feedback ao usuário (Aula 12).
 class ItemDetalheView extends StatelessWidget {
-  const ItemDetalheView({super.key, required this.item, required this.controller});
+  const ItemDetalheView(
+      {super.key, required this.item, required this.controller});
 
   final Item item;
   final ItensController controller;
@@ -63,12 +65,14 @@ class ItemDetalheView extends StatelessWidget {
                   color: cores.primaryContainer,
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: Icon(item.icone, size: 80, color: cores.onPrimaryContainer),
+                child: Icon(iconeDaCategoria(item.categoria),
+                    size: 80, color: cores.onPrimaryContainer),
               ),
               const SizedBox(height: TemaEmprestaAi.espacoG),
               Text(item.nome, style: textos.headlineSmall),
               const SizedBox(height: TemaEmprestaAi.espacoP),
-              Text('Dono: ${item.dono} · ${item.apartamento}', style: textos.bodyLarge),
+              Text('Dono: ${item.dono} · ${item.apartamento}',
+                  style: textos.bodyLarge),
               const SizedBox(height: TemaEmprestaAi.espacoP),
               Text(
                 item.disponivel ? 'Disponível agora' : 'Emprestado no momento',

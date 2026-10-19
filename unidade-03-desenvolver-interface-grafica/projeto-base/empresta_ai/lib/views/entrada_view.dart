@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../controllers/itens_controller.dart';
+import '../controllers/sessao_controller.dart';
 import '../tema/tema.dart';
 import 'inicio_view.dart';
 
-/// Tela de entrada: formulário com validação e teclado adequado (Aula 12).
+/// Tela de entrada: formulário com teclado adequado (Aula 12).
+/// As regras de validação moram no SessaoController; a tela só mostra o erro.
 class EntradaView extends StatefulWidget {
-  const EntradaView({super.key, required this.controller});
+  const EntradaView({super.key, required this.sessao, required this.itens});
 
-  final ItensController controller;
+  final SessaoController sessao;
+  final ItensController itens;
 
   @override
   State<EntradaView> createState() => _EntradaViewState();
@@ -29,10 +32,10 @@ class _EntradaViewState extends State<EntradaView> {
 
   void _entrar() {
     if (!_formKey.currentState!.validate()) return;
-    widget.controller.entrar(_apartamento.text);
+    if (!widget.sessao.entrar(_apartamento.text, _senha.text)) return;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (_) => InicioView(controller: widget.controller),
+        builder: (_) => InicioView(sessao: widget.sessao, itens: widget.itens),
       ),
     );
   }
@@ -53,7 +56,8 @@ class _EntradaViewState extends State<EntradaView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Icon(Icons.volunteer_activism, size: 72, color: cores.primary),
+                  Icon(Icons.volunteer_activism,
+                      size: 72, color: cores.primary),
                   const SizedBox(height: TemaEmprestaAi.espacoM),
                   Text(
                     'Empresta Aí',
@@ -79,15 +83,7 @@ class _EntradaViewState extends State<EntradaView> {
                       hintText: 'Ex.: A-302',
                       prefixIcon: Icon(Icons.apartment),
                     ),
-                    validator: (valor) {
-                      if (valor == null || valor.trim().isEmpty) {
-                        return 'Informe seu bloco e apartamento.';
-                      }
-                      if (!RegExp(r'^[A-Za-z]-?\d{3}$').hasMatch(valor.trim())) {
-                        return 'Use o formato bloco-número, como A-302.';
-                      }
-                      return null;
-                    },
+                    validator: widget.sessao.validarApartamento,
                   ),
                   const SizedBox(height: TemaEmprestaAi.espacoM),
                   TextFormField(
@@ -100,17 +96,16 @@ class _EntradaViewState extends State<EntradaView> {
                       labelText: 'Senha (4 números)',
                       prefixIcon: const Icon(Icons.lock),
                       suffixIcon: IconButton(
-                        tooltip: _senhaVisivel ? 'Esconder senha' : 'Mostrar senha',
-                        icon: Icon(_senhaVisivel ? Icons.visibility_off : Icons.visibility),
-                        onPressed: () => setState(() => _senhaVisivel = !_senhaVisivel),
+                        tooltip:
+                            _senhaVisivel ? 'Esconder senha' : 'Mostrar senha',
+                        icon: Icon(_senhaVisivel
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        onPressed: () =>
+                            setState(() => _senhaVisivel = !_senhaVisivel),
                       ),
                     ),
-                    validator: (valor) {
-                      if (valor == null || valor.length != 4) {
-                        return 'A senha tem exatamente 4 números.';
-                      }
-                      return null;
-                    },
+                    validator: widget.sessao.validarSenha,
                   ),
                   const SizedBox(height: TemaEmprestaAi.espacoG),
                   FilledButton(

@@ -34,7 +34,8 @@ class ItensView extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: TemaEmprestaAi.espacoM),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: TemaEmprestaAi.espacoM),
               child: TextField(
                 onChanged: controller.buscar,
                 textInputAction: TextInputAction.search,
@@ -47,16 +48,20 @@ class ItensView extends StatelessWidget {
             const SizedBox(height: TemaEmprestaAi.espacoP),
             Expanded(
               child: itens.isEmpty
-                  ? const Center(child: Text('Nenhum item encontrado. Tente outra palavra.'))
+                  ? const Center(
+                      child:
+                          Text('Nenhum item encontrado. Tente outra palavra.'))
                   : ListView.separated(
                       padding: const EdgeInsets.all(TemaEmprestaAi.espacoM),
                       itemCount: itens.length,
-                      separatorBuilder: (_, __) => const SizedBox(height: TemaEmprestaAi.espacoP),
+                      separatorBuilder: (_, __) =>
+                          const SizedBox(height: TemaEmprestaAi.espacoP),
                       itemBuilder: (context, i) => ItemCard(
                         item: itens[i],
                         aoTocar: () => Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (_) => ItemDetalheView(item: itens[i], controller: controller),
+                            builder: (_) => ItemDetalheView(
+                                item: itens[i], controller: controller),
                           ),
                         ),
                       ),

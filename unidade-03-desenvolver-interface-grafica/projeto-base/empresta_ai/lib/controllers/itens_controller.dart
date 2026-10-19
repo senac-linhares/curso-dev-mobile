@@ -3,13 +3,12 @@ import 'package:flutter/foundation.dart';
 import '../dados/itens_exemplo.dart';
 import '../models/item.dart';
 
-/// Camada Controller: recebe as ações da tela e altera o Model.
+/// Camada Controller dos itens: busca, pedir e devolver.
 /// Quando algo muda, chama notifyListeners() e as telas se redesenham.
 class ItensController extends ChangeNotifier {
   final List<Item> _itens = itensDeExemplo();
   final List<Item> _meusPedidos = [];
   String _busca = '';
-  String? apartamentoLogado;
 
   List<Item> get itens {
     if (_busca.isEmpty) return List.unmodifiable(_itens);
@@ -25,11 +24,6 @@ class ItensController extends ChangeNotifier {
 
   void buscar(String texto) {
     _busca = texto.trim();
-    notifyListeners();
-  }
-
-  void entrar(String apartamento) {
-    apartamentoLogado = apartamento.toUpperCase();
     notifyListeners();
   }
 

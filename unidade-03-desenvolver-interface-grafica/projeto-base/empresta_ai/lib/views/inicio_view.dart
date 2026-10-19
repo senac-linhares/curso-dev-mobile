@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../controllers/itens_controller.dart';
+import '../controllers/sessao_controller.dart';
 import 'itens_view.dart';
 import 'pedidos_view.dart';
 import 'perfil_view.dart';
 
 /// Estrutura principal com navegação inferior (tab bar) — Aula 11.
 class InicioView extends StatefulWidget {
-  const InicioView({super.key, required this.controller});
+  const InicioView({super.key, required this.sessao, required this.itens});
 
-  final ItensController controller;
+  final SessaoController sessao;
+  final ItensController itens;
 
   @override
   State<InicioView> createState() => _InicioViewState();
@@ -21,9 +23,9 @@ class _InicioViewState extends State<InicioView> {
   @override
   Widget build(BuildContext context) {
     final abas = [
-      ItensView(controller: widget.controller),
-      PedidosView(controller: widget.controller),
-      PerfilView(controller: widget.controller),
+      ItensView(controller: widget.itens),
+      PedidosView(controller: widget.itens),
+      PerfilView(sessao: widget.sessao),
     ];
 
     return Scaffold(
