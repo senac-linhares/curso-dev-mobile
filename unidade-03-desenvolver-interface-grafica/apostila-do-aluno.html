@@ -1,0 +1,2388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UC3 · Apostila do Aluno | Desenvolvedor Mobile – Senac</title>
+<meta name="description" content="Apostila do aluno da Unidade Curricular 3 do curso Desenvolvedor Mobile (Senac, 60h): desenvolver interface gráfica para dispositivos móveis com Flutter.">
+<style>
+:root{
+  --azul:#00447c; --azul-esc:#002f56; --azul-claro:#e8f1f9;
+  --laranja:#e8730c; --laranja-claro:#fdf0e3;
+  --verde:#1d7a52; --verde-claro:#e6f4ee;
+  --roxo:#6b3fa0; --roxo-claro:#f1ebfa;
+  --vermelho:#b3261e; --vermelho-claro:#fdecea;
+  --tinta:#1a1f26; --tinta2:#455060; --linha:#dfe4ea; --fundo:#ffffff; --fundo2:#f6f8fa;
+  --raio:10px; --sombra:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.06);
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:"SF Mono",Consolas,"Liberation Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{counter-reset:fig;margin:0;background:var(--fundo);color:var(--tinta);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%}
+
+/* ---------- Layout ---------- */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--linha)}
+.topbar-in{max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px}
+.topbar .marca{font-weight:700;color:var(--azul);font-size:15px;letter-spacing:.2px}
+.topbar .marca span{color:var(--laranja)}
+.topbar .uc{font-size:13px;color:var(--tinta2);border-left:1px solid var(--linha);padding-left:14px}
+.topbar .acoes{margin-left:auto;display:flex;gap:8px}
+.btn{font:inherit;font-size:13px;font-weight:600;padding:7px 13px;border-radius:8px;border:1px solid var(--linha);background:#fff;color:var(--tinta2);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--azul);color:var(--azul)}
+.btn-p{background:var(--azul);border-color:var(--azul);color:#fff}
+.btn-p:hover{background:var(--azul-esc);color:#fff}
+.progresso{height:3px;background:var(--laranja);width:0;position:fixed;top:0;left:0;z-index:60;transition:width .1s}
+
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:266px 1fr;gap:44px;align-items:start}
+nav.sumario{position:sticky;top:64px;max-height:calc(100vh - 84px);overflow-y:auto;padding:26px 0 40px;font-size:14px}
+nav.sumario h2{font-size:11px;text-transform:uppercase;letter-spacing:.9px;color:var(--tinta2);margin:0 0 10px}
+nav.sumario ol{list-style:none;margin:0 0 20px;padding:0}
+nav.sumario a{display:block;padding:5px 10px;border-left:2px solid var(--linha);color:var(--tinta2);text-decoration:none;line-height:1.35}
+nav.sumario a:hover{color:var(--azul);border-color:var(--azul);background:var(--azul-claro)}
+nav.sumario a.ativo{color:var(--azul);font-weight:600;border-color:var(--azul);background:var(--azul-claro)}
+nav.sumario .sub a{padding-left:22px;font-size:13px}
+main{padding:26px 0 90px;min-width:0;max-width:860px}
+
+/* ---------- Tipografia ---------- */
+h1{font-size:34px;line-height:1.2;margin:0 0 12px;letter-spacing:-.4px}
+h2{font-size:26px;line-height:1.25;margin:56px 0 14px;padding-top:12px;letter-spacing:-.3px;border-top:3px solid var(--azul)}
+h2 .num{display:block;font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--laranja);margin-bottom:4px}
+h3{font-size:20px;margin:34px 0 8px;color:var(--azul-esc)}
+h4{font-size:16px;margin:22px 0 6px;color:var(--tinta)}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 16px;padding-left:22px}
+li{margin-bottom:7px}
+strong{font-weight:650}
+a{color:var(--azul)}
+code{font-family:var(--mono);font-size:.86em;background:var(--fundo2);border:1px solid var(--linha);border-radius:5px;padding:1px 5px}
+.lede{font-size:19px;color:var(--tinta2);line-height:1.6}
+hr{border:0;border-top:1px solid var(--linha);margin:34px 0}
+
+/* ---------- Capa ---------- */
+.capa{background:linear-gradient(135deg,var(--azul-esc),var(--azul) 55%,#0b6ab0);color:#fff;border-radius:14px;padding:40px 38px;margin:20px 0 8px;box-shadow:var(--sombra)}
+.capa .tag{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:4px 11px;border-radius:99px;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase}
+.capa h1{color:#fff;margin:14px 0 10px;font-size:37px}
+.capa p{color:rgba(255,255,255,.9);margin:0;max-width:60ch}
+.capa .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.capa .meta div{background:rgba(255,255,255,.12);border-radius:8px;padding:9px 14px;font-size:13px}
+.capa .meta b{display:block;font-size:17px;font-weight:700}
+
+/* ---------- Cartões e caixas ---------- */
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--fundo);border:1px solid var(--linha);border-radius:var(--raio);padding:18px 20px}
+.card h4{margin-top:0}
+.card p:last-child,.card ul:last-child,.card ol:last-child{margin-bottom:0}
+
+.box{border-radius:var(--raio);padding:16px 18px 16px 20px;margin:20px 0;border-left:4px solid;font-size:16px}
+.box .rot{display:block;font-size:11px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;margin-bottom:5px}
+.box p:last-child,.box ul:last-child,.box ol:last-child{margin-bottom:0}
+.dica{background:var(--azul-claro);border-color:var(--azul)} .dica .rot{color:var(--azul)}
+.atencao{background:var(--vermelho-claro);border-color:var(--vermelho)} .atencao .rot{color:var(--vermelho)}
+.pratica{background:var(--verde-claro);border-color:var(--verde)} .pratica .rot{color:var(--verde)}
+.docente{background:var(--roxo-claro);border-color:var(--roxo)} .docente .rot{color:var(--roxo)}
+.mercado{background:var(--laranja-claro);border-color:var(--laranja)} .mercado .rot{color:var(--laranja)}
+
+/* ---------- Comparativo certo x errado ---------- */
+.comparativo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
+.comparativo .certo,.comparativo .errado{border-radius:var(--raio);padding:15px 18px;border:1.5px solid}
+.comparativo .certo{background:var(--verde-claro);border-color:#bde0cf}
+.comparativo .errado{background:var(--vermelho-claro);border-color:#f3c6c2}
+.comparativo h4{margin:0 0 9px;font-size:12.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.comparativo h4::before{content:"";width:9px;height:9px;border-radius:99px;flex:none}
+.comparativo .certo h4{color:var(--verde)} .comparativo .certo h4::before{background:var(--verde)}
+.comparativo .errado h4{color:var(--vermelho)} .comparativo .errado h4::before{background:var(--vermelho)}
+.comparativo ul{margin:0;padding-left:19px;font-size:14.5px}
+.comparativo li{margin-bottom:6px}
+.comparativo p{font-size:14.5px}
+.comparativo p:last-child{margin-bottom:0}
+
+/* ---------- Figuras fotográficas reais ---------- */
+figure.foto img{display:block;margin:0 auto;max-width:100%;border-radius:6px;border:1px solid var(--linha);background:#fff}
+.creditos{display:block;margin-top:6px;opacity:.72;font-size:12px;font-style:italic}
+
+/* ---------- Tabelas ---------- */
+.tab-wrap{overflow-x:auto;margin:18px 0}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--linha);vertical-align:top}
+thead th{background:var(--fundo2);font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--tinta2);border-bottom:2px solid var(--linha)}
+tbody tr:hover{background:var(--fundo2)}
+td code{white-space:nowrap}
+
+/* ---------- Badges ---------- */
+.bg{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:.4px;vertical-align:middle}
+.bg-i{background:var(--azul-claro);color:var(--azul);border:1px solid #bcd8ee}
+.bg-h{background:var(--verde-claro);color:var(--verde);border:1px solid #bde0cf}
+.bg-a{background:var(--roxo-claro);color:var(--roxo);border:1px solid #d8c9ef}
+.bg-t{background:var(--laranja-claro);color:var(--laranja);border:1px solid #f5d5b0}
+
+/* ---------- Figuras ---------- */
+figure{margin:24px 0;padding:18px;background:var(--fundo2);border:1px solid var(--linha);border-radius:var(--raio)}
+figure svg{display:block;margin:0 auto;height:auto}
+figcaption{font-size:13.5px;color:var(--tinta2);margin-top:12px;text-align:center;line-height:1.5;counter-increment:fig}
+figcaption::before{content:"Figura " counter(fig) ". ";font-weight:700;color:var(--tinta)}
+figcaption b{color:var(--tinta)}
+
+/* ---------- Templates ---------- */
+.tpl{border:1px solid var(--linha);border-radius:var(--raio);margin:20px 0;overflow:hidden}
+.tpl-head{display:flex;align-items:center;gap:10px;background:var(--fundo2);padding:10px 14px;border-bottom:1px solid var(--linha)}
+.tpl-head h4{margin:0;font-size:14px}
+.tpl-head .btn{margin-left:auto;padding:5px 10px;font-size:12px}
+.tpl pre{margin:0;padding:16px 18px;font-family:var(--mono);font-size:13.2px;line-height:1.6;white-space:pre-wrap;overflow-x:auto;background:#fff;color:var(--tinta)}
+
+/* ---------- Aulas ---------- */
+.aula{border:1px solid var(--linha);border-left:5px solid var(--azul);border-radius:var(--raio);padding:20px 22px;margin:18px 0;background:#fff}
+.aula-top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.aula-n{background:var(--azul);color:#fff;font-weight:700;font-size:12px;letter-spacing:.6px;padding:3px 10px;border-radius:99px}
+.aula h3{margin:0;font-size:19px}
+.aula .ch{margin-left:auto;font-size:12px;color:var(--tinta2);font-weight:600}
+.aula dl{display:grid;grid-template-columns:132px 1fr;gap:2px 14px;margin:14px 0 0;font-size:15px}
+.aula dt{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--tinta2);padding-top:3px}
+.aula dd{margin:0 0 8px}
+.aula dd ul{margin:0;padding-left:18px}
+.aula dd li{margin-bottom:3px}
+
+/* ---------- Checklists ---------- */
+.check{list-style:none;padding:0}
+.check li{padding-left:28px;position:relative}
+.check li::before{content:"";position:absolute;left:0;top:4px;width:15px;height:15px;border:2px solid var(--azul);border-radius:4px}
+
+/* ---------- Passos ---------- */
+.passos{counter-reset:p;list-style:none;padding:0}
+.passos li{counter-increment:p;padding-left:42px;position:relative;margin-bottom:14px}
+.passos li::before{content:counter(p);position:absolute;left:0;top:0;width:28px;height:28px;background:var(--azul);color:#fff;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:700}
+
+
+/* ---------- Código (Dart, terminal, YAML) ---------- */
+.codigo{border-radius:var(--raio);margin:20px 0;overflow:hidden;border:1px solid #0f1a26;background:#0f1b2b}
+.codigo-head{display:flex;align-items:center;gap:10px;padding:8px 14px;background:#16263a;color:#b8c7d9;font-family:var(--mono);font-size:12.5px}
+.codigo-head .btn{margin-left:auto;padding:4px 10px;font-size:12px;background:transparent;color:#d6e2f0;border-color:#33475f}
+.codigo-head .btn:hover{border-color:#7cc4ff;color:#fff}
+.codigo pre{margin:0;padding:16px 18px;font-family:var(--mono);font-size:13.4px;line-height:1.6;color:#e6edf5;overflow-x:auto;white-space:pre;tab-size:2}
+.c-com{color:#8ea3b8;font-style:italic}.c-str{color:#a5e3a1}.c-kw{color:#ff9f6b}.c-tipo{color:#7cc4ff}.c-num{color:#f5c26b}.c-ann{color:#d4a6ff}
+
+/* ---------- Telas de celular (recriações ilustrativas) ---------- */
+.fones{display:flex;flex-wrap:wrap;gap:22px;justify-content:center;margin:22px 0}
+.fone-fig{margin:0;padding:0;background:none;border:0}
+.fone{width:226px;height:430px;border:9px solid #1a1f26;border-radius:30px;background:#fbfcfe;overflow:hidden;box-shadow:var(--sombra);font-size:12px;line-height:1.35;display:flex;flex-direction:column;margin:0 auto}
+.fone .status{flex:none;height:20px;display:flex;justify-content:space-between;align-items:center;padding:0 14px;font-size:10px;font-weight:700;color:var(--tinta)}
+.fone .appbar{flex:none;display:flex;align-items:center;gap:10px;padding:8px 12px;font-size:14px;font-weight:600}
+.fone .tela{flex:1;padding:10px 12px;overflow:hidden;display:flex;flex-direction:column;gap:8px}
+.fone .navbar{flex:none;display:flex;justify-content:space-around;padding:7px 0 9px;background:#eaf0f7;font-size:9.5px}
+.fone .navbar span{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--tinta2)}
+.fone .navbar i{font-style:normal;font-size:14px;padding:1px 14px;border-radius:99px}
+.fone .navbar .on{color:var(--tinta);font-weight:700}
+.fone .navbar .on i{background:#cfe1f5}
+.fone .rodape-fone{text-align:center;font-size:12.5px;color:var(--tinta2);margin-top:8px;max-width:226px}
+.f-titulo{font-size:16px;font-weight:700;color:var(--tinta)}
+.f-sub{color:var(--tinta2)}
+.f-btn{background:var(--azul);color:#fff;border-radius:99px;text-align:center;padding:10px;font-weight:600;font-size:12.5px}
+.f-btn.off{background:#dfe3e8;color:#8a94a1}
+.f-campo{border:1px solid #9aa4b1;border-radius:4px;padding:8px 10px;color:#6b7684;background:#fff}
+.f-campo.erro{border-color:var(--vermelho);border-width:2px}
+.f-erro{color:var(--vermelho);font-size:10.5px;margin-top:-5px}
+.f-card{border-radius:12px;background:#eef2f7;padding:8px;display:flex;gap:8px;align-items:center}
+.f-av{width:30px;height:30px;border-radius:50%;background:#d3e3f5;display:grid;place-items:center;flex:none;font-size:14px}
+.f-card b{display:block;font-size:11.5px}
+.f-card small{color:var(--tinta2);font-size:10px}
+.f-chip{margin-left:auto;font-size:9px;padding:2px 6px;border-radius:6px;background:#d6e8dc;flex:none}
+.f-chip.n{background:#f6d9d6}
+.f-snack{background:#2f3540;color:#fff;border-radius:6px;padding:9px 10px;font-size:11px;margin-top:auto}
+.f-hero{height:90px;border-radius:14px;background:#d3e3f5;display:grid;place-items:center;font-size:40px}
+.f-espaco{flex:1}
+
+/* ---------- Árvore de widgets ---------- */
+.arvore{font-family:var(--mono);font-size:13px;background:#fff;border:1px solid var(--linha);border-radius:var(--raio);padding:16px 18px;margin:20px 0;overflow-x:auto}
+.arvore ul{list-style:none;margin:0;padding-left:22px;border-left:2px dashed #c4d3e3}
+.arvore > ul{padding-left:0;border:0}
+.arvore li{margin:6px 0;position:relative}
+.arvore li span{display:inline-block;background:var(--azul-claro);border:1px solid #bcd8ee;color:var(--azul-esc);border-radius:6px;padding:2px 9px}
+.arvore li span.folha{background:var(--verde-claro);border-color:#bde0cf;color:var(--verde)}
+.arvore li em{font-style:normal;color:var(--tinta2);font-family:var(--sans);font-size:12.5px;margin-left:8px}
+
+/* ---------- Responsivo ---------- */
+@media (max-width:980px){
+  .wrap{grid-template-columns:1fr;gap:0}
+  nav.sumario{position:static;max-height:none;border-bottom:1px solid var(--linha);margin-bottom:10px}
+  .g3,.g4,.g2,.comparativo{grid-template-columns:1fr}
+  .capa{padding:28px 22px}.capa h1{font-size:28px}
+  h1{font-size:27px}h2{font-size:22px}
+  .aula dl{grid-template-columns:1fr}
+  .aula dt{margin-top:8px}
+  .topbar .uc{display:none}
+}
+@media print{
+  .codigo{-webkit-print-color-adjust:exact;print-color-adjust:exact;page-break-inside:avoid}
+  .codigo pre{white-space:pre-wrap}
+  .codigo-head .btn{display:none}
+  .fone{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .fones{page-break-inside:avoid}
+}
+
+/* ---------- Impressão ---------- */
+@media print{
+  nav.sumario,.topbar,.progresso,.tpl-head .btn{display:none!important}
+  body{font-size:11.5pt}
+  .wrap{display:block;max-width:none;padding:0}
+  main{max-width:none;padding:0}
+  .capa{background:#00447c!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  h2{page-break-after:avoid;margin-top:26px}
+  h3,h4{page-break-after:avoid}
+  p,li{orphans:3;widows:3}
+  figure,.aula,.box,.card,.tpl-head{page-break-inside:avoid}
+  tr{page-break-inside:avoid}
+  .capa{page-break-after:always}
+  .grid{display:block}
+  .grid .card{margin-bottom:10px}
+  a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<div class="progresso" id="prog"></div>
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="marca">Desenvolvedor <span>Mobile</span></div>
+    <div class="uc"><b>Apostila do Aluno</b> &middot; UC3 · Desenvolver interface gráfica para dispositivos móveis &middot; 60h</div>
+    <div class="acoes">
+      <button class="btn" onclick="window.print()">Imprimir / PDF</button>
+    </div>
+  </div>
+</div>
+<div class="wrap">
+<nav class="sumario" id="toc">
+  <h2>Sumário</h2>
+  <ol>
+    <li><a href="#ap">Como usar este material</a></li>
+    <li><a href="#uc">A UC3 em uma página</a></li>
+    <li><a href="#plano">Nossos 20 encontros</a></li>
+    <li><a href="#caso">O Empresta Aí ganha telas</a></li>
+    <li><a href="#base">O projeto-base em Flutter</a></li>
+  </ol>
+  <h2>Mobilização</h2>
+  <ol class="sub">
+    <li><a href="#a1">1. Sistemas mobile e requisitos</a></li>
+    <li><a href="#a2">2. Ambiente Flutter</a></li>
+    <li><a href="#a3">3. Git: branches e tags</a></li>
+  </ol>
+  <h2>Desenvolvimento</h2>
+  <ol class="sub">
+    <li><a href="#a4">4. Leiaute mobile</a></li>
+    <li><a href="#a5">5. Padrões de interação</a></li>
+    <li><a href="#a6">6. Camadas e MVC</a></li>
+    <li><a href="#a7">7. Híbrido, web e PWA</a></li>
+    <li><a href="#a8">8. Imagens otimizadas</a></li>
+    <li><a href="#a9">9. Telas e componentes</a></li>
+    <li><a href="#a10">10. Checkpoint 1</a></li>
+    <li><a href="#a11">11. Toque e navegação</a></li>
+    <li><a href="#a12">12. Feedback e teclado</a></li>
+    <li><a href="#a13">13. Conteúdo e tema</a></li>
+    <li><a href="#a14">14. Teste de usabilidade</a></li>
+    <li><a href="#a15">15. Acessibilidade</a></li>
+    <li><a href="#a16">16. Ajustes pós-teste</a></li>
+    <li><a href="#a17">17. Checkpoint 2</a></li>
+  </ol>
+  <h2>Síntese</h2>
+  <ol class="sub">
+    <li><a href="#a18">18. Manual de Interface</a></li>
+    <li><a href="#a19">19. Ensaio e APK</a></li>
+    <li><a href="#a20">20. Demonstração final</a></li>
+  </ol>
+  <h2>Apoio</h2>
+  <ol>
+    <li><a href="#cola">Cola de widgets</a></li>
+    <li><a href="#erros">Erros comuns e soluções</a></li>
+    <li><a href="#tpl">Modelos para copiar</a></li>
+    <li><a href="#aval">Evidências e avaliação</a></li>
+    <li><a href="#glo">Glossário</a></li>
+    <li><a href="#ref">Referências</a></li>
+  </ol>
+</nav>
+<main>
+
+<div class="capa">
+  <span class="tag">Apostila do Aluno &middot; Unidade Curricular 3</span>
+  <h1>Desenvolver interface gráfica para dispositivos móveis</h1>
+  <p>Do wireframe à tela testada no emulador, com <b>Flutter</b> — curso <b>Desenvolvedor Mobile</b>, eixo tecnológico Informação e Comunicação.</p>
+  <div class="meta">
+    <div><b>60h</b>carga horária</div>
+    <div><b>5</b>indicadores</div>
+    <div><b>20</b>encontros de 3h</div>
+    <div><b>Flutter</b>framework da turma</div>
+  </div>
+</div>
+<p style="font-size:13px;color:var(--tinta2);margin-top:10px">Material didático de apoio elaborado pelo docente Welton Castoldi com base no Plano de Curso Desenvolvedor Mobile (Código DN 2826, versão 2). Não substitui o plano de curso nem os documentos oficiais do Modelo Pedagógico Senac. Exemplos de código testados com Flutter 3.41 (canal stable).</p>
+
+<h2 id="ap"><span class="num">Abertura</span>Como usar este material</h2>
+
+<p class="lede">Nas UC1 e UC2 vocês planejaram e organizaram. Agora o projeto vira tela. Esta apostila acompanha os 20 encontros da unidade: leia a seção da aula antes de chegar e use o tempo de laboratório para programar.</p>
+
+<div class="grid g2">
+  <div class="card"><h4>Para o aluno</h4><p>Cada aula tem a teoria do dia, o código Flutter que vamos usar e uma atividade marcada em verde. As atividades constroem, tela a tela, o aplicativo da sua squad e o Relatório de Interface e Testes da entrega final.</p></div>
+  <div class="card"><h4>Para a squad</h4><p>O aplicativo de cada squad é o projeto aprovado nas UC anteriores. Quem não tiver projeto próprio usa o <a href="#caso">Empresta Aí</a>, que também é o exemplo de todas as aulas e tem um <a href="#base">projeto-base pronto</a> para consulta.</p></div>
+</div>
+
+<h4>Legenda das caixas</h4>
+<div class="box dica"><span class="rot">Conceito-chave</span><p>Definição que você vai usar todo dia como desenvolvedor e que costuma aparecer na avaliação.</p></div>
+<div class="box pratica"><span class="rot">Mão na massa</span><p>Atividade prática. Produz uma parte do aplicativo ou do relatório da squad.</p></div>
+<div class="box mercado"><span class="rot">No mercado</span><p>Como isso acontece em agências, softwarehouses e times de produto.</p></div>
+<div class="box atencao"><span class="rot">Atenção</span><p>Erro frequente que trava o projeto ou derruba a nota.</p></div>
+
+<h4>Como ler os blocos de código</h4>
+<p>Os blocos escuros são código. O nome no topo diz em qual arquivo ele mora (por exemplo, <code>lib/main.dart</code>) e o botão <b>Copiar</b> copia tudo. Copiar é permitido, mas entenda cada linha antes de colar: na avaliação você vai explicar o que o seu código faz.</p>
+<div class="codigo"><div class="codigo-head"><span>lib/exemplo.dart</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">// Comentários aparecem assim.
+const nome = 'Empresta Aí';   // texto
+final total = 96;              // número
+Text('Olá, $nome!');           // um widget</pre></div>
+<p>Blocos marcados com <code>terminal</code> são comandos para digitar no terminal (PowerShell, Prompt de Comando ou o terminal do VS Code).</p>
+
+<h2 id="uc"><span class="num">Referência</span>A UC3 em uma página</h2>
+
+<p>A competência desta unidade é <b>desenvolver interface gráfica para dispositivos móveis</b>. Interface gráfica é tudo o que o usuário vê e toca: telas, botões, textos, imagens, a navegação entre telas e as respostas do aplicativo a cada toque. Salvar dados num servidor, usar câmera ou GPS fica para as UC4 e UC5. Aqui o objetivo é que o aplicativo pareça certo, funcione bem na mão e possa ser usado por qualquer pessoa, inclusive quem enxerga pouco ou tem dificuldade com o celular.</p>
+
+<p>A ferramenta escolhida para a turma é o <b>Flutter</b>, framework do Google que gera aplicativos Android, iOS e web a partir de um único código escrito na linguagem <b>Dart</b>. Você vai sair da UC sabendo montar telas, ligar uma tela na outra, tratar toques e formulários, aplicar um tema visual e testar o resultado com pessoas reais.</p>
+
+<h3>Os cinco indicadores</h3>
+<p>Indicadores são as evidências observáveis de que a competência foi desenvolvida. Cada um recebe menção <b>A</b> (atendido), <b>PA</b> (parcialmente atendido) ou <b>NA</b> (não atendido) ao longo da unidade.</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:60px">#</th><th>Indicador</th><th>O que você entrega</th></tr></thead>
+<tbody>
+<tr><td><span class="bg bg-i">I1</span></td><td>Estrutura leiaute para aplicativos móveis conforme os princípios de comunicação visual, normas e tendências de mercado.</td><td>Telas organizadas a partir do wireframe, com justificativa de leiaute e de padrão de interação</td></tr>
+<tr><td><span class="bg bg-i">I2</span></td><td>Implementa interface gráfica conforme leiaute e arquitetura mobile.</td><td>Telas em Flutter rodando no emulador, organizadas em camadas (models, views, controllers)</td></tr>
+<tr><td><span class="bg bg-i">I3</span></td><td>Testa a usabilidade e acessibilidade de aplicativos, conforme requisitos do projeto e padrões da arquitetura móvel.</td><td>Roteiro e resultados de teste com usuários, checklist de acessibilidade e plano de ajustes</td></tr>
+<tr><td><span class="bg bg-i">I4</span></td><td>Programa interatividade em dispositivos móveis, conforme leiaute e sistemas mobile.</td><td>Navegação entre telas, formulários com validação e feedback para cada ação</td></tr>
+<tr><td><span class="bg bg-i">I5</span></td><td>Define conteúdo visual e textual para dispositivos móveis de acordo com os requisitos e elementos disponibilizados pelo projeto.</td><td>Textos das telas, guia de estilo (tema do app) e Manual de Interface</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Elementos da competência</h3>
+<div class="grid g3">
+  <div class="card">
+    <h4>Conhecimentos</h4>
+    <ol style="font-size:14.5px;padding-left:18px">
+      <li>Sistemas mobile: conceitos e características</li>
+      <li>Desenvolvimento híbrido: marcação e estilo, webstandards W3C e PWA</li>
+      <li>Ambiente de desenvolvimento e emuladores</li>
+      <li>Programação para mobile: linguagens e sintaxe</li>
+      <li>Arquitetura em camadas: MVC</li>
+      <li>Leiaute para aplicativo móvel</li>
+      <li>Telas: tecnologias de interface, elementos visuais e componentes</li>
+      <li>Padrões de design de interação</li>
+      <li>Interação: toque, teclado virtual, alternância de telas, feedback e navegação</li>
+      <li>Testes em mobile: usabilidade e acessibilidade</li>
+      <li>Versionamento de código: ramificações e tags</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h4>Habilidades</h4>
+    <ol style="font-size:14.5px;padding-left:18px">
+      <li>Interpretar requisitos de projetos</li>
+      <li>Organizar elementos gráficos para dispositivos móveis</li>
+      <li>Otimizar imagens para dispositivos móveis</li>
+      <li>Aplicar linguagem de marcação de conteúdo e estilo e aplicativos híbridos</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h4>Atitudes e valores</h4>
+    <ol style="font-size:14.5px;padding-left:18px">
+      <li>Sigilo no tratamento de dados e informações</li>
+      <li>Iniciativa na proposição de soluções de projetos</li>
+      <li>Proatividade no desenvolvimento das atividades</li>
+      <li>Colaboração no trabalho em equipe</li>
+      <li>Respeito aos direitos de propriedade intelectual</li>
+      <li>Comprometimento com usabilidade e acessibilidade</li>
+      <li>Atualização contínua</li>
+      <li>Cordialidade no trato com as pessoas</li>
+      <li>Atitude propositiva no trabalho</li>
+    </ol>
+  </div>
+</div>
+
+<h2 id="plano"><span class="num">Percurso</span>Nossos 20 encontros</h2>
+
+<p>São 60 horas em 20 encontros de 3h, em três momentos: <b>mobilização</b> (preparar o terreno), <b>desenvolvimento</b> (construir e testar) e <b>síntese</b> (documentar e apresentar). Há dois checkpoints com devolutiva escrita e uma demonstração final.</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:50px">Aula</th><th>O que vamos fazer</th><th>O que você entrega</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Sistemas mobile e leitura dos requisitos e wireframes do projeto</td><td>Inventário de telas e dúvidas para o cliente</td></tr>
+<tr><td>2</td><td>Instalação do Flutter, VS Code e emulador Android</td><td>"Olá, mundo" rodando no emulador em dois perfis</td></tr>
+<tr><td>3</td><td>Git e GitHub: ramificações, tags e papéis da squad</td><td>Repositório do app com o projeto-base</td></tr>
+<tr><td>4</td><td>Leiaute mobile e o sistema de leiaute do Flutter</td><td>Uma tela do wireframe organizada e justificada</td></tr>
+<tr><td>5</td><td>Padrões de design de interação e referências de mercado</td><td>Ficha de decisão de interação</td></tr>
+<tr><td>6</td><td>Arquitetura em camadas e MVC no Flutter</td><td>Estrutura de pastas e diagrama no repositório</td></tr>
+<tr><td>7</td><td>Desenvolvimento híbrido, webstandards e PWA</td><td>Tela em HTML/CSS comparada com a versão Flutter</td></tr>
+<tr><td>8</td><td>Otimização de imagens e direitos de uso</td><td>Imagens otimizadas + planilha de origem e licença</td></tr>
+<tr><td>9</td><td>Dart essencial, widgets e componentes</td><td>Tela de entrada e tela inicial no emulador</td></tr>
+<tr><td>10</td><td>Consolidação e <b>Checkpoint 1</b></td><td>Telas base versionadas</td></tr>
+<tr><td>11</td><td>Toque, navegação e abas</td><td>Fluxo principal navegável</td></tr>
+<tr><td>12</td><td>Formulários, teclado virtual e feedback</td><td>Formulário validado + mensagens de feedback</td></tr>
+<tr><td>13</td><td>Conteúdo visual e textual, tema do app</td><td>Textos das telas + guia de estilo em código</td></tr>
+<tr><td>14</td><td>Teste de usabilidade com usuários</td><td>Roteiro aplicado com 3+ pessoas</td></tr>
+<tr><td>15</td><td>Acessibilidade e teste em dispositivo físico</td><td>Checklist de acessibilidade preenchido</td></tr>
+<tr><td>16</td><td>Priorização e correção dos achados</td><td>Ajustes + Relatório de Interface e Testes (início)</td></tr>
+<tr><td>17</td><td><b>Checkpoint 2</b>: interface ajustada</td><td>Versão corrigida com tag + relatório</td></tr>
+<tr><td>18</td><td>Manual de Interface</td><td>Manual consolidado</td></tr>
+<tr><td>19</td><td>Ensaio, revisão por pares e APK</td><td>APK instalável + ensaio cronometrado</td></tr>
+<tr><td>20</td><td><b>Demonstração final</b> ao cliente/gestor</td><td>Apresentação + autoavaliação</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box atencao"><span class="rot">Atenção à revisão de interface da Aula 16</span><p>Cada squad recebe um feedback simulado de usuário diferente (tela confusa, botão pequeno para o dedo, contraste fraco, texto ilegível) sem saber antes qual será. A menção não avalia se a squad "acertou", e sim se priorizou, corrigiu e registrou de forma coerente.</p></div>
+
+<h2 id="caso"><span class="num">Fio condutor</span>O Empresta Aí ganha telas</h2>
+
+<p class="lede">Na UC1, Dona Ilza aprovou o projeto. Na UC2, a squad organizou o trabalho e atendeu os primeiros chamados. Agora ela quer ver o aplicativo funcionando no celular.</p>
+
+<p>Relembrando: o <b>Empresta Aí</b> é o aplicativo de empréstimo de objetos entre os 96 moradores do Condomínio Jardim das Palmeiras, em Linhares. A cliente é Dona Ilza, a síndica. O problema que ele resolve é o grupo de WhatsApp onde ninguém sabe quem pegou a furadeira, quando devolve, nem se a escada está livre.</p>
+
+<p>Três moradores vão aparecer o tempo todo nesta UC, porque são eles que decidem se a interface funciona:</p>
+
+<div class="grid g3">
+  <div class="card"><h4>Seu Antônio, 68 anos</h4><p>Aposentado, mora sozinho no bloco B. Usa óculos, aumenta a fonte do celular no máximo e tem pouca paciência com ícone sem texto. Se ele não conseguir pedir a escada, o app falhou.</p></div>
+  <div class="card"><h4>Sr. Joaquim, apto. 302</h4><p>Celular antigo, tela pequena. Foi ele quem abriu o chamado "trava no login" na UC2. Toda tela precisa caber e funcionar no aparelho dele.</p></div>
+  <div class="card"><h4>Marta, 34 anos</h4><p>Usa o celular com uma mão só, segurando a filha com a outra. Vai notar na hora se o botão principal estiver no topo da tela, fora do alcance do polegar.</p></div>
+</div>
+
+<div class="fones">
+  <figure class="fone-fig">
+    <div class="fone">
+      <div class="status"><span>9:41</span><span>▮▮▮ 🔋</span></div>
+      <div class="tela" style="justify-content:center;gap:10px">
+        <div style="text-align:center;font-size:40px">🤝</div>
+        <div class="f-titulo" style="text-align:center;color:var(--azul)">Empresta Aí</div>
+        <div class="f-sub" style="text-align:center">Peça emprestado aos seus vizinhos do Jardim das Palmeiras.</div>
+        <div class="f-campo">🏢 Bloco e apartamento</div>
+        <div class="f-campo">🔒 Senha (4 números)</div>
+        <div class="f-btn">Entrar</div>
+      </div>
+    </div>
+    <div class="rodape-fone">Entrada</div>
+  </figure>
+  <figure class="fone-fig">
+    <div class="fone">
+      <div class="status"><span>9:41</span><span>▮▮▮ 🔋</span></div>
+      <div class="tela">
+        <div class="f-titulo">O que você precisa hoje?</div>
+        <div class="f-campo">🔍 Buscar furadeira, escada...</div>
+        <div class="f-card"><div class="f-av">🛠</div><div><b>Furadeira de impacto</b><small>Seu Antônio · B-104</small></div><span class="f-chip">Disponível</span></div>
+        <div class="f-card"><div class="f-av">🪜</div><div><b>Escada de alumínio</b><small>Dona Ilza · A-201</small></div><span class="f-chip">Disponível</span></div>
+        <div class="f-card"><div class="f-av">🍲</div><div><b>Panela de pressão 7 L</b><small>Sr. Joaquim · A-302</small></div><span class="f-chip n">Emprestado</span></div>
+      </div>
+      <div class="navbar"><span class="on"><i>🔍</i>Itens</span><span><i>📦</i>Meus pedidos</span><span><i>👤</i>Perfil</span></div>
+    </div>
+    <div class="rodape-fone">Lista de itens</div>
+  </figure>
+  <figure class="fone-fig">
+    <div class="fone">
+      <div class="status"><span>9:41</span><span>▮▮▮ 🔋</span></div>
+      <div class="appbar">← Ferramentas</div>
+      <div class="tela">
+        <div class="f-hero">🪜</div>
+        <div class="f-titulo">Escada de alumínio (7 degraus)</div>
+        <div class="f-sub">Dono: Dona Ilza · A-201</div>
+        <div style="color:var(--azul);font-weight:600">Disponível agora</div>
+        <div class="f-espaco"></div>
+        <div class="f-btn">🤝 Pedir emprestado</div>
+      </div>
+    </div>
+    <div class="rodape-fone">Detalhe do item</div>
+  </figure>
+</div>
+<p style="text-align:center;font-size:13.5px;color:var(--tinta2)">Recriação ilustrativa das três telas principais do projeto-base, com o visual do Material 3 (o padrão do Flutter). Essas telas existem de verdade no código da pasta <code>projeto-base</code>.</p>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 0 — Retomada (15 min, em squad).</b> Abram o documento de projeto da UC1 (ou o caso Empresta Aí) e listem: (a) as telas que o aplicativo precisa ter; (b) para cada tela, qual morador teria mais dificuldade com ela e por quê; (c) uma coisa que vocês já sabem que vai dar trabalho de programar. Guardem a lista: ela vira o inventário de telas da Aula 1.</p></div>
+
+<h2 id="base"><span class="num">Material de apoio</span>O projeto-base em Flutter</h2>
+
+<p>Junto com esta apostila existe um aplicativo Flutter completo do Empresta Aí, com tela de entrada, lista com busca, detalhe com confirmação, navegação por abas, tema próprio e testes de acessibilidade. Ele está no repositório do curso, na pasta <code>unidade-03-desenvolver-interface-grafica/projeto-base/empresta_ai</code>.</p>
+
+<p><a class="btn btn-p" href="https://github.com/senac-linhares/curso-dev-mobile/tree/main/unidade-03-desenvolver-interface-grafica/projeto-base/empresta_ai" target="_blank" rel="noopener">Abrir o projeto-base no GitHub</a></p>
+
+<p>Ele serve para <b>consultar</b>: quando a aula falar de validação de formulário, abra <code>entrada_view.dart</code> e veja como foi feito; quando falar de MVC, compare as pastas <code>models</code>, <code>views</code> e <code>controllers</code>. O aplicativo da sua squad você constrói do zero, com os requisitos e wireframes do seu projeto.</p>
+
+<div class="codigo"><div class="codigo-head"><span>terminal — rodar o projeto-base</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="sh">cd C:\projetos\empresta_ai
+flutter create .
+flutter pub get
+flutter run</pre></div>
+<p>O <code>flutter create .</code> gera as pastas de plataforma (<code>android</code>, <code>ios</code>, <code>web</code>) que não ficam guardadas no repositório. Ele não apaga nada do que já existe em <code>lib/</code>.</p>
+
+
+<!-- ============================ AULA 1 ============================ -->
+<h2 id="a1"><span class="num">Aula 1 · Mobilização</span>Sistemas mobile e leitura dos requisitos</h2>
+
+<p class="lede">Antes de abrir o editor, a pergunta do dia: o que muda quando uma tarefa sai do computador e vai para uma tela de seis polegadas usada com o dedo?</p>
+
+<h3>1.1 O que é diferente no celular</h3>
+<p>Um aplicativo não é um site encolhido. O celular tem limitações e possibilidades próprias, e boa parte das decisões de interface desta UC sai desta tabela.</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:140px">Característica</th><th>No computador</th><th>No celular</th><th>O que isso muda na interface</th></tr></thead>
+<tbody>
+<tr><td><b>Tela</b></td><td>Grande, horizontal, várias janelas</td><td>Pequena, vertical, uma tela por vez</td><td>Uma tarefa principal por tela; hierarquia visual clara; nada de tabelas largas</td></tr>
+<tr><td><b>Entrada</b></td><td>Mouse preciso e teclado físico</td><td>Dedo (impreciso) e teclado virtual que cobre metade da tela</td><td>Alvos de toque grandes; poucos campos de digitação; teclado certo para cada campo</td></tr>
+<tr><td><b>Contexto de uso</b></td><td>Sentado, com atenção</td><td>Em pé, andando, com uma mão, com sol na tela, sendo interrompido</td><td>Contraste alto; ações principais ao alcance do polegar; textos curtos</td></tr>
+<tr><td><b>Conectividade</b></td><td>Estável</td><td>Oscila entre Wi-Fi, 4G/5G e sem sinal</td><td>Mostrar carregamento e erro de rede com mensagem útil</td></tr>
+<tr><td><b>Bateria e memória</b></td><td>Praticamente ilimitadas</td><td>Limitadas, principalmente em aparelhos antigos</td><td>Imagens leves; animações moderadas; nada pesado à toa</td></tr>
+<tr><td><b>Sensores</b></td><td>Poucos</td><td>Câmera, GPS, acelerômetro, biometria, vibração</td><td>Novas formas de interação (vibrar ao confirmar, digital para entrar) — usadas nas UC4 e UC5</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>1.2 Plataformas e abordagens</h3>
+<p>Dois sistemas operacionais dominam o mercado: <b>Android</b> (Google, maioria dos aparelhos no Brasil) e <b>iOS</b> (Apple, iPhone). Há três jeitos principais de construir um aplicativo para eles:</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:150px">Abordagem</th><th>Como funciona</th><th>Exemplos de tecnologia</th></tr></thead>
+<tbody>
+<tr><td><b>Nativo</b></td><td>Um código para cada sistema, na linguagem oficial dele. Máximo desempenho, custo dobrado.</td><td>Kotlin (Android), Swift (iOS)</td></tr>
+<tr><td><b>Híbrido</b></td><td>Uma página web (HTML, CSS, JavaScript) roda dentro de um aplicativo. Aproveita quem já sabe web.</td><td>Ionic, Capacitor, Cordova; PWA</td></tr>
+<tr><td><b>Multiplataforma (cross-platform)</b></td><td>Um único código gera aplicativos para vários sistemas, com desempenho próximo do nativo.</td><td><b>Flutter</b> (Dart), React Native (JavaScript), Kotlin Multiplatform</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box dica"><span class="rot">Conceito-chave</span><p><b>Flutter</b> é um kit de desenvolvimento de interfaces criado pelo Google. Com um único código em <b>Dart</b>, ele gera aplicativos para Android, iOS, web e desktop. Diferente do híbrido, o Flutter não usa uma página web por dentro: ele desenha cada pixel da tela com seu próprio motor gráfico. Por isso a interface fica igual em todos os aparelhos.</p></div>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>Flutter é usado em aplicativos de bancos, varejo e mobilidade no Brasil e no mundo, e é uma das tecnologias multiplataforma mais procuradas em vagas para desenvolvedor mobile. Para uma agência pequena como a nossa, a vantagem é direta: uma squad, um código, dois sistemas.</p></div>
+
+<h3>1.3 Lendo requisitos e wireframes como desenvolvedor</h3>
+<p>Na UC1 vocês escreveram requisitos para o cliente entender. Agora vão ler os mesmos documentos com outra pergunta: <b>o que eu preciso construir?</b> Para cada wireframe, procure:</p>
+<ul class="check">
+<li><b>Telas:</b> quantas são e qual o nome de cada uma.</li>
+<li><b>Fluxos:</b> de qual tela se chega em qual, e por qual botão ou gesto.</li>
+<li><b>Elementos:</b> listas, formulários, imagens, botões, abas.</li>
+<li><b>Estados:</b> como a tela fica vazia, carregando, com erro, com sucesso. Wireframes quase nunca mostram isso, e o desenvolvedor precisa perguntar.</li>
+<li><b>Dúvidas:</b> o que o wireframe não responde. Exemplo: "o que aparece se o morador buscar um item que ninguém tem?"</li>
+</ul>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 1 — Inventário de telas.</b> Usando o modelo <a href="#tpl">Inventário de telas</a>, listem todas as telas do aplicativo da squad, com elementos, origem e destino de cada uma, e pelo menos cinco dúvidas para o cliente. Esse inventário guia a ordem de implementação das próximas aulas.</p></div>
+
+<!-- ============================ AULA 2 ============================ -->
+<h2 id="a2"><span class="num">Aula 2 · Mobilização</span>Ambiente de desenvolvimento Flutter</h2>
+
+<p class="lede">Hoje cada um sai com o Flutter instalado e um aplicativo rodando no emulador. Parece pouco, mas instalação é onde mais gente trava, então vamos com calma.</p>
+
+<h3>2.1 As peças do ambiente</h3>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:170px">Peça</th><th>Para que serve</th></tr></thead>
+<tbody>
+<tr><td><b>Flutter SDK</b></td><td>O kit em si: framework, linguagem Dart e a ferramenta de linha de comando <code>flutter</code>.</td></tr>
+<tr><td><b>Android Studio</b></td><td>Usamos principalmente pelo <b>Android SDK</b> (as bibliotecas do Android) e pelo <b>Device Manager</b>, que cria os emuladores.</td></tr>
+<tr><td><b>VS Code</b> + extensões <i>Flutter</i> e <i>Dart</i></td><td>Editor onde escrevemos o código. As extensões dão autocompletar, botão de executar e hot reload ao salvar.</td></tr>
+<tr><td><b>Emulador (AVD)</b></td><td>Um celular Android virtual rodando no computador. Cada emulador tem um modelo de tela, uma versão do Android (nível de API) e uma quantidade de memória.</td></tr>
+<tr><td><b>Git</b></td><td>Controle de versões. Usaremos na Aula 3.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box atencao"><span class="rot">Atenção</span><p><b>Não instale o Flutter nem crie projetos dentro do OneDrive</b> ou em pastas com espaço ou acento no caminho (como <code>Área de Trabalho</code>). Sincronização e caracteres especiais quebram o build do Android. Use algo como <code>C:\flutter</code> para o SDK e <code>C:\projetos\</code> para os aplicativos.</p></div>
+
+<h3>2.2 Conferindo a instalação</h3>
+<p>O comando <code>flutter doctor</code> verifica tudo e diz o que falta. Rode e leia a saída com atenção:</p>
+<div class="codigo"><div class="codigo-head"><span>terminal</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="sh">flutter doctor</pre></div>
+<div class="codigo"><div class="codigo-head"><span>saída esperada (resumida)</span></div><pre data-lang="sh">[√] Flutter (Channel stable, 3.41.x, on Microsoft Windows)
+[√] Windows Version
+[√] Android toolchain - develop for Android devices
+[√] Chrome - develop for the web
+[√] Android Studio
+[√] VS Code
+[√] Connected device (2 available)
+[√] Network resources
+
+• No issues found!</pre></div>
+<p>Um <code>[!]</code> ou <code>[X]</code> indica problema. Os mais comuns:</p>
+<ul>
+<li><b>Android licenses not accepted:</b> rode <code>flutter doctor --android-licenses</code> e responda <code>y</code> a todas.</li>
+<li><b>cmdline-tools component is missing:</b> no Android Studio, abra <i>SDK Manager → SDK Tools</i> e marque <i>Android SDK Command-line Tools</i>.</li>
+<li><b>Visual Studio not installed:</b> só é necessário para gerar aplicativo de Windows. Pode ignorar.</li>
+</ul>
+
+<h3>2.3 Criando o emulador</h3>
+<ol class="passos">
+<li>No Android Studio, abra <b>Device Manager</b> e clique em <b>+ (Create Virtual Device)</b>.</li>
+<li>Escolha um modelo de celular (por exemplo, um Pixel de tela média) e uma imagem de sistema recente.</li>
+<li>Crie um <b>segundo</b> emulador com tela pequena e sistema mais antigo. Ele representa o celular do Sr. Joaquim.</li>
+<li>Inicie um dos emuladores e, no terminal, confira se o Flutter o enxerga com <code>flutter devices</code>.</li>
+</ol>
+
+<div class="box dica"><span class="rot">Conceito-chave</span><p>Os <b>parâmetros de hardware</b> de um emulador (tamanho e densidade da tela, memória, versão do Android) mudam como o aplicativo aparece e se comporta. Testar só no emulador "bonito" esconde problemas que o usuário real vai encontrar. Por isso trabalhamos sempre com pelo menos dois perfis.</p></div>
+
+<div class="box atencao"><span class="rot">Emulador não abre?</span><p>O emulador precisa da <b>virtualização</b> ativada no computador (Intel VT-x ou AMD-V, na BIOS) e, no Windows, do recurso <i>Plataforma do Hipervisor do Windows</i>. Se a máquina não suportar, rode o app no <b>Chrome</b> (<code>flutter run -d chrome</code>) ou no seu celular por cabo USB (passo a passo na Aula 15).</p></div>
+
+<h3>2.4 O primeiro projeto</h3>
+<div class="codigo"><div class="codigo-head"><span>terminal</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="sh">cd C:\projetos
+flutter create ola_mundo
+cd ola_mundo
+flutter run</pre></div>
+<p>O <code>flutter create</code> gera um projeto com estas pastas principais:</p>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:170px">Pasta / arquivo</th><th>O que é</th></tr></thead>
+<tbody>
+<tr><td><code>lib/</code></td><td>O <b>seu código Dart</b>. É onde você vai trabalhar 95% do tempo. O ponto de partida é <code>lib/main.dart</code>.</td></tr>
+<tr><td><code>pubspec.yaml</code></td><td>Ficha do projeto: nome, versão, pacotes usados e imagens/fontes (assets).</td></tr>
+<tr><td><code>test/</code></td><td>Testes automatizados.</td></tr>
+<tr><td><code>android/</code>, <code>ios/</code>, <code>web/</code></td><td>Projetos de cada plataforma, gerados pelo Flutter. Raramente mexemos aqui.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Agora troque todo o conteúdo de <code>lib/main.dart</code> por este código, salve e veja a tela mudar:</p>
+<div class="codigo"><div class="codigo-head"><span>lib/main.dart</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MeuApp());
+}
+
+class MeuApp extends StatelessWidget {
+  const MeuApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: const Text('Olá, Linhares!')),
+        body: const Center(
+          child: Text(
+            'Meu primeiro app Flutter',
+            style: TextStyle(fontSize: 24),
+          ),
+        ),
+      ),
+    );
+  }
+}</pre></div>
+
+<div class="box dica"><span class="rot">Conceito-chave</span><p><b>Hot reload</b>: ao salvar o arquivo (ou apertar <code>r</code> no terminal), o Flutter injeta a mudança no aplicativo que já está rodando, em menos de um segundo, sem perder o estado da tela. <b>Hot restart</b> (<code>R</code>) reinicia o app do zero. Use o reload o tempo todo; o restart quando algo "não atualiza".</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 2 — Olá, mundo em dois aparelhos.</b> Rode o projeto nos dois emuladores. Mude o texto, a cor da AppBar (<code>backgroundColor: Colors.teal</code>) e o tamanho da fonte usando hot reload. Tire um print de cada emulador. Depois, registrem no documento da squad o passo a passo da instalação e os erros que apareceram com as soluções: na próxima máquina nova, vocês vão agradecer.</p></div>
+
+<div class="box mercado"><span class="rot">Sem computador em casa?</span><p>O <b>DartPad</b> (dartpad.dev) roda código Flutter direto no navegador, inclusive no celular. Não substitui o ambiente completo, mas serve para estudar widgets e testar trechos da apostila fora do laboratório.</p></div>
+
+<!-- ============================ AULA 3 ============================ -->
+<h2 id="a3"><span class="num">Aula 3 · Mobilização</span>Versionamento: ramificações e tags</h2>
+
+<p class="lede">Quatro pessoas mexendo no mesmo aplicativo ao mesmo tempo. Sem um combinado de versionamento, alguém apaga o trabalho de alguém até sexta-feira.</p>
+
+<h3>3.1 Ramificações (branches)</h3>
+<div class="box dica"><span class="rot">Conceito-chave</span><p>Uma <b>ramificação</b> (branch) é uma linha paralela de trabalho. A <code>main</code> guarda a versão que funciona; cada tela ou correção nasce em uma branch própria e só volta para a <code>main</code> depois de revisada. Uma <b>tag</b> é uma etiqueta fixa num ponto da história, como <code>v0.1.0</code>, usada para marcar entregas.</p></div>
+
+<figure>
+<svg viewBox="0 0 640 170" width="640" role="img" aria-label="Diagrama de branches: main com duas branches de tela que voltam para a main, e tags v0.1.0 e v0.2.0">
+  <line x1="30" y1="85" x2="610" y2="85" stroke="#00447c" stroke-width="4"/>
+  <text x="30" y="70" font-size="13" font-weight="700" fill="#00447c">main</text>
+  <path d="M120 85 C150 85 150 35 180 35 L300 35 C330 35 330 85 360 85" fill="none" stroke="#1d7a52" stroke-width="3"/>
+  <text x="185" y="25" font-size="12" fill="#1d7a52">feature/tela-entrada</text>
+  <path d="M200 85 C230 85 230 135 260 135 L420 135 C450 135 450 85 480 85" fill="none" stroke="#e8730c" stroke-width="3"/>
+  <text x="265" y="158" font-size="12" fill="#e8730c">feature/lista-itens</text>
+  <g fill="#fff" stroke-width="3">
+    <circle cx="60" cy="85" r="7" stroke="#00447c"/><circle cx="120" cy="85" r="7" stroke="#00447c"/>
+    <circle cx="210" cy="35" r="6" stroke="#1d7a52"/><circle cx="260" cy="35" r="6" stroke="#1d7a52"/>
+    <circle cx="300" cy="135" r="6" stroke="#e8730c"/><circle cx="370" cy="135" r="6" stroke="#e8730c"/>
+    <circle cx="360" cy="85" r="7" stroke="#00447c"/><circle cx="480" cy="85" r="7" stroke="#00447c"/><circle cx="570" cy="85" r="7" stroke="#00447c"/>
+  </g>
+  <rect x="330" y="96" width="60" height="20" rx="4" fill="#fdf0e3" stroke="#e8730c"/><text x="360" y="110" font-size="11" text-anchor="middle" fill="#a2510a">v0.1.0</text>
+  <rect x="540" y="96" width="60" height="20" rx="4" fill="#fdf0e3" stroke="#e8730c"/><text x="570" y="110" font-size="11" text-anchor="middle" fill="#a2510a">v0.2.0</text>
+</svg>
+<figcaption>Cada tela nasce numa branch e volta para a <b>main</b> quando está pronta. As <b>tags</b> marcam os checkpoints.</figcaption>
+</figure>
+
+<h3>3.2 Combinados da squad</h3>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:200px">Item</th><th>Combinado sugerido</th></tr></thead>
+<tbody>
+<tr><td>Nome das branches</td><td><code>feature/tela-entrada</code>, <code>feature/lista-itens</code>, <code>fix/contraste-botao</code></td></tr>
+<tr><td>Mensagem de commit</td><td>Verbo no presente + o que mudou: <code>Adiciona validação no campo de apartamento</code>. Nada de "ajustes" ou "agora vai".</td></tr>
+<tr><td>Integração na main</td><td>Sempre por <b>Pull Request</b>, com revisão de pelo menos um colega.</td></tr>
+<tr><td>Tags</td><td><code>v0.1.0</code> no Checkpoint 1, <code>v0.2.0</code> no Checkpoint 2, <code>v1.0.0</code> na demonstração final.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>3.3 Os comandos do dia</h3>
+<div class="codigo"><div class="codigo-head"><span>terminal — criar o repositório e o primeiro commit</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="sh">cd C:\projetos\app_da_squad
+git init
+git add .
+git commit -m "Cria projeto Flutter base"
+git branch -M main
+git remote add origin https://github.com/SUA-SQUAD/app_da_squad.git
+git push -u origin main</pre></div>
+
+<div class="codigo"><div class="codigo-head"><span>terminal — trabalhar numa tela</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="sh">git switch -c feature/tela-entrada     # cria a branch e entra nela
+# ... programa, salva, testa ...
+git add lib/
+git commit -m "Cria leiaute da tela de entrada"
+git push -u origin feature/tela-entrada
+# no GitHub: abrir Pull Request para a main e pedir revisão</pre></div>
+
+<div class="codigo"><div class="codigo-head"><span>terminal — marcar uma entrega com tag</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="sh">git switch main
+git pull
+git tag -a v0.1.0 -m "Checkpoint 1: telas base"
+git push origin v0.1.0</pre></div>
+
+<div class="box atencao"><span class="rot">Atenção</span><p>O <code>flutter create</code> já gera um arquivo <code>.gitignore</code> correto, que deixa de fora a pasta <code>build/</code> (centenas de megabytes gerados a cada execução). Não apague esse arquivo e nunca faça commit da pasta <code>build/</code>.</p></div>
+
+<h3>3.4 Papéis na squad</h3>
+<p>Todos programam, mas cada um responde por uma frente: <b>interface</b> (fidelidade ao wireframe e ao guia de estilo), <b>testes</b> (roteiros e registro dos testes com usuários), <b>documentação</b> (relatório e manual) e <b>qualidade</b> (revisão dos Pull Requests e checklist de acessibilidade). Os papéis podem rodar a cada checkpoint.</p>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 3 — Repositório da squad.</b> Criem o repositório do aplicativo no GitHub com o projeto Flutter inicial, adicionem todos os integrantes e o docente como colaboradores, registrem os papéis no <code>README.md</code> e façam cada integrante abrir e revisar um Pull Request pequeno (por exemplo, mudar o título do app).</p></div>
+
+<!-- ============================ AULA 4 ============================ -->
+<h2 id="a4"><span class="num">Aula 4 · Desenvolvimento</span>Leiaute para aplicativo móvel</h2>
+
+<p class="lede">Leiaute é a decisão de onde cada coisa fica na tela e por quê. Hoje vemos os princípios e como o Flutter os transforma em código.</p>
+
+<h3>4.1 Princípios de comunicação visual</h3>
+<div class="grid g2">
+  <div class="card"><h4>Hierarquia</h4><p>O que é mais importante aparece primeiro e maior. Em cada tela, deve ficar óbvio qual é a ação principal.</p></div>
+  <div class="card"><h4>Contraste</h4><p>Diferença clara entre texto e fundo, e entre o botão principal e os secundários.</p></div>
+  <div class="card"><h4>Alinhamento</h4><p>Elementos alinhados a uma mesma margem parecem organizados. Use sempre os mesmos espaçamentos (8, 16, 24).</p></div>
+  <div class="card"><h4>Proximidade</h4><p>O que é relacionado fica junto; o que é diferente fica separado. Rótulo colado no campo, grupos separados por espaço.</p></div>
+</div>
+
+<h3>4.2 A zona do polegar e o tamanho do toque</h3>
+<p>A maioria das pessoas segura o celular com uma mão e alcança a tela com o polegar. A parte de baixo e o centro são fáceis de alcançar; os cantos de cima, difíceis.</p>
+
+<figure>
+<svg viewBox="0 0 520 300" width="520" role="img" aria-label="Celular com três zonas: fácil embaixo e no centro, esticar no meio, difícil no topo">
+  <rect x="40" y="10" width="160" height="280" rx="22" fill="#fff" stroke="#1a1f26" stroke-width="6"/>
+  <rect x="49" y="22" width="142" height="256" rx="12" fill="#fdecea"/>
+  <path d="M49 140 Q120 105 191 150 L191 278 L49 278 Z" fill="#fdf0e3"/>
+  <path d="M49 200 Q115 170 191 215 L191 266 Q191 278 179 278 L61 278 Q49 278 49 266 Z" fill="#e6f4ee"/>
+  <text x="120" y="70" font-size="13" text-anchor="middle" fill="#b3261e" font-weight="700">difícil</text>
+  <text x="120" y="160" font-size="13" text-anchor="middle" fill="#a2510a" font-weight="700">esticar</text>
+  <text x="120" y="245" font-size="13" text-anchor="middle" fill="#1d7a52" font-weight="700">fácil</text>
+  <text x="240" y="60" font-size="13" fill="#1a1f26"><tspan font-weight="700">Topo:</tspan> título, voltar, ações raras</text>
+  <text x="240" y="155" font-size="13" fill="#1a1f26"><tspan font-weight="700">Meio:</tspan> conteúdo, listas, leitura</text>
+  <text x="240" y="240" font-size="13" fill="#1a1f26"><tspan font-weight="700">Base:</tspan> ação principal e navegação</text>
+</svg>
+<figcaption>Zona de alcance do polegar (mão direita). Por isso o botão <b>Pedir emprestado</b> do Empresta Aí fica embaixo, e a navegação usa abas inferiores.</figcaption>
+</figure>
+
+<div class="box dica"><span class="rot">Conceito-chave</span><p>Todo elemento tocável precisa de uma área de pelo menos <b>48 × 48 dp</b> (diretriz do Material Design, do Google) ou <b>44 × 44 pt</b> (diretriz da Apple). <b>dp</b> (pixel independente de densidade) é a unidade que o Flutter usa: 48 dp têm mais ou menos o mesmo tamanho físico em qualquer celular, cerca de 9 mm, a largura da ponta de um dedo.</p></div>
+
+<h3>4.3 Cores e entrada de dados</h3>
+<ul>
+<li><b>Regra 60-30-10:</b> 60% da tela numa cor neutra (fundo), 30% numa cor secundária (superfícies, cartões) e 10% na cor de destaque (botões e ações). Destaque em tudo não destaca nada.</li>
+<li><b>Cor não pode ser a única informação:</b> "Disponível" em verde e "Emprestado" em vermelho precisam do texto escrito, porque cerca de 8% dos homens têm algum tipo de daltonismo.</li>
+<li><b>Escolha o método de entrada mais fácil:</b> antes de pedir para digitar, veja se dá para escolher numa lista, marcar um botão de opção ou usar um seletor de data. Digitar no celular é lento e cansativo.</li>
+</ul>
+
+<h3>4.4 Leiaute no Flutter: tudo é widget</h3>
+<p>No Flutter, cada pedaço da tela é um <b>widget</b>: um texto, um botão, um espaçamento, uma coluna. A tela é uma <b>árvore</b> de widgets, uns dentro dos outros. Os widgets de leiaute que você vai usar o tempo todo:</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:170px">Widget</th><th>O que faz</th></tr></thead>
+<tbody>
+<tr><td><code>Column</code> / <code>Row</code></td><td>Empilha filhos na vertical / lado a lado na horizontal.</td></tr>
+<tr><td><code>Padding</code></td><td>Espaço em volta de um filho.</td></tr>
+<tr><td><code>SizedBox</code></td><td>Uma caixa de tamanho fixo. Muito usada como espaço entre widgets: <code>SizedBox(height: 16)</code>.</td></tr>
+<tr><td><code>Container</code></td><td>Caixa com cor, borda, cantos arredondados, margem e tamanho.</td></tr>
+<tr><td><code>Expanded</code></td><td>Dentro de Row/Column, faz o filho ocupar todo o espaço que sobrar.</td></tr>
+<tr><td><code>Stack</code></td><td>Sobrepõe widgets (por exemplo, um selo em cima de uma imagem).</td></tr>
+<tr><td><code>Center</code>, <code>Align</code></td><td>Posicionam o filho dentro do espaço disponível.</td></tr>
+<tr><td><code>SafeArea</code></td><td>Afasta o conteúdo do entalhe da câmera e da barra de gestos do sistema.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Veja a árvore do cartão de item do Empresta Aí e o código correspondente:</p>
+<div class="arvore"><ul>
+<li><span>Card</span><em>a superfície arredondada</em>
+  <ul><li><span>Padding</span><em>12 dp de respiro</em>
+    <ul><li><span>Row</span><em>ícone | textos | selo, lado a lado</em>
+      <ul>
+        <li><span class="folha">CircleAvatar</span><em>ícone do item</em></li>
+        <li><span class="folha">SizedBox</span><em>12 dp de espaço</em></li>
+        <li><span>Expanded</span><em>os textos ocupam o que sobrar</em>
+          <ul><li><span>Column</span><ul><li><span class="folha">Text</span><em>nome</em></li><li><span class="folha">Text</span><em>dono e apartamento</em></li></ul></li></ul></li>
+        <li><span class="folha">Chip</span><em>Disponível / Emprestado</em></li>
+      </ul></li></ul></li></ul></li>
+</ul></div>
+
+<div class="codigo"><div class="codigo-head"><span>trecho de lib/widgets/item_card.dart</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">Card(
+  child: Padding(
+    padding: const EdgeInsets.all(12),
+    child: Row(
+      children: [
+        const CircleAvatar(radius: 26, child: Icon(Icons.handyman)),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              Text('Furadeira de impacto', style: TextStyle(fontSize: 16)),
+              Text('Seu Antônio · B-104'),
+            ],
+          ),
+        ),
+        const Chip(label: Text('Disponível')),
+      ],
+    ),
+  ),
+)</pre></div>
+
+<div class="box dica"><span class="rot">Conceito-chave</span><p>A regra de ouro do leiaute no Flutter: <b>restrições descem, tamanhos sobem, o pai decide a posição</b>. O pai diz ao filho "você pode ter no máximo tal largura"; o filho escolhe seu tamanho dentro disso; o pai posiciona. Quando um <code>Row</code> recebe filhos mais largos que a tela, aparece a faixa amarela e preta de <b>overflow</b>. A solução quase sempre é envolver o filho que pode encolher em <code>Expanded</code> ou <code>Flexible</code>.</p></div>
+
+<h3>4.5 Responsividade</h3>
+<p>O mesmo aplicativo vai rodar no celular pequeno do Sr. Joaquim e num tablet. Três ferramentas resolvem quase tudo:</p>
+<div class="codigo"><div class="codigo-head"><span>exemplos de responsividade</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">// 1. Saber o tamanho da tela
+final largura = MediaQuery.sizeOf(context).width;
+
+// 2. Mudar o leiaute conforme o espaço disponível
+LayoutBuilder(
+  builder: (context, restricoes) {
+    if (restricoes.maxWidth > 600) {
+      return const GradeDeItens(colunas: 2); // tablet
+    }
+    return const ListaDeItens();               // celular
+  },
+);
+
+// 3. Rolar quando não couber (telas pequenas, teclado aberto)
+SingleChildScrollView(
+  child: Column(children: [/* ... */]),
+);</pre></div>
+
+<div class="comparativo">
+<div class="errado"><h4>Leiaute frágil</h4><ul><li>Larguras fixas em pixels (<code>width: 360</code>).</li><li>Botão principal no topo direito.</li><li>Ícones sem texto em ações importantes.</li><li>Testado só no emulador grande.</li></ul></div>
+<div class="certo"><h4>Leiaute robusto</h4><ul><li>Larguras relativas (<code>Expanded</code>, <code>double.infinity</code>).</li><li>Ação principal na base, larga, com texto.</li><li>Ícone + rótulo nas ações importantes.</li><li>Testado no emulador pequeno e com fonte grande.</li></ul></div>
+</div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 4 — Uma tela organizada.</b> Escolham a tela mais importante do wireframe. No Figma, no Canva ou no papel, reorganizem os elementos aplicando os princípios da aula (hierarquia, zona do polegar, 48 dp, 60-30-10) em dois tamanhos de tela. Escrevam ao lado de cada decisão uma frase de justificativa. Depois, desenhem a árvore de widgets dessa tela, como no exemplo do cartão.</p></div>
+
+<!-- ============================ AULA 5 ============================ -->
+<h2 id="a5"><span class="num">Aula 5 · Desenvolvimento</span>Padrões de design de interação</h2>
+
+<p class="lede">O usuário não lê o manual do seu aplicativo. Ele usa o que já aprendeu em outros. Padrões de interação são esse aprendizado coletivo, e respeitá-los poupa esforço de todo mundo.</p>
+
+<h3>5.1 Os padrões mais usados e seus widgets</h3>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:170px">Padrão</th><th>Quando usar</th><th>Widget Flutter</th></tr></thead>
+<tbody>
+<tr><td><b>Navegação inferior</b></td><td>3 a 5 seções principais, usadas o tempo todo</td><td><code>NavigationBar</code></td></tr>
+<tr><td><b>Menu lateral (gaveta)</b></td><td>Muitas seções, ou seções pouco usadas</td><td><code>Drawer</code> / <code>NavigationDrawer</code></td></tr>
+<tr><td><b>Abas superiores</b></td><td>Visões diferentes do mesmo conteúdo ("Disponíveis" / "Emprestados")</td><td><code>TabBar</code> + <code>TabBarView</code></td></tr>
+<tr><td><b>Lista → detalhe</b></td><td>Coleções de coisas; tocar abre mais informação</td><td><code>ListView</code> + <code>Navigator.push</code></td></tr>
+<tr><td><b>Cartões</b></td><td>Itens com imagem, título e ação</td><td><code>Card</code></td></tr>
+<tr><td><b>Botão de ação flutuante</b></td><td>A ação mais frequente da tela ("Cadastrar item")</td><td><code>FloatingActionButton</code></td></tr>
+<tr><td><b>Folha inferior</b></td><td>Opções rápidas sem sair da tela</td><td><code>showModalBottomSheet</code></td></tr>
+<tr><td><b>Puxar para atualizar</b></td><td>Listas que mudam com frequência</td><td><code>RefreshIndicator</code></td></tr>
+<tr><td><b>Deslizar para remover</b></td><td>Gesto rápido em itens de lista (sempre com "desfazer")</td><td><code>Dismissible</code></td></tr>
+<tr><td><b>Feedback de ação</b></td><td>Confirmar que algo aconteceu</td><td><code>SnackBar</code>, <code>AlertDialog</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>5.2 Diretrizes das plataformas</h3>
+<p>Google e Apple publicam guias oficiais de interface: o <b>Material Design 3</b> (m3.material.io) e as <b>Human Interface Guidelines</b> da Apple. O Flutter traz os dois conjuntos de componentes: os widgets <b>Material</b> (padrão, usados nesta UC) e os widgets <b>Cupertino</b> (<code>CupertinoButton</code>, <code>CupertinoNavigationBar</code>...), que imitam o visual do iPhone.</p>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>A maioria dos aplicativos brasileiros feitos em Flutter usa Material com o tema da marca nas duas plataformas, e só troca componentes específicos para Cupertino (como seletores de data) quando o cliente pede. Para o Empresta Aí, Material resolve, e a squad ganha tempo.</p></div>
+
+<h3>5.3 Referências de mercado e da região</h3>
+<p>Antes de decidir a interação, pesquise como outros resolveram o mesmo problema. Para o Empresta Aí, valem aplicativos de classificados, de aluguel de objetos e os próprios aplicativos de condomínio usados em Linhares. Para cada referência, anote: o que funciona, o que irrita e o que serve para o público do projeto.</p>
+
+<div class="comparativo">
+<div class="errado"><h4>Copiar sem pensar</h4><p>"O aplicativo X usa menu hambúrguer, então vamos usar também." O público do X é outro, com outras tarefas.</p></div>
+<div class="certo"><h4>Decidir com justificativa</h4><p>"Usamos navegação inferior com 3 abas porque Seu Antônio precisa ver as opções o tempo todo, e Marta usa com uma mão só. Testamos a gaveta e ela escondia 'Meus pedidos'."</p></div>
+</div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 5 — Ficha de decisão de interação.</b> Para as telas principais do app, comparem pelo menos duas alternativas de padrão (por exemplo, navegação inferior × gaveta; lista × grade de cartões), usando o modelo <a href="#tpl">Ficha de decisão de interação</a>. Escolham uma, justifiquem com base nos usuários do projeto e apresentem a decisão para a turma em dois minutos.</p></div>
+
+<!-- ============================ AULA 6 ============================ -->
+<h2 id="a6"><span class="num">Aula 6 · Desenvolvimento</span>Arquitetura em camadas e MVC</h2>
+
+<p class="lede">Um aplicativo onde tudo fica num arquivo só funciona por duas semanas. Depois ninguém mais acha nada. Hoje definimos onde cada coisa mora.</p>
+
+<h3>6.1 Model, View, Controller</h3>
+<div class="box dica"><span class="rot">Conceito-chave</span><p><b>MVC</b> divide o aplicativo em três camadas com responsabilidades separadas. <b>Model</b>: os dados e suas regras (um item, um pedido). <b>View</b>: o que aparece na tela. <b>Controller</b>: recebe as ações do usuário, altera o model e avisa a view que algo mudou. A view nunca altera dados diretamente; ela pede ao controller.</p></div>
+
+<figure>
+<svg viewBox="0 0 620 190" width="620" role="img" aria-label="Fluxo MVC: usuário toca na View, View chama Controller, Controller altera Model e notifica a View">
+  <defs><marker id="seta6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#455060"/></marker></defs>
+  <rect x="20" y="60" width="160" height="70" rx="10" fill="#e8f1f9" stroke="#00447c" stroke-width="2"/>
+  <text x="100" y="90" text-anchor="middle" font-size="16" font-weight="700" fill="#00447c">View</text>
+  <text x="100" y="110" text-anchor="middle" font-size="12" fill="#455060">itens_view.dart</text>
+  <rect x="230" y="60" width="160" height="70" rx="10" fill="#fdf0e3" stroke="#e8730c" stroke-width="2"/>
+  <text x="310" y="90" text-anchor="middle" font-size="16" font-weight="700" fill="#a2510a">Controller</text>
+  <text x="310" y="110" text-anchor="middle" font-size="12" fill="#455060">itens_controller.dart</text>
+  <rect x="440" y="60" width="160" height="70" rx="10" fill="#e6f4ee" stroke="#1d7a52" stroke-width="2"/>
+  <text x="520" y="90" text-anchor="middle" font-size="16" font-weight="700" fill="#1d7a52">Model</text>
+  <text x="520" y="110" text-anchor="middle" font-size="12" fill="#455060">item.dart</text>
+  <line x1="180" y1="80" x2="228" y2="80" stroke="#455060" stroke-width="2" marker-end="url(#seta6)"/>
+  <text x="204" y="50" text-anchor="middle" font-size="11.5" fill="#455060">1. pedir(item)</text>
+  <line x1="390" y1="95" x2="438" y2="95" stroke="#455060" stroke-width="2" marker-end="url(#seta6)"/>
+  <text x="414" y="50" text-anchor="middle" font-size="11.5" fill="#455060">2. altera</text>
+  <path d="M310 130 Q310 175 205 175 Q100 175 100 132" fill="none" stroke="#455060" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#seta6)"/>
+  <text x="205" y="168" text-anchor="middle" font-size="11.5" fill="#455060">3. notifyListeners() — a tela se redesenha</text>
+</svg>
+<figcaption>O caminho de um toque no botão <b>Pedir emprestado</b> pelas três camadas.</figcaption>
+</figure>
+
+<h3>6.2 Como fica no Flutter</h3>
+<p>O Flutter não obriga nenhuma arquitetura, então a squad combina. Nesta UC usamos uma versão simples do MVC, com pastas assim:</p>
+<div class="codigo"><div class="codigo-head"><span>estrutura de pastas</span></div><pre data-lang="sh">lib/
+├── main.dart          só chama runApp()
+├── app.dart           MaterialApp, tema, primeira tela
+├── models/            MODEL: classes de dados (item.dart)
+├── controllers/       CONTROLLER: regras e estado (itens_controller.dart)
+├── views/             VIEW: uma tela por arquivo (itens_view.dart)
+├── widgets/           pedaços reutilizáveis de tela (item_card.dart)
+└── tema/              cores, fontes e espaçamentos (tema.dart)</pre></div>
+
+<p>O <b>model</b> é uma classe Dart comum, sem nada de tela:</p>
+<div class="codigo"><div class="codigo-head"><span>lib/models/item.dart</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">class Item {
+  final String id;
+  final String nome;
+  final String dono;
+  bool disponivel;
+
+  Item({
+    required this.id,
+    required this.nome,
+    required this.dono,
+    this.disponivel = true,
+  });
+}</pre></div>
+
+<p>O <b>controller</b> herda de <code>ChangeNotifier</code>, uma classe do próprio Flutter que sabe avisar quem estiver ouvindo:</p>
+<div class="codigo"><div class="codigo-head"><span>lib/controllers/itens_controller.dart (resumido)</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">import 'package:flutter/foundation.dart';
+import '../models/item.dart';
+
+class ItensController extends ChangeNotifier {
+  final List&lt;Item&gt; _itens = [
+    Item(id: '1', nome: 'Furadeira de impacto', dono: 'Seu Antônio'),
+    Item(id: '2', nome: 'Escada de alumínio', dono: 'Dona Ilza'),
+  ];
+
+  List&lt;Item&gt; get itens =&gt; List.unmodifiable(_itens);
+
+  bool pedir(Item item) {
+    if (!item.disponivel) return false;
+    item.disponivel = false;
+    notifyListeners(); // avisa as telas: "algo mudou, redesenhem"
+    return true;
+  }
+}</pre></div>
+
+<p>A <b>view</b> usa <code>ListenableBuilder</code> para se redesenhar sempre que o controller avisar:</p>
+<div class="codigo"><div class="codigo-head"><span>lib/views/itens_view.dart (resumido)</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">class ItensView extends StatelessWidget {
+  const ItensView({super.key, required this.controller});
+  final ItensController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: controller,
+      builder: (context, _) {
+        return ListView(
+          children: [
+            for (final item in controller.itens)
+              ListTile(
+                title: Text(item.nome),
+                subtitle: Text(item.disponivel ? 'Disponível' : 'Emprestado'),
+                onTap: () =&gt; controller.pedir(item),
+              ),
+          ],
+        );
+      },
+    );
+  }
+}</pre></div>
+
+<h3>6.3 StatelessWidget e StatefulWidget</h3>
+<div class="grid g2">
+  <div class="card"><h4>StatelessWidget</h4><p>Não guarda nada que mude. Recebe dados e desenha. A maioria das telas e componentes é assim: <code>ItemCard</code>, <code>PerfilView</code>.</p></div>
+  <div class="card"><h4>StatefulWidget</h4><p>Guarda um <b>estado</b> local que muda com o uso (a aba selecionada, a senha visível ou não). Para mudar, chama <code>setState(() { ... })</code>, que redesenha o widget.</p></div>
+</div>
+<div class="box atencao"><span class="rot">Atenção</span><p>Estado que só interessa a uma tela (aba atual, campo visível) pode ficar no <code>StatefulWidget</code> com <code>setState</code>. Estado que várias telas usam (lista de itens, meus pedidos) fica no <b>controller</b>. Misturar os dois é a origem de metade dos bugs de "a tela não atualiza".</p></div>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>Em projetos maiores, as equipes usam pacotes de gerência de estado como <b>Provider</b>, <b>Riverpod</b> ou <b>Bloc</b>, e arquiteturas como MVVM. Todos partem da mesma ideia que vocês estão aplicando aqui: separar tela, regra e dados. Quem entende o <code>ChangeNotifier</code> aprende qualquer um deles depois.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 6 — Estrutura do projeto.</b> Criem no aplicativo da squad as pastas <code>models</code>, <code>views</code>, <code>controllers</code>, <code>widgets</code> e <code>tema</code>. Usando o inventário de telas, listem quais arquivos vão existir em cada pasta e quais componentes se repetem em mais de uma tela (eles vão para <code>widgets/</code>). Registrem um diagrama simples (pode ser foto de papel) no <code>README.md</code> do repositório.</p></div>
+
+<!-- ============================ AULA 7 ============================ -->
+<h2 id="a7"><span class="num">Aula 7 · Desenvolvimento</span>Desenvolvimento híbrido, webstandards e PWA</h2>
+
+<p class="lede">O Flutter não é híbrido, mas o mercado está cheio de aplicativos que são. Hoje entendemos a web como plataforma mobile e comparamos as abordagens.</p>
+
+<h3>7.1 Marcação e estilo</h3>
+<p>Aplicativos híbridos e PWAs são feitos com as três linguagens da web: <b>HTML</b> (estrutura e conteúdo), <b>CSS</b> (aparência) e <b>JavaScript</b> (comportamento). Estes padrões são mantidos pelo <b>W3C</b> (World Wide Web Consortium), que também publica as diretrizes de acessibilidade WCAG que usaremos na Aula 15.</p>
+
+<div class="codigo"><div class="codigo-head"><span>item.html — o cartão de item em HTML e CSS</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Empresta Aí&lt;/title&gt;
+  &lt;style&gt;
+    body   { font-family: sans-serif; margin: 0; padding: 16px; background: #f6f8fa; }
+    .card  { display: flex; align-items: center; gap: 12px;
+             background: #fff; border-radius: 12px; padding: 12px; }
+    .icone { width: 52px; height: 52px; border-radius: 50%; background: #d3e3f5;
+             display: grid; place-items: center; font-size: 24px; }
+    .textos { flex: 1; }
+    .textos h2 { font-size: 16px; margin: 0; }
+    .selo  { background: #d6e8dc; border-radius: 6px; padding: 2px 8px; font-size: 12px; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;article class="card"&gt;
+    &lt;div class="icone" aria-hidden="true"&gt;🛠&lt;/div&gt;
+    &lt;div class="textos"&gt;
+      &lt;h2&gt;Furadeira de impacto&lt;/h2&gt;
+      &lt;p&gt;Seu Antônio · B-104&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;span class="selo"&gt;Disponível&lt;/span&gt;
+  &lt;/article&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre></div>
+
+<p>Compare com o <code>ItemCard</code> da Aula 4. As ideias são as mesmas, só muda a sintaxe:</p>
+<div class="tab-wrap">
+<table>
+<thead><tr><th>Na web (CSS)</th><th>No Flutter</th></tr></thead>
+<tbody>
+<tr><td><code>display: flex</code> (linha)</td><td><code>Row</code></td></tr>
+<tr><td><code>flex-direction: column</code></td><td><code>Column</code></td></tr>
+<tr><td><code>flex: 1</code></td><td><code>Expanded</code></td></tr>
+<tr><td><code>gap: 12px</code></td><td><code>SizedBox(width: 12)</code> entre os filhos (ou a propriedade <code>spacing</code> nas versões recentes)</td></tr>
+<tr><td><code>padding: 12px</code></td><td><code>Padding(padding: EdgeInsets.all(12))</code></td></tr>
+<tr><td><code>border-radius</code>, <code>background</code></td><td><code>Container(decoration: BoxDecoration(...))</code></td></tr>
+<tr><td><code>&lt;meta name="viewport"&gt;</code></td><td><code>MediaQuery</code> e <code>SafeArea</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>7.2 Webstandards: as boas práticas do W3C</h3>
+<ul>
+<li><b>HTML semântico:</b> usar a tag que diz o que a coisa é (<code>&lt;button&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;h1&gt;</code>), não <code>&lt;div&gt;</code> para tudo. Leitores de tela dependem disso.</li>
+<li><b>Separação de responsabilidades:</b> estrutura no HTML, aparência no CSS, comportamento no JavaScript. É o mesmo raciocínio do MVC.</li>
+<li><b>Viewport e unidades relativas:</b> a meta tag <code>viewport</code> e medidas como <code>%</code>, <code>rem</code> e <code>vw</code> fazem a página se adaptar ao celular.</li>
+<li><b>Validação:</b> o código deve passar no validador do W3C (validator.w3.org) sem erros.</li>
+</ul>
+
+<h3>7.3 Progressive Web Apps (PWA)</h3>
+<div class="box dica"><span class="rot">Conceito-chave</span><p>Uma <b>PWA</b> é um site que se comporta como aplicativo: pode ser instalado na tela inicial, abre em tela cheia e pode funcionar sem internet. Ela depende de três coisas: <b>HTTPS</b>, um arquivo <b>manifest</b> (nome, ícones e cores do app) e um <b>service worker</b> (um script que guarda arquivos para uso offline).</p></div>
+
+<div class="codigo"><div class="codigo-head"><span>manifest.json — o "cartão de identidade" de uma PWA</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="json">{
+  "name": "Empresta Aí",
+  "short_name": "Empresta Aí",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#00447c",
+  "icons": [
+    { "src": "icons/Icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/Icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}</pre></div>
+<p>O Flutter também gera versão web: o comando <code>flutter build web</code> cria a pasta <code>build/web</code>, já com um <code>manifest.json</code> e ícones parecidos com esses (veja <code>web/manifest.json</code> no seu projeto). A diferença é que a versão web do Flutter desenha a tela num <i>canvas</i>, não em HTML semântico. Por isso ela é ótima para aplicativos, e pior que um site comum para conteúdo que precisa aparecer no Google.</p>
+
+<h3>7.4 Comparando as abordagens</h3>
+<div class="tab-wrap">
+<table>
+<thead><tr><th></th><th>Nativo</th><th>Híbrido / PWA</th><th>Flutter</th></tr></thead>
+<tbody>
+<tr><td><b>Código</b></td><td>Um por sistema</td><td>Um só (web)</td><td>Um só (Dart)</td></tr>
+<tr><td><b>Desempenho</b></td><td>Máximo</td><td>Depende do navegador</td><td>Próximo do nativo</td></tr>
+<tr><td><b>Visual</b></td><td>O do sistema</td><td>O do site</td><td>Desenhado pelo Flutter, igual em todo aparelho</td></tr>
+<tr><td><b>Acesso a recursos do aparelho</b></td><td>Total</td><td>Limitado (principalmente no iPhone)</td><td>Amplo, via pacotes</td></tr>
+<tr><td><b>Publicação</b></td><td>Lojas</td><td>Link (PWA) ou lojas (híbrido)</td><td>Lojas e web</td></tr>
+<tr><td><b>Bom para</b></td><td>Apps exigentes (jogos, câmera avançada)</td><td>Equipes web, orçamentos curtos</td><td>Uma squad, dois sistemas, interface caprichada</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box mercado"><span class="rot">Tendências para ficar de olho</span><p>Telas que vão de borda a borda (<i>edge-to-edge</i>), modo escuro como padrão de uso, celulares dobráveis e tablets exigindo leiautes adaptativos, interfaces com mais movimento e personalização (o <i>Material 3 Expressive</i> do Google) e recursos de IA dentro dos aplicativos. Atualização contínua é um dos valores desta UC: siga o blog oficial do Flutter e as notas de cada nova versão.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 7 — Mesma tela, duas tecnologias.</b> Escolham um componente do seu app (um cartão, um cabeçalho, um item de lista) e façam em HTML e CSS, abrindo no navegador com as ferramentas de desenvolvedor no modo celular (F12 → ícone de celular). Depois, escrevam a versão Flutter e montem uma tabela como a da seção 7.1 com as correspondências que encontraram. Pesquisem também uma novidade recente do Flutter ou do Material Design e tragam em uma frase.</p></div>
+
+<!-- ============================ AULA 8 ============================ -->
+<h2 id="a8"><span class="num">Aula 8 · Desenvolvimento</span>Otimização de imagens para dispositivos móveis</h2>
+
+<p class="lede">Uma foto de 5 MB tirada pelo celular, colocada sem tratamento no app, deixa a tela lenta, gasta o plano de dados do usuário e aumenta o tamanho do download. Hoje aprendemos a evitar isso e a usar só imagens que temos direito de usar.</p>
+
+<h3>8.1 Formatos</h3>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:90px">Formato</th><th>Melhor para</th><th>Observação</th></tr></thead>
+<tbody>
+<tr><td><b>JPG</b></td><td>Fotos</td><td>Compressão com perda; sem transparência. Qualidade 70–80% costuma ser invisível ao olho.</td></tr>
+<tr><td><b>PNG</b></td><td>Ícones, logotipos, imagens com transparência</td><td>Sem perda, mas pesado em fotos.</td></tr>
+<tr><td><b>WebP</b></td><td>Fotos e imagens com transparência</td><td>Em geral bem menor que JPG e PNG com qualidade parecida. Suportado pelo Flutter.</td></tr>
+<tr><td><b>SVG</b></td><td>Ícones e ilustrações simples</td><td>Vetorial: fica nítido em qualquer tamanho. No Flutter, precisa do pacote <code>flutter_svg</code>.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>8.2 Densidade de tela</h3>
+<div class="box dica"><span class="rot">Conceito-chave</span><p><b>Densidade</b> é quantos pixels físicos cabem em cada dp. Um celular simples pode ter 2 pixels por dp; um topo de linha, 3 ou mais. Para uma imagem de 100 × 100 dp ficar nítida em todos, você fornece versões de 100, 200 e 300 pixels, e o Flutter escolhe a certa sozinho.</p></div>
+
+<div class="codigo"><div class="codigo-head"><span>organização das imagens no projeto</span></div><pre data-lang="sh">assets/
+└── imagens/
+    ├── logo.png          100 × 100 px  (1x)
+    ├── 2.0x/
+    │   └── logo.png      200 × 200 px
+    └── 3.0x/
+        └── logo.png      300 × 300 px</pre></div>
+
+<div class="codigo"><div class="codigo-head"><span>pubspec.yaml — declarar as imagens</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="yaml">flutter:
+  uses-material-design: true
+  assets:
+    - assets/imagens/</pre></div>
+<div class="box atencao"><span class="rot">Atenção</span><p>O <code>pubspec.yaml</code> usa indentação com <b>espaços</b> (nunca Tab), e ela tem significado: <code>assets:</code> fica dois espaços para dentro de <code>flutter:</code>. Depois de alterar o arquivo, pare o app e rode <code>flutter run</code> de novo (hot reload não carrega imagens novas).</p></div>
+
+<div class="codigo"><div class="codigo-head"><span>usando imagens no código</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">// Imagem do próprio app (o Flutter escolhe 1x, 2x ou 3x)
+Image.asset(
+  'assets/imagens/logo.png',
+  width: 100,
+  semanticLabel: 'Logotipo do Empresta Aí',
+);
+
+// Foto grande: decodifica já no tamanho exibido, economizando memória
+Image.asset(
+  'assets/imagens/escada.webp',
+  height: 160,
+  fit: BoxFit.cover,
+  cacheHeight: 480, // 160 dp × densidade 3
+);
+
+// Imagem da internet, com o que mostrar enquanto carrega e se falhar
+Image.network(
+  'https://exemplo.com/furadeira.webp',
+  loadingBuilder: (context, child, progresso) =&gt;
+      progresso == null ? child : const CircularProgressIndicator(),
+  errorBuilder: (context, erro, pilha) =&gt; const Icon(Icons.broken_image),
+);</pre></div>
+
+<h3>8.3 Como otimizar</h3>
+<ol class="passos">
+<li><b>Redimensione</b> para o tamanho máximo em que a imagem aparece (em pixels, já multiplicado pela densidade 3x). Uma foto de 4000 px para um espaço de 360 dp é desperdício.</li>
+<li><b>Converta</b> para o formato certo (fotos em WebP ou JPG; ícones em SVG ou PNG).</li>
+<li><b>Comprima</b> com uma ferramenta como Squoosh (squoosh.app, no navegador) ou TinyPNG.</li>
+<li><b>Meça</b> o antes e o depois e anote o ganho. É evidência para o relatório.</li>
+<li><b>Prefira ícones a imagens</b> quando possível: o Flutter já traz milhares de ícones Material (<code>Icon(Icons.handyman)</code>) que não pesam nada.</li>
+</ol>
+
+<h3>8.4 Propriedade intelectual</h3>
+<p>Imagem achada no Google <b>não</b> é imagem livre. Antes de usar qualquer imagem, ícone ou fonte, confira a licença:</p>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:210px">Origem</th><th>Pode usar?</th></tr></thead>
+<tbody>
+<tr><td>Fotos próprias ou da squad</td><td>Sim. Se aparecer alguém, precisa de autorização da pessoa.</td></tr>
+<tr><td>Unsplash, Pexels, Pixabay</td><td>Em geral sim, inclusive comercialmente, conforme a licença de cada site. Dar crédito é boa prática.</td></tr>
+<tr><td>Creative Commons (CC BY, CC BY-SA...)</td><td>Sim, cumprindo as condições: <b>BY</b> exige crédito ao autor; <b>NC</b> proíbe uso comercial; <b>ND</b> proíbe alterar.</td></tr>
+<tr><td>Ícones Material (Google)</td><td>Sim, licença Apache 2.0. Já vêm no Flutter.</td></tr>
+<tr><td>Google Fonts</td><td>Sim, a maioria sob a licença SIL Open Font License.</td></tr>
+<tr><td>Imagens geradas por IA</td><td>Depende dos termos da ferramenta. Registre qual ferramenta e qual prompt foram usados.</td></tr>
+<tr><td>Logotipo de outra empresa, imagem de banco pago, print de outro app</td><td><b>Não</b>, sem autorização.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 8 — Imagens do projeto.</b> Reúnam todas as imagens que o app vai usar, otimizem (redimensionar, converter, comprimir) e gerem as versões 2.0x e 3.0x quando fizer sentido. Preencham a <a href="#tpl">Planilha de recursos visuais</a> com nome do arquivo, origem, licença, peso antes e depois. Coloquem as imagens em <code>assets/imagens/</code>, declarem no <code>pubspec.yaml</code> e mostrem pelo menos uma no emulador.</p></div>
+
+<!-- ============================ AULA 9 ============================ -->
+<h2 id="a9"><span class="num">Aula 9 · Desenvolvimento</span>Dart essencial, telas e componentes</h2>
+
+<p class="lede">Hoje a primeira tela de verdade do aplicativo da squad sai do wireframe e vai para o emulador. Antes, o mínimo de Dart que você precisa para montar telas sem tropeçar.</p>
+
+<h3>9.1 Dart em dez minutos</h3>
+<div class="codigo"><div class="codigo-head"><span>o essencial de Dart para interface</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">// Variáveis
+var cidade = 'Linhares';      // tipo deduzido (String)
+String bloco = 'B';           // tipo explícito
+final hoje = DateTime.now();  // não pode ser reatribuída
+const moradores = 96;         // valor fixo, conhecido antes de rodar
+
+// Tipos mais usados
+int quantidade = 3;
+double nota = 9.5;
+bool disponivel = true;
+List&lt;String&gt; categorias = ['Ferramentas', 'Cozinha', 'Lazer'];
+Map&lt;String, int&gt; estoque = {'escada': 1, 'furadeira': 2};
+
+// Interpolação de texto
+print('Moradores: $moradores, cidade: ${cidade.toUpperCase()}');
+
+// Null safety: o ? diz "pode ser nulo"
+String? apelido;
+print(apelido ?? 'sem apelido');   // ?? usa um valor padrão se for nulo
+print(apelido?.length);            // ?. só acessa se não for nulo
+
+// Funções, com parâmetros nomeados entre chaves
+String saudacao({required String nome, String periodo = 'dia'}) {
+  return 'Bom $periodo, $nome!';
+}
+saudacao(nome: 'Dona Ilza');
+
+// Função de uma linha (arrow function)
+int dobro(int x) =&gt; x * 2;
+
+// Classes
+class Morador {
+  final String nome;
+  final String apartamento;
+  const Morador({required this.nome, required this.apartamento});
+}
+
+// if e for dentro de listas (muito usados em telas)
+final mostrarAviso = true;
+final widgets = [
+  'Título',
+  if (mostrarAviso) 'Aviso',
+  for (final c in categorias) c,
+];</pre></div>
+
+<div class="box dica"><span class="rot">Conceito-chave</span><p>Use <b><code>const</code></b> sempre que um widget não depender de nada que muda: <code>const Text('Entrar')</code>, <code>const SizedBox(height: 16)</code>. O Flutter reaproveita esses widgets em vez de recriá-los, e o app fica mais leve. O próprio VS Code sublinha onde dá para colocar <code>const</code>.</p></div>
+
+<h3>9.2 O catálogo de componentes</h3>
+<p>Toda tela começa num <code>Scaffold</code>, o "esqueleto" com espaço para barra superior, corpo, barra inferior e botão flutuante. Dentro dele, os componentes do dia a dia:</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:200px">Componente</th><th>Para quê</th></tr></thead>
+<tbody>
+<tr><td><code>Scaffold</code>, <code>AppBar</code></td><td>Estrutura da tela e barra de título</td></tr>
+<tr><td><code>Text</code>, <code>Icon</code>, <code>Image</code></td><td>Conteúdo</td></tr>
+<tr><td><code>FilledButton</code></td><td>Ação principal da tela (só uma por tela)</td></tr>
+<tr><td><code>OutlinedButton</code>, <code>TextButton</code></td><td>Ações secundárias e terciárias</td></tr>
+<tr><td><code>IconButton</code></td><td>Ação só com ícone (sempre com <code>tooltip</code>)</td></tr>
+<tr><td><code>TextField</code>, <code>TextFormField</code></td><td>Entrada de texto</td></tr>
+<tr><td><code>Checkbox</code>, <code>Switch</code>, <code>Radio</code>, <code>DropdownMenu</code></td><td>Escolhas</td></tr>
+<tr><td><code>Card</code>, <code>ListTile</code>, <code>Chip</code></td><td>Agrupar e listar informação</td></tr>
+<tr><td><code>ListView.builder</code></td><td>Listas longas: só constrói os itens que aparecem na tela</td></tr>
+<tr><td><code>CircularProgressIndicator</code></td><td>Carregando</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>9.3 Montando uma tela a partir do wireframe</h3>
+<p>Siga sempre esta ordem: <b>esqueleto → blocos → conteúdo → acabamento</b>. Primeiro o <code>Scaffold</code> e a <code>Column</code> principal; depois os blocos com cores provisórias; depois os textos e imagens reais; só no final espaçamentos finos e tema.</p>
+
+<div class="codigo"><div class="codigo-head"><span>lib/views/inicio_view.dart — versão inicial</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">import 'package:flutter/material.dart';
+
+class InicioView extends StatelessWidget {
+  const InicioView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Empresta Aí')),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: 10,
+        itemBuilder: (context, i) {
+          return Card(
+            child: ListTile(
+              leading: const Icon(Icons.handyman),
+              title: Text('Item ${i + 1}'),
+              subtitle: const Text('Dono · Apartamento'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () {},
+            ),
+          );
+        },
+      ),
+    );
+  }
+}</pre></div>
+
+<h3>9.4 Extraindo componentes</h3>
+<p>Quando um pedaço de tela aparece mais de uma vez, ou quando o <code>build</code> passa de umas 60 linhas, extraia um widget. No VS Code, clique no widget, aperte <code>Ctrl + .</code> e escolha <b>Extract Widget</b>.</p>
+<div class="codigo"><div class="codigo-head"><span>lib/widgets/botao_principal.dart</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">import 'package:flutter/material.dart';
+
+/// Botão largo, com ícone e texto, para a ação principal da tela.
+class BotaoPrincipal extends StatelessWidget {
+  const BotaoPrincipal({
+    super.key,
+    required this.texto,
+    required this.icone,
+    required this.aoTocar,
+  });
+
+  final String texto;
+  final IconData icone;
+  final VoidCallback? aoTocar; // null = botão desabilitado
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 52,
+      child: FilledButton.icon(
+        onPressed: aoTocar,
+        icon: Icon(icone),
+        label: Text(texto, style: const TextStyle(fontSize: 17)),
+      ),
+    );
+  }
+}
+
+// Uso:
+// BotaoPrincipal(texto: 'Pedir emprestado', icone: Icons.handshake, aoTocar: _pedir)</pre></div>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>Times profissionais mantêm uma <b>biblioteca de componentes</b>: um conjunto de widgets próprios (botão, cartão, campo) usados em todas as telas. Se o cliente pedir para mudar o arredondamento dos botões, muda-se um arquivo e o app inteiro acompanha. É o que vocês documentam no Manual de Interface da Aula 18.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 9 — Primeiras telas.</b> Cada squad implementa, em branches separadas, a <b>tela de entrada</b> e a <b>tela inicial</b> do seu app, fiéis ao wireframe, com pelo menos um componente extraído para <code>widgets/</code> e as imagens otimizadas da Aula 8. Ao final, revisão cruzada: outra squad abre o app no emulador e compara com o wireframe, anotando três diferenças.</p></div>
+
+<!-- ============================ AULA 10 ============================ -->
+<h2 id="a10"><span class="num">Aula 10 · Checkpoint 1</span>Consolidação e entrega das telas base</h2>
+
+<p class="lede">Primeira parada para olhar o que foi construído. A devolutiva sai no mesmo encontro, e a squad ganha prazo para ajustar antes das aulas de interação.</p>
+
+<h3>10.1 O que entregar</h3>
+<p>As telas base rodando no emulador, com o repositório organizado e uma tag <code>v0.1.0</code>. Avaliam-se os indicadores <span class="bg bg-i">I1</span> (leiaute) e <span class="bg bg-i">I2</span> (implementação conforme leiaute e arquitetura).</p>
+
+<h3>10.2 Checklist do Checkpoint 1</h3>
+<ul class="check">
+<li>As telas de entrada e inicial seguem o wireframe (ou as diferenças estão justificadas).</li>
+<li>A ação principal de cada tela está clara e na zona do polegar.</li>
+<li>Alvos de toque com pelo menos 48 dp.</li>
+<li>O app roda sem faixas de overflow nos <b>dois</b> emuladores (grande e pequeno).</li>
+<li>Pastas <code>models</code>, <code>views</code>, <code>controllers</code>, <code>widgets</code> criadas e usadas.</li>
+<li>Pelo menos um componente reutilizável em <code>widgets/</code>.</li>
+<li>Imagens otimizadas, declaradas no <code>pubspec.yaml</code>, com a planilha de licenças preenchida.</li>
+<li>Commits com mensagens claras, de todos os integrantes, via Pull Request.</li>
+<li>Tag <code>v0.1.0</code> publicada no GitHub.</li>
+<li><code>flutter analyze</code> sem erros.</li>
+</ul>
+
+<div class="codigo"><div class="codigo-head"><span>terminal — verificação antes de entregar</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="sh">flutter analyze          # procura erros e más práticas no código
+dart format lib          # padroniza a formatação de todos os arquivos
+git status               # nada esquecido sem commit?</pre></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 10 — Checkpoint 1.</b> Passem o checklist em squad antes de chamar o docente. Na devolutiva, anotem cada ajuste pedido como uma tarefa no quadro da squad (o mesmo da UC2), com responsável e prazo.</p></div>
+
+<div class="box mercado"><span class="rot">Proatividade conta</span><p>Squad que chega ao checkpoint já sabendo o que falta, com isso escrito e com um plano, mostra exatamente a atitude que o mercado procura. "Não deu tempo" sem explicação, não.</p></div>
+
+<!-- ============================ AULA 11 ============================ -->
+<h2 id="a11"><span class="num">Aula 11 · Desenvolvimento</span>Interação I: toque e navegação</h2>
+
+<p class="lede">Até aqui, telas soltas. Hoje elas viram um aplicativo: cada toque leva a algum lugar, e o usuário sempre sabe onde está e como voltar.</p>
+
+<h3>11.1 Respondendo ao toque</h3>
+<p>Botões já têm <code>onPressed</code>. Para tornar tocável qualquer outra coisa (um cartão, uma imagem), use <code>InkWell</code>, que mostra o efeito de "onda" do Material, ou <code>GestureDetector</code>, que reconhece mais gestos mas não mostra efeito visual.</p>
+<div class="codigo"><div class="codigo-head"><span>eventos de toque</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">// Botão: o jeito mais simples
+FilledButton(
+  onPressed: () =&gt; print('tocou'),
+  child: const Text('Pedir'),
+);
+
+// Qualquer widget tocável, com efeito visual
+Card(
+  clipBehavior: Clip.antiAlias, // a "onda" respeita os cantos arredondados
+  child: InkWell(
+    onTap: () =&gt; abrirDetalhe(),
+    onLongPress: () =&gt; mostrarOpcoes(),
+    child: const ListTile(title: Text('Escada de alumínio')),
+  ),
+);
+
+// Gestos mais avançados (arrastar, toque duplo), sem efeito visual
+GestureDetector(
+  onDoubleTap: () =&gt; favoritar(),
+  child: const Icon(Icons.favorite_border),
+);</pre></div>
+
+<div class="box atencao"><span class="rot">Atenção</span><p>Gesto escondido (toque longo, toque duplo, deslizar) nunca pode ser o <b>único</b> jeito de fazer algo. Seu Antônio não vai descobrir sozinho que precisa segurar o dedo no item. Sempre ofereça também um botão visível.</p></div>
+
+<h3>11.2 Alternância entre telas com o Navigator</h3>
+<div class="box dica"><span class="rot">Conceito-chave</span><p>O <b>Navigator</b> funciona como uma pilha de pratos. <code>push</code> coloca uma tela nova em cima; <code>pop</code> tira a de cima e revela a anterior. O botão "voltar" do Android e a seta da <code>AppBar</code> fazem <code>pop</code> automaticamente.</p></div>
+
+<div class="codigo"><div class="codigo-head"><span>abrir uma tela passando dados, e voltar</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">// Na lista: abrir o detalhe do item tocado
+Navigator.of(context).push(
+  MaterialPageRoute(
+    builder: (context) =&gt; ItemDetalheView(item: item),
+  ),
+);
+
+// No detalhe: voltar para a lista
+Navigator.of(context).pop();
+
+// Trocar a tela atual sem permitir voltar (ex.: depois do login)
+Navigator.of(context).pushReplacement(
+  MaterialPageRoute(builder: (context) =&gt; const InicioView()),
+);
+
+// Esperar uma resposta da tela que foi aberta
+final confirmou = await Navigator.of(context).push&lt;bool&gt;(
+  MaterialPageRoute(builder: (context) =&gt; const ConfirmarView()),
+);
+// e, na ConfirmarView: Navigator.of(context).pop(true);</pre></div>
+
+<h3>11.3 Navegação inferior com abas</h3>
+<p>Para as seções principais, a <code>NavigationBar</code> (Aula 5) troca o conteúdo do corpo sem empilhar telas. A aba selecionada é estado local, então usamos <code>StatefulWidget</code> e <code>setState</code>:</p>
+<div class="codigo"><div class="codigo-head"><span>lib/views/inicio_view.dart (versão simplificada; no projeto-base as abas recebem o controller)</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">class InicioView extends StatefulWidget {
+  const InicioView({super.key});
+
+  @override
+  State&lt;InicioView&gt; createState() =&gt; _InicioViewState();
+}
+
+class _InicioViewState extends State&lt;InicioView&gt; {
+  int _abaAtual = 0;
+
+  final _abas = const [ItensView(), PedidosView(), PerfilView()];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(child: _abas[_abaAtual]),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _abaAtual,
+        onDestinationSelected: (i) =&gt; setState(() =&gt; _abaAtual = i),
+        destinations: const [
+          NavigationDestination(icon: Icon(Icons.search), label: 'Itens'),
+          NavigationDestination(icon: Icon(Icons.inventory_2_outlined), label: 'Meus pedidos'),
+          NavigationDestination(icon: Icon(Icons.person_outline), label: 'Perfil'),
+        ],
+      ),
+    );
+  }
+}</pre></div>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>Aplicativos com muitas telas costumam usar <b>rotas nomeadas</b> e o pacote <b>go_router</b>, que permite endereços como <code>/itens/12</code> e links que abrem direto numa tela. Para o tamanho dos projetos desta UC, o <code>Navigator.push</code> resolve bem.</p></div>
+
+<h3>11.4 Limitações e possibilidades de navegação</h3>
+<ul>
+<li><b>Profundidade:</b> se o usuário precisa de mais de três toques para chegar ao que quer, repense o fluxo.</li>
+<li><b>Voltar previsível:</b> o botão voltar deve levar para onde o usuário espera. Depois do login, voltar não deve retornar à tela de senha (por isso o <code>pushReplacement</code>).</li>
+<li><b>Sair sem perder dados:</b> se o usuário preencheu um formulário e aperta voltar, pergunte antes de descartar. O widget <code>PopScope</code> permite interceptar o voltar.</li>
+<li><b>Onde estou?</b> Título na <code>AppBar</code> e aba destacada sempre mostram a posição atual.</li>
+</ul>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 11 — Fluxo principal navegável.</b> Liguem as telas do app: entrada → inicial → detalhe → voltar, e a navegação inferior (ou o padrão escolhido na Aula 5). Depois, <b>teste cruzado</b>: uma pessoa de outra squad recebe uma tarefa ("encontre a escada e peça emprestado") e tenta cumprir sem ajuda. Anotem onde ela hesitou, se perdeu ou tocou no lugar errado.</p></div>
+
+<!-- ============================ AULA 12 ============================ -->
+<h2 id="a12"><span class="num">Aula 12 · Desenvolvimento</span>Interação II: formulários, teclado virtual e feedback</h2>
+
+<p class="lede">Toda ação do usuário merece uma resposta. E todo campo de formulário merece o teclado certo. Hoje cuidamos das duas coisas.</p>
+
+<h3>12.1 O teclado certo para cada campo</h3>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:250px"><code>keyboardType</code></th><th>Teclado que aparece</th><th>Use em</th></tr></thead>
+<tbody>
+<tr><td><code>TextInputType.text</code></td><td>Letras (padrão)</td><td>Nomes, descrições</td></tr>
+<tr><td><code>TextInputType.number</code></td><td>Só números</td><td>Senhas numéricas, quantidades</td></tr>
+<tr><td><code>TextInputType.phone</code></td><td>Discador</td><td>Telefone</td></tr>
+<tr><td><code>TextInputType.emailAddress</code></td><td>Letras com @ e .com à mão</td><td>E-mail</td></tr>
+<tr><td><code>TextInputType.multiline</code></td><td>Letras com tecla de nova linha</td><td>Observações longas</td></tr>
+<tr><td><code>TextInputType.datetime</code></td><td>Números com / e :</td><td>Datas digitadas (prefira um seletor de data)</td></tr>
+</tbody>
+</table>
+</div>
+<p>Além do tipo, o <code>textInputAction</code> muda o botão de ação do teclado: <code>next</code> (vai para o próximo campo), <code>done</code> (fecha o teclado), <code>search</code> (lupa).</p>
+
+<h3>12.2 Formulário com validação</h3>
+<div class="codigo"><div class="codigo-head"><span>formulário de cadastro de item</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">class CadastroItemView extends StatefulWidget {
+  const CadastroItemView({super.key});
+
+  @override
+  State&lt;CadastroItemView&gt; createState() =&gt; _CadastroItemViewState();
+}
+
+class _CadastroItemViewState extends State&lt;CadastroItemView&gt; {
+  final _formKey = GlobalKey&lt;FormState&gt;();
+  final _nome = TextEditingController();
+
+  @override
+  void dispose() {
+    _nome.dispose(); // libera a memória do campo ao sair da tela
+    super.dispose();
+  }
+
+  void _salvar() {
+    if (!_formKey.currentState!.validate()) return; // mostra os erros
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('"${_nome.text}" cadastrado!')),
+    );
+    Navigator.of(context).pop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Cadastrar item')),
+      body: SingleChildScrollView( // rola quando o teclado abre
+        padding: const EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                controller: _nome,
+                textCapitalization: TextCapitalization.sentences,
+                textInputAction: TextInputAction.next,
+                decoration: const InputDecoration(
+                  labelText: 'Nome do item',
+                  hintText: 'Ex.: Furadeira de impacto',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (valor) {
+                  if (valor == null || valor.trim().isEmpty) {
+                    return 'Diga o nome do item.';
+                  }
+                  if (valor.trim().length &lt; 3) {
+                    return 'O nome precisa de pelo menos 3 letras.';
+                  }
+                  return null; // null = campo válido
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                keyboardType: TextInputType.multiline,
+                maxLines: 3,
+                decoration: const InputDecoration(
+                  labelText: 'Observações (opcional)',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 24),
+              FilledButton(onPressed: _salvar, child: const Text('Salvar')),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}</pre></div>
+
+<div class="fones">
+  <figure class="fone-fig">
+    <div class="fone">
+      <div class="status"><span>9:41</span><span>▮▮▮ 🔋</span></div>
+      <div class="appbar">← Cadastrar item</div>
+      <div class="tela">
+        <div class="f-campo erro">Nome do item</div>
+        <div class="f-erro">Diga o nome do item.</div>
+        <div class="f-campo" style="height:58px">Observações (opcional)</div>
+        <div class="f-btn">Salvar</div>
+      </div>
+    </div>
+    <div class="rodape-fone">Erro de validação: borda vermelha e mensagem que diz o que fazer.</div>
+  </figure>
+  <figure class="fone-fig">
+    <div class="fone">
+      <div class="status"><span>9:41</span><span>▮▮▮ 🔋</span></div>
+      <div class="tela">
+        <div class="f-titulo">O que você precisa hoje?</div>
+        <div class="f-card"><div class="f-av">🛠</div><div><b>Furadeira de impacto</b><small>Seu Antônio · B-104</small></div><span class="f-chip">Disponível</span></div>
+        <div class="f-card"><div class="f-av">🪜</div><div><b>Escada de alumínio</b><small>Dona Ilza · A-201</small></div><span class="f-chip n">Emprestado</span></div>
+        <div class="f-snack">Pedido enviado! Dona Ilza vai receber um aviso.</div>
+      </div>
+      <div class="navbar"><span class="on"><i>🔍</i>Itens</span><span><i>📦</i>Meus pedidos</span><span><i>👤</i>Perfil</span></div>
+    </div>
+    <div class="rodape-fone">SnackBar confirmando a ação, sem interromper o usuário.</div>
+  </figure>
+</div>
+
+<h3>12.3 Feedback ao usuário</h3>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:180px">Situação</th><th>Feedback adequado</th><th>Widget</th></tr></thead>
+<tbody>
+<tr><td>Ação concluída</td><td>Mensagem curta que some sozinha</td><td><code>SnackBar</code></td></tr>
+<tr><td>Ação que não tem volta</td><td>Pedir confirmação antes</td><td><code>AlertDialog</code> via <code>showDialog</code></td></tr>
+<tr><td>Esperando algo</td><td>Indicador de carregamento; desabilitar o botão para evitar toque duplo</td><td><code>CircularProgressIndicator</code></td></tr>
+<tr><td>Erro de preenchimento</td><td>Mensagem no próprio campo, dizendo como corrigir</td><td><code>validator</code></td></tr>
+<tr><td>Lista vazia</td><td>Explicar por que está vazia e o que fazer</td><td><code>Text</code> + botão</td></tr>
+<tr><td>Ação indisponível</td><td>Botão desabilitado (<code>onPressed: null</code>) e texto explicando</td><td>qualquer botão</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="codigo"><div class="codigo-head"><span>confirmação antes de agir (projeto-base, item_detalhe_view.dart)</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">final confirmou = await showDialog&lt;bool&gt;(
+  context: context,
+  builder: (context) =&gt; AlertDialog(
+    title: const Text('Confirmar pedido?'),
+    content: Text('Vamos avisar ${item.dono} que você quer pegar "${item.nome}".'),
+    actions: [
+      TextButton(
+        onPressed: () =&gt; Navigator.pop(context, false),
+        child: const Text('Cancelar'),
+      ),
+      FilledButton(
+        onPressed: () =&gt; Navigator.pop(context, true),
+        child: const Text('Confirmar'),
+      ),
+    ],
+  ),
+);
+if (confirmou != true || !context.mounted) return;</pre></div>
+<p>O <code>context.mounted</code> confere se a tela ainda existe depois do <code>await</code>. Sem ele, o app pode tentar mostrar um SnackBar numa tela que o usuário já fechou.</p>
+
+<h3>12.4 Quando o teclado cobre o campo</h3>
+<p>O teclado virtual ocupa quase metade da tela. O <code>Scaffold</code> já encolhe o corpo quando ele abre, mas se o conteúdo não puder rolar, aparece overflow ou o campo some atrás do teclado. A regra: <b>toda tela com campo de texto tem o conteúdo dentro de um <code>SingleChildScrollView</code> ou <code>ListView</code></b>. Teste sempre no emulador pequeno, com o teclado aberto no último campo.</p>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 12 — Formulário e feedback.</b> Implementem pelo menos um formulário do app com validação, teclado adequado em cada campo e <code>textInputAction</code> levando de um campo ao outro. Adicionem feedback para as ações principais (SnackBar, confirmação e estado vazio). Testem nos dois emuladores com o teclado aberto e registrem prints do antes e depois de qualquer ajuste.</p></div>
+
+<!-- ============================ AULA 13 ============================ -->
+<h2 id="a13"><span class="num">Aula 13 · Desenvolvimento</span>Conteúdo visual e textual</h2>
+
+<p class="lede">Texto também é interface. Um botão escrito "Submeter" e uma mensagem "Erro 422" afastam mais usuários do que qualquer cor feia.</p>
+
+<h3>13.1 Hierarquia tipográfica</h3>
+<p>O Material 3 define papéis para o texto, e o Flutter já traz todos no <code>TextTheme</code>. Use os papéis em vez de inventar tamanhos soltos:</p>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:230px">Papel no <code>TextTheme</code></th><th>Uso</th></tr></thead>
+<tbody>
+<tr><td><code>headlineLarge</code> / <code>headlineSmall</code></td><td>Título principal da tela</td></tr>
+<tr><td><code>titleLarge</code> / <code>titleMedium</code></td><td>Títulos de seção, nome do item no cartão</td></tr>
+<tr><td><code>bodyLarge</code> / <code>bodyMedium</code></td><td>Texto corrido, descrições</td></tr>
+<tr><td><code>labelLarge</code></td><td>Texto de botões</td></tr>
+</tbody>
+</table>
+</div>
+<div class="codigo"><div class="codigo-head"><span>usando os papéis de texto do tema</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">final textos = Theme.of(context).textTheme;
+
+Text('O que você precisa hoje?', style: textos.headlineSmall);
+Text('Furadeira de impacto', style: textos.titleMedium);
+Text('Emprestada 12 vezes este ano.', style: textos.bodyMedium);</pre></div>
+
+<h3>13.2 Microtextos</h3>
+<p>Microtextos são os textos curtos da interface: botões, rótulos, mensagens, dicas. Algumas regras:</p>
+<ul>
+<li><b>Botão diz o que acontece:</b> "Pedir emprestado", não "OK" nem "Enviar".</li>
+<li><b>Fale como o usuário fala:</b> "apartamento", não "unidade habitacional".</li>
+<li><b>Mensagem de erro = o que aconteceu + como resolver</b>, sem culpar a pessoa.</li>
+<li><b>Seja breve:</b> se cabe em três palavras, não use dez.</li>
+<li><b>Tom de voz consistente:</b> o Empresta Aí é "confiável, simples, vizinhança, sem frescura" (definido na UC1). Isso vale para todos os textos.</li>
+</ul>
+
+<div class="comparativo">
+<div class="errado"><h4>Texto que atrapalha</h4><ul><li>"Submeter solicitação"</li><li>"Erro: campo obrigatório"</li><li>"Falha na operação. Código 500."</li><li>"Nenhum registro encontrado"</li></ul></div>
+<div class="certo"><h4>Texto que ajuda</h4><ul><li>"Pedir emprestado"</li><li>"Diga o nome do item."</li><li>"Não conseguimos enviar agora. Confira sua internet e tente de novo."</li><li>"Ninguém cadastrou esse item ainda. Que tal perguntar no grupo?"</li></ul></div>
+</div>
+
+<h3>13.3 Guia de estilo vira código: o tema</h3>
+<p>O guia de estilo registra as decisões visuais (cores, fontes, espaçamentos, formato dos botões). No Flutter, ele vira um <code>ThemeData</code>: um lugar só, aplicado ao app inteiro.</p>
+<div class="codigo"><div class="codigo-head"><span>lib/tema/tema.dart (projeto-base, resumido)</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">import 'package:flutter/material.dart';
+
+class TemaEmprestaAi {
+  static const Color corSemente = Color(0xFF00447C); // azul da agência
+
+  // Espaçamentos padronizados: use sempre estes valores
+  static const double espacoP = 8;
+  static const double espacoM = 16;
+  static const double espacoG = 24;
+
+  static ThemeData claro() =&gt; _base(Brightness.light);
+  static ThemeData escuro() =&gt; _base(Brightness.dark);
+
+  static ThemeData _base(Brightness brilho) {
+    return ThemeData(
+      // Gera uma paleta completa e harmoniosa a partir de uma cor
+      colorScheme: ColorScheme.fromSeed(seedColor: corSemente, brightness: brilho),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          minimumSize: const Size.fromHeight(52),
+          textStyle: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+        ),
+      ),
+      inputDecorationTheme: const InputDecorationTheme(border: OutlineInputBorder()),
+    );
+  }
+}
+
+// Em app.dart:
+// MaterialApp(
+//   theme: TemaEmprestaAi.claro(),
+//   darkTheme: TemaEmprestaAi.escuro(), // modo escuro automático
+//   ...
+// )</pre></div>
+
+<div class="box dica"><span class="rot">Conceito-chave</span><p>Depois que o tema existe, nenhuma tela deve ter cor escrita direto no código (<code>Colors.blue</code>, <code>Color(0xFF...)</code>). Use sempre <code>Theme.of(context).colorScheme.primary</code>, <code>.error</code>, <code>.surface</code> etc. Assim o modo escuro e qualquer mudança de marca funcionam sem caçar cor em vinte arquivos.</p></div>
+
+<div class="box mercado"><span class="rot">Fontes personalizadas</span><p>Para usar uma fonte do Google Fonts, baixe os arquivos <code>.ttf</code>, coloque em <code>assets/fontes/</code> e declare em <code>fonts:</code> no <code>pubspec.yaml</code>, ou use o pacote <code>google_fonts</code>. Registre a licença na planilha da Aula 8, como fez com as imagens.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 13 — Textos e guia de estilo.</b> (a) Revisem todos os textos das telas implementadas com as regras de microtexto e escrevam as mensagens de erro e de estado vazio que faltam. (b) Preencham o <a href="#tpl">Guia de estilo</a> com cores, papéis de texto, espaçamentos e componentes. (c) Criem o <code>tema.dart</code> da squad e removam do código todas as cores e tamanhos de fonte escritos à mão.</p></div>
+
+<!-- ============================ AULA 14 ============================ -->
+<h2 id="a14"><span class="num">Aula 14 · Desenvolvimento</span>Testes em mobile I: usabilidade</h2>
+
+<p class="lede">Vocês conhecem o app de cor, então não conseguem mais enxergar onde ele confunde. Precisamos de gente que nunca viu o aplicativo.</p>
+
+<h3>14.1 O que é um teste de usabilidade</h3>
+<div class="box dica"><span class="rot">Conceito-chave</span><p>Num <b>teste de usabilidade</b>, uma pessoa real tenta cumprir tarefas reais no aplicativo enquanto a squad observa, <b>sem ajudar</b>. Mede-se se ela conseguiu (eficácia), quanto tempo e quantos erros levou (eficiência) e o que achou (satisfação). O que se testa é a interface, nunca a pessoa.</p></div>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>A pesquisa do Nielsen Norman Group, referência na área, mostra que testar com cerca de <b>cinco usuários</b> já revela a maior parte dos problemas de usabilidade de uma interface. Vale mais testar pouco e várias vezes do que uma vez só, com muita gente, no final.</p></div>
+
+<h3>14.2 Montando o roteiro</h3>
+<ol class="passos">
+<li><b>Tarefas realistas</b>, escritas como situação, não como instrução: "Sua pia entupiu e você precisa de um desentupidor. Veja se algum vizinho tem", e não "Toque na lupa e digite desentupidor".</li>
+<li><b>Três a cinco tarefas</b>, cobrindo o fluxo principal do app.</li>
+<li><b>Critério de sucesso</b> de cada tarefa definido antes ("chegou à tela de detalhe e tocou em Pedir").</li>
+<li><b>Papéis:</b> um <i>facilitador</i> (conversa com o usuário), um <i>observador</i> (anota) e um <i>cronometrista</i>.</li>
+<li><b>Pensar em voz alta:</b> peça para o usuário falar o que está pensando enquanto usa ("estou procurando onde...").</li>
+</ol>
+
+<h3>14.3 Conduzindo com cordialidade</h3>
+<div class="comparativo">
+<div class="errado"><h4>Atrapalha o teste</h4><ul><li>"É fácil, é só tocar ali embaixo."</li><li>"Não, não é aí!"</li><li>Rir ou suspirar quando a pessoa erra.</li><li>Explicar o app antes de começar.</li></ul></div>
+<div class="certo"><h4>Teste bem conduzido</h4><ul><li>"Estamos testando o aplicativo, não você. Se algo for difícil, a culpa é nossa."</li><li>"O que você esperava que acontecesse?"</li><li>Silêncio paciente quando a pessoa trava.</li><li>Agradecer ao final, de verdade.</li></ul></div>
+</div>
+
+<h3>14.4 Registrando</h3>
+<p>Para cada usuário e cada tarefa, anote na ficha: conseguiu (sim / com dificuldade / não), tempo, erros, onde hesitou e frases marcantes. Identifique os participantes só como <b>Usuário A, B, C</b>: nada de nome, telefone ou foto.</p>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 14 — Teste de usabilidade.</b> Usando o modelo <a href="#tpl">Roteiro de teste de usabilidade</a>, escrevam as tarefas, apliquem com pelo menos três usuários-teste (colegas de outra squad, funcionários ou convidados) no emulador ou no celular e registrem tudo na ficha. Ao final, listem os cinco problemas mais importantes que observaram.</p></div>
+
+<!-- ============================ AULA 15 ============================ -->
+<h2 id="a15"><span class="num">Aula 15 · Desenvolvimento</span>Testes em mobile II: acessibilidade e dispositivo físico</h2>
+
+<p class="lede">Acessibilidade não é acabamento, é requisito. No Empresta Aí, se Seu Antônio não consegue usar, o produto falhou. Hoje testamos o app com os olhos, as mãos e os ouvidos de quem tem alguma limitação.</p>
+
+<h3>15.1 Os quatro pontos que mais reprovam um app</h3>
+<div class="grid g2">
+  <div class="card"><h4>1. Contraste</h4><p>Texto comum precisa de contraste de pelo menos <b>4,5:1</b> com o fundo; texto grande (a partir de 24 px, ou cerca de 19 px em negrito) e ícones, <b>3:1</b> (WCAG 2.2, nível AA, do W3C). Cinza-claro sobre branco quase sempre reprova.</p></div>
+  <div class="card"><h4>2. Alvo de toque</h4><p>Mínimo de 48 × 48 dp em tudo que é tocável, com espaço entre alvos vizinhos.</p></div>
+  <div class="card"><h4>3. Rótulos para leitor de tela</h4><p>Botão só com ícone precisa de <code>tooltip</code>; imagem com significado precisa de <code>semanticLabel</code>; imagem decorativa deve ser ignorada.</p></div>
+  <div class="card"><h4>4. Texto ampliado</h4><p>O app precisa continuar usável com a fonte do sistema no máximo, sem texto cortado nem sobreposto.</p></div>
+</div>
+
+<h3>15.2 Acessibilidade no código Flutter</h3>
+<div class="codigo"><div class="codigo-head"><span>rótulos e semântica</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">// Botão só com ícone: o tooltip vira o rótulo lido pelo leitor de tela
+IconButton(
+  tooltip: 'Mostrar senha',
+  icon: const Icon(Icons.visibility),
+  onPressed: alternarSenha,
+);
+
+// Imagem com significado
+Image.asset('assets/imagens/escada.webp', semanticLabel: 'Escada de alumínio de 7 degraus');
+
+// Imagem só decorativa: o leitor de tela pula
+Image.asset('assets/imagens/fundo.webp', excludeFromSemantics: true);
+
+// Juntar um cartão inteiro numa frase só (projeto-base, item_card.dart)
+Semantics(
+  button: true,
+  label: '${item.nome}, de ${item.dono}, ${disponivel ? 'Disponível' : 'Emprestado'}',
+  excludeSemantics: true, // ignora os textos soltos de dentro
+  child: Card(/* ... */),
+);</pre></div>
+
+<p>O próprio Flutter consegue verificar contraste, tamanho de alvo e rótulos num teste automatizado. O projeto-base já tem este teste em <code>test/widget_test.dart</code>:</p>
+<div class="codigo"><div class="codigo-head"><span>test/widget_test.dart — teste automático de acessibilidade</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="dart">testWidgets('Tela de entrada segue as diretrizes de acessibilidade', (tester) async {
+  final handle = tester.ensureSemantics();
+  await tester.pumpWidget(const EmprestaAiApp());
+
+  await expectLater(tester, meetsGuideline(androidTapTargetGuideline)); // 48 dp
+  await expectLater(tester, meetsGuideline(labeledTapTargetGuideline)); // rótulos
+  await expectLater(tester, meetsGuideline(textContrastGuideline));     // contraste
+
+  handle.dispose();
+});</pre></div>
+<div class="codigo"><div class="codigo-head"><span>terminal</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="sh">flutter test</pre></div>
+
+<div class="box atencao"><span class="rot">Atenção</span><p>O teste automático pega só uma parte dos problemas. Ele não sabe se o rótulo faz sentido, se a ordem de leitura é lógica ou se a tela é compreensível. O teste com o leitor de tela e com pessoas continua obrigatório.</p></div>
+
+<h3>15.3 Testando com o leitor de tela e fonte grande</h3>
+<ol class="passos">
+<li><b>TalkBack (Android):</b> <i>Configurações → Acessibilidade → TalkBack</i>. Com ele ligado, um toque seleciona e lê; dois toques ativam; deslizar para a direita vai ao próximo elemento. No iPhone, o equivalente é o <b>VoiceOver</b>.</li>
+<li>Com os olhos fechados (ou a tela virada), tente cumprir a tarefa principal do app só ouvindo. Anote cada elemento lido de forma confusa ou não lido.</li>
+<li><b>Fonte grande:</b> <i>Configurações → Tela → Tamanho da fonte</i> no máximo. Abra todas as telas e procure texto cortado, sobreposto ou com overflow.</li>
+<li><b>Visualizar a semântica:</b> no código, <code>MaterialApp(showSemanticsDebugger: true, ...)</code> mostra na tela o que o leitor de tela "enxerga".</li>
+</ol>
+
+<h3>15.4 Emulador × dispositivo físico</h3>
+<p>O emulador não mostra tudo: o toque com o dedo de verdade, o brilho e reflexo da tela, o desempenho de um aparelho simples, a câmera e o leitor de tela real. Para rodar no seu celular Android:</p>
+<ol class="passos">
+<li>Em <i>Configurações → Sobre o telefone</i>, toque 7 vezes em <b>Número da versão</b> para liberar as <b>Opções do desenvolvedor</b>.</li>
+<li>Em <i>Opções do desenvolvedor</i>, ative <b>Depuração USB</b>.</li>
+<li>Ligue o celular no computador pelo cabo e aceite o aviso "Permitir depuração USB?" na tela do celular.</li>
+<li>No terminal, <code>flutter devices</code> deve listar o aparelho. Depois, <code>flutter run</code>.</li>
+</ol>
+
+<h3>15.5 Sigilo nos testes</h3>
+<div class="box atencao"><span class="rot">Atenção</span><p>Gravações de tela, fotos e anotações dos testes são dados pessoais dos participantes. Peça autorização antes de gravar, identifique só como "Usuário A", nunca publique gravações no repositório nem em grupos, e apague as gravações depois da avaliação. Isso vale também para os testes da Aula 14.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 15 — Checklist de acessibilidade.</b> Apliquem o <a href="#tpl">Checklist de acessibilidade</a> em todas as telas do app: contraste (use um verificador como o da WebAIM), alvos de toque, rótulos com TalkBack, fonte no máximo. Adicionem ao projeto o teste automático de acessibilidade. Rodem o app em pelo menos um celular real e anotem as diferenças em relação ao emulador.</p></div>
+
+<!-- ============================ AULA 16 ============================ -->
+<h2 id="a16"><span class="num">Aula 16 · Desenvolvimento</span>Ajustes a partir dos testes</h2>
+
+<p class="lede">Os testes geraram uma lista de problemas maior do que o tempo disponível. Isso é normal, e decidir o que corrigir primeiro é parte da competência.</p>
+
+<h3>16.1 Revisão de interface com feedback simulado</h3>
+<p>No início da aula, cada squad recebe do docente um feedback simulado de usuário, diferente para cada equipe: uma tela confusa, um botão pequeno demais para o dedo, contraste insuficiente ou um texto ilegível. Ele entra na lista de achados junto com os problemas dos testes das Aulas 14 e 15.</p>
+
+<h3>16.2 Priorizando por gravidade e frequência</h3>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:80px">Nota</th><th>Gravidade (escala de Nielsen)</th></tr></thead>
+<tbody>
+<tr><td><b>0</b></td><td>Não é problema de usabilidade</td></tr>
+<tr><td><b>1</b></td><td>Cosmético: corrigir se sobrar tempo</td></tr>
+<tr><td><b>2</b></td><td>Menor: atrapalha um pouco, baixa prioridade</td></tr>
+<tr><td><b>3</b></td><td>Maior: atrapalha muito, alta prioridade</td></tr>
+<tr><td><b>4</b></td><td>Catástrofe: impede a tarefa, corrigir antes de entregar</td></tr>
+</tbody>
+</table>
+</div>
+<p>Cruze a gravidade com a <b>frequência</b> (quantos usuários tiveram o problema). Um problema nota 3 que apareceu para todos vem antes de um nota 3 que apareceu para um só. Problemas de acessibilidade que impedem alguém de usar o app são sempre nota 4.</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th>#</th><th>Achado</th><th>Onde</th><th>Gravidade</th><th>Frequência</th><th>Decisão</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Seu Antônio não achou "Meus pedidos": o ícone sem texto não dizia nada</td><td>Navegação</td><td>3</td><td>3 de 4</td><td>Corrigir já: rótulo nas abas</td></tr>
+<tr><td>2</td><td>Botão "Devolvi" com 32 dp de altura</td><td>Meus pedidos</td><td>4</td><td>teste automático</td><td>Corrigir já</td></tr>
+<tr><td>3</td><td>Texto do selo "Emprestado" com contraste 3,1:1</td><td>Lista</td><td>3</td><td>checklist</td><td>Corrigir já: usar cor do tema</td></tr>
+<tr><td>4</td><td>Usuário queria filtrar por categoria</td><td>Lista</td><td>1</td><td>1 de 4</td><td>Próxima versão (registrar no manual)</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>16.3 Corrigindo com rastreabilidade</h3>
+<p>Cada correção é uma branch, um commit claro e, se possível, um print de antes e depois:</p>
+<div class="codigo"><div class="codigo-head"><span>terminal</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="sh">git switch -c fix/rotulo-abas
+# ... corrige ...
+git commit -am "Adiciona rótulo de texto nas abas (achado 1 do teste)"
+git push -u origin fix/rotulo-abas</pre></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 16 — Priorizar, corrigir, registrar.</b> Montem a tabela de achados (testes + checklist + feedback simulado), atribuam gravidade e frequência, decidam o que corrigir agora e o que fica para depois, e justifiquem. Corrijam pelo menos todos os achados nota 3 e 4. Comecem o <a href="#tpl">Relatório de Interface e Testes</a> com o antes e depois de cada ajuste.</p></div>
+
+<!-- ============================ AULA 17 ============================ -->
+<h2 id="a17"><span class="num">Aula 17 · Checkpoint 2</span>Interface ajustada</h2>
+
+<p class="lede">Segunda parada: o app agora é navegável, responde ao usuário e passou por teste com gente real. Hoje mostramos a versão corrigida e as evidências.</p>
+
+<p>Avaliam-se os indicadores <span class="bg bg-i">I3</span> (testes de usabilidade e acessibilidade) e <span class="bg bg-i">I4</span> (interatividade).</p>
+
+<h3>17.1 Checklist do Checkpoint 2</h3>
+<ul class="check">
+<li>Fluxo principal completo e navegável, com voltar previsível.</li>
+<li>Pelo menos um formulário com validação e teclado adequado.</li>
+<li>Feedback para as ações principais (SnackBar, confirmação, estado vazio, carregamento quando houver).</li>
+<li>Roteiro de teste aplicado com pelo menos três usuários e fichas preenchidas (sem dados pessoais).</li>
+<li>Checklist de acessibilidade aplicado e teste automático passando com <code>flutter test</code>.</li>
+<li>Tabela de achados priorizada, com as correções feitas e as adiadas justificadas.</li>
+<li>Relatório de Interface e Testes com antes e depois.</li>
+<li>Tag <code>v0.2.0</code> publicada.</li>
+</ul>
+
+<div class="codigo"><div class="codigo-head"><span>terminal</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="sh">flutter analyze
+flutter test
+git tag -a v0.2.0 -m "Checkpoint 2: interface ajustada após testes"
+git push origin v0.2.0</pre></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 17 — Checkpoint 2.</b> Demonstrem ao docente as interações principais no emulador ou no celular, mostrando pelo menos um ajuste feito a partir do teste. Registrem a devolutiva como tarefas no quadro, com plano até a demonstração final.</p></div>
+
+<!-- ============================ AULA 18 ============================ -->
+<h2 id="a18"><span class="num">Aula 18 · Síntese</span>Manual de Interface da agência</h2>
+
+<p class="lede">Daqui a seis meses, outra squad (ou vocês mesmos) vai precisar criar uma tela nova para o app. O Manual de Interface é o que garante que ela vai parecer parte do mesmo aplicativo.</p>
+
+<h3>18.1 O que vai no manual</h3>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:200px">Seção</th><th>Conteúdo</th></tr></thead>
+<tbody>
+<tr><td><b>Princípios</b></td><td>Três a cinco frases que guiam as decisões ("ação principal sempre embaixo", "todo ícone tem texto").</td></tr>
+<tr><td><b>Cores</b></td><td>Cor-semente, papéis usados (<code>primary</code>, <code>error</code>...) e contraste conferido.</td></tr>
+<tr><td><b>Tipografia</b></td><td>Fonte e papéis de texto com exemplo de uso.</td></tr>
+<tr><td><b>Espaçamentos</b></td><td>A escala usada (8, 16, 24) e onde se aplica cada valor.</td></tr>
+<tr><td><b>Componentes</b></td><td>Print, nome do widget, arquivo onde mora e quando usar: botão principal, cartão de item, campo de texto...</td></tr>
+<tr><td><b>Textos</b></td><td>Tom de voz, glossário de termos ("apartamento", não "unidade") e modelos de mensagens de erro e confirmação.</td></tr>
+<tr><td><b>Navegação</b></td><td>Mapa das telas e padrão de navegação escolhido, com a justificativa da Aula 5.</td></tr>
+<tr><td><b>Acessibilidade</b></td><td>Regras obrigatórias para qualquer tela nova (rótulos, 48 dp, contraste, fonte grande).</td></tr>
+<tr><td><b>Próximos passos</b></td><td>Melhorias adiadas na Aula 16, com a justificativa.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>Empresas maiores transformam o manual em um <b>design system</b>: uma biblioteca de componentes prontos, documentados e versionados, usada por várias equipes e aplicativos. O Material Design é o design system do Google; muitos bancos e varejistas brasileiros têm o seu.</p></div>
+
+<h3>18.2 Revisão de coerência</h3>
+<p>Antes de fechar o manual, confiram se as três camadas contam a mesma história: os <b>requisitos</b> do projeto, os <b>wireframes</b> e as <b>telas implementadas</b>. Toda diferença precisa estar justificada (por exemplo, "mudamos a gaveta para navegação inferior depois do teste do Usuário B").</p>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 18 — Manual de Interface.</b> Consolidem o manual a partir do guia de estilo da Aula 13, usando o modelo <a href="#tpl">Manual de Interface</a>, com prints reais das telas. Cada squad propõe pelo menos uma melhoria para a próxima versão, justificada pelos testes, e a registra no manual e no quadro de tarefas.</p></div>
+
+<!-- ============================ AULA 19 ============================ -->
+<h2 id="a19"><span class="num">Aula 19 · Síntese</span>Ensaio, revisão por pares e APK</h2>
+
+<p class="lede">Ensaio é onde se descobre que o emulador demora quatro minutos para abrir no projetor. Melhor descobrir hoje.</p>
+
+<h3>19.1 Gerando o APK</h3>
+<p>Um <b>APK</b> é o arquivo de instalação de um aplicativo Android. Com ele, o cliente instala o app no próprio celular, sem loja e sem cabo.</p>
+<div class="codigo"><div class="codigo-head"><span>terminal</span><button class="btn" onclick="copiar(this)">Copiar</button></div><pre data-lang="sh">flutter build apk --release
+# o arquivo fica em: build\app\outputs\flutter-apk\app-release.apk</pre></div>
+<p>Envie o arquivo para um celular Android, abra e permita a instalação de fontes desconhecidas quando o sistema pedir. Para publicar na Google Play, o processo exige assinatura com chave própria e outras etapas, que veremos nas próximas UC.</p>
+
+<div class="box dica"><span class="rot">Conceito-chave</span><p>O app rodando com <code>flutter run</code> está em modo <b>debug</b>: mais lento, com a faixa "DEBUG" no canto e ferramentas de desenvolvimento ligadas. O APK gerado com <code>--release</code> é a versão otimizada que o usuário recebe. Demonstre sempre a versão release, porque é ela que vale.</p></div>
+
+<h3>19.2 Roteiro de demonstração (10 minutos)</h3>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:90px">Tempo</th><th>O que mostrar</th></tr></thead>
+<tbody>
+<tr><td>1 min</td><td>O problema do cliente e quem são os usuários</td></tr>
+<tr><td>4 min</td><td>O app funcionando: tarefa principal do início ao fim, contada como uma história de usuário real</td></tr>
+<tr><td>2 min</td><td>O que os testes revelaram e o que mudou (antes e depois)</td></tr>
+<tr><td>1 min</td><td>Acessibilidade: fonte grande e leitor de tela em uma tela</td></tr>
+<tr><td>1 min</td><td>Manual de Interface e histórico de versões (tags) no GitHub</td></tr>
+<tr><td>1 min</td><td>Próximos passos</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box atencao"><span class="rot">Plano B obrigatório</span><p>Tenham o APK instalado em pelo menos um celular, um vídeo curto gravado da tela com a tarefa principal e o emulador já aberto antes de começar. Se a internet, o projetor ou o emulador falharem, a demonstração continua.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 19 — Ensaio cronometrado.</b> Gerem o APK e instalem em um celular. Ensaiem a demonstração com tempo marcado, com todos os integrantes falando. Outra squad assiste e preenche a <a href="#tpl">Ficha de revisão por pares</a>. Corrijam o que for apontado e registrem os ajustes no repositório.</p></div>
+
+<!-- ============================ AULA 20 ============================ -->
+<h2 id="a20"><span class="num">Aula 20 · Entrega final</span>Demonstração final e encerramento</h2>
+
+<p class="lede">Dona Ilza (ou quem fizer o papel do cliente) vai segurar o celular. Esse é o teste que importa.</p>
+
+<p>Cada squad apresenta em até dez minutos o aplicativo, o Manual de Interface, o Relatório de Interface e Testes e o histórico de versões. O avaliador faz perguntas sobre as decisões de leiaute, de interação e de conteúdo. Avaliam-se os cinco indicadores, <span class="bg bg-i">I1</span> a <span class="bg bg-i">I5</span>.</p>
+
+<h3>20.1 Checklist da entrega final</h3>
+<ul class="check">
+<li>Repositório com branches, Pull Requests revisados e tags <code>v0.1.0</code>, <code>v0.2.0</code> e <code>v1.0.0</code>.</li>
+<li>Telas implementadas e navegáveis, fiéis aos wireframes ou com mudanças justificadas.</li>
+<li>Guia de estilo aplicado no <code>tema.dart</code>, sem cores soltas no código.</li>
+<li>Imagens otimizadas e planilha de origem e licença completa.</li>
+<li>Roteiro, fichas e resultados dos testes de usabilidade e acessibilidade.</li>
+<li>Relatório de Interface e Testes com priorização e antes e depois.</li>
+<li>Manual de Interface.</li>
+<li>APK de release funcionando.</li>
+<li><code>flutter analyze</code> e <code>flutter test</code> sem erros.</li>
+</ul>
+
+<h3>20.2 Perguntas que o avaliador pode fazer</h3>
+<ul>
+<li>Por que a ação principal desta tela está nesta posição?</li>
+<li>O que acontece se o usuário tocar em "voltar" no meio do formulário?</li>
+<li>Como uma pessoa que usa leitor de tela faria esta tarefa?</li>
+<li>Qual foi o achado de teste mais importante, e como vocês decidiram corrigi-lo?</li>
+<li>Se o cliente pedir para trocar a cor da marca amanhã, quantos arquivos vocês precisam alterar?</li>
+<li>De onde veio esta imagem e qual é a licença dela?</li>
+</ul>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 20 — Encerramento.</b> Depois da demonstração, cada um preenche a <a href="#tpl">Autoavaliação e avaliação por pares</a>. Quem tiver algum indicador como PA ou NA combina com o docente o que reentregar e em qual prazo.</p></div>
+
+<!-- ============================ APOIO ============================ -->
+<h2 id="cola"><span class="num">Apoio</span>Cola de widgets Flutter</h2>
+
+<p class="lede">Os widgets desta UC numa tabela só, para consulta rápida durante a oficina.</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:120px">Categoria</th><th style="width:240px">Widget</th><th>Lembrete</th></tr></thead>
+<tbody>
+<tr><td rowspan="3"><b>Estrutura</b></td><td><code>MaterialApp</code></td><td>Raiz do app: tema, título, primeira tela (<code>home</code>)</td></tr>
+<tr><td><code>Scaffold</code></td><td><code>appBar</code>, <code>body</code>, <code>bottomNavigationBar</code>, <code>floatingActionButton</code></td></tr>
+<tr><td><code>SafeArea</code></td><td>Protege do entalhe e das barras do sistema</td></tr>
+<tr><td rowspan="7"><b>Leiaute</b></td><td><code>Column</code> / <code>Row</code></td><td><code>mainAxisAlignment</code> (no sentido do eixo), <code>crossAxisAlignment</code> (no sentido oposto)</td></tr>
+<tr><td><code>Expanded</code> / <code>Flexible</code></td><td>Ocupar o espaço que sobra; resolve overflow em Row</td></tr>
+<tr><td><code>Padding</code>, <code>SizedBox</code></td><td>Espaço em volta / espaço fixo</td></tr>
+<tr><td><code>Container</code></td><td>Cor, borda, arredondado via <code>decoration: BoxDecoration(...)</code></td></tr>
+<tr><td><code>Stack</code> + <code>Positioned</code></td><td>Sobrepor elementos</td></tr>
+<tr><td><code>Wrap</code></td><td>Como Row, mas quebra linha (bom para chips)</td></tr>
+<tr><td><code>LayoutBuilder</code>, <code>MediaQuery</code></td><td>Adaptar à largura disponível</td></tr>
+<tr><td rowspan="3"><b>Rolagem</b></td><td><code>ListView.builder</code></td><td>Listas longas; dentro de Column, envolver em <code>Expanded</code></td></tr>
+<tr><td><code>GridView.count</code></td><td>Grade com número fixo de colunas</td></tr>
+<tr><td><code>SingleChildScrollView</code></td><td>Formulários e telas que podem não caber</td></tr>
+<tr><td rowspan="4"><b>Conteúdo</b></td><td><code>Text</code></td><td><code>style: Theme.of(context).textTheme.titleMedium</code></td></tr>
+<tr><td><code>Icon</code></td><td><code>Icon(Icons.search)</code>; catálogo em fonts.google.com/icons</td></tr>
+<tr><td><code>Image.asset</code> / <code>Image.network</code></td><td><code>semanticLabel</code>, <code>fit</code>, <code>errorBuilder</code></td></tr>
+<tr><td><code>Card</code>, <code>ListTile</code>, <code>Chip</code>, <code>CircleAvatar</code></td><td>Blocos prontos para listas</td></tr>
+<tr><td rowspan="3"><b>Ação</b></td><td><code>FilledButton</code></td><td>Ação principal (uma por tela)</td></tr>
+<tr><td><code>OutlinedButton</code>, <code>TextButton</code>, <code>IconButton</code></td><td>Secundárias; <code>IconButton</code> sempre com <code>tooltip</code></td></tr>
+<tr><td><code>InkWell</code>, <code>GestureDetector</code></td><td>Tornar qualquer coisa tocável</td></tr>
+<tr><td rowspan="3"><b>Entrada</b></td><td><code>TextFormField</code> + <code>Form</code></td><td><code>validator</code>, <code>keyboardType</code>, <code>textInputAction</code></td></tr>
+<tr><td><code>Checkbox</code>, <code>Switch</code>, <code>RadioListTile</code></td><td>Escolhas simples</td></tr>
+<tr><td><code>DropdownMenu</code>, <code>showDatePicker</code></td><td>Escolher numa lista; escolher data</td></tr>
+<tr><td rowspan="3"><b>Navegação</b></td><td><code>Navigator.push</code> / <code>pop</code></td><td>Abrir e fechar telas</td></tr>
+<tr><td><code>NavigationBar</code></td><td>3 a 5 abas inferiores</td></tr>
+<tr><td><code>TabBar</code>, <code>Drawer</code></td><td>Abas superiores; menu lateral</td></tr>
+<tr><td rowspan="3"><b>Feedback</b></td><td><code>SnackBar</code></td><td><code>ScaffoldMessenger.of(context).showSnackBar(...)</code></td></tr>
+<tr><td><code>AlertDialog</code></td><td>Via <code>showDialog</code>; para confirmar</td></tr>
+<tr><td><code>CircularProgressIndicator</code></td><td>Carregando</td></tr>
+<tr><td><b>Acessibilidade</b></td><td><code>Semantics</code>, <code>Tooltip</code></td><td>Rótulos para o leitor de tela</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="erros"><span class="num">Apoio</span>Erros comuns e soluções</h2>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:260px">Mensagem ou sintoma</th><th>Causa provável e solução</th></tr></thead>
+<tbody>
+<tr><td>Faixa amarela e preta com <i>A RenderFlex overflowed by N pixels</i></td><td>Os filhos de uma Row/Column não cabem. Envolva o filho que pode encolher em <code>Expanded</code>, ou a tela em <code>SingleChildScrollView</code>.</td></tr>
+<tr><td><i>Vertical viewport was given unbounded height</i></td><td><code>ListView</code> direto dentro de <code>Column</code>. Envolva a lista em <code>Expanded</code>.</td></tr>
+<tr><td>A tela não atualiza quando muda um valor</td><td>Faltou <code>setState</code> (estado local) ou <code>notifyListeners()</code> no controller, ou a tela não está dentro de um <code>ListenableBuilder</code>.</td></tr>
+<tr><td>Mudei e o hot reload não mostrou</td><td>Mudanças no <code>main()</code>, no <code>initState</code> ou no <code>pubspec.yaml</code> exigem hot restart (<code>R</code>) ou parar e rodar de novo.</td></tr>
+<tr><td><i>Unable to load asset</i></td><td>Caminho errado, ou imagem não declarada no <code>pubspec.yaml</code>, ou indentação errada nele. Confira e rode de novo.</td></tr>
+<tr><td><i>Null check operator used on a null value</i></td><td>Um <code>!</code> foi usado em algo que era nulo. Troque por <code>??</code> com valor padrão ou verifique antes.</td></tr>
+<tr><td><i>No connected devices</i></td><td>Emulador fechado ou celular sem depuração USB. Rode <code>flutter devices</code> e abra o emulador.</td></tr>
+<tr><td>Build do Android falha com erro de Gradle</td><td>Projeto dentro do OneDrive ou em caminho com espaço/acento. Mova para <code>C:\projetos\</code>. Depois, <code>flutter clean</code> e <code>flutter run</code>.</td></tr>
+<tr><td>Teclado cobre o campo</td><td>Conteúdo sem rolagem. Use <code>SingleChildScrollView</code>.</td></tr>
+<tr><td>SnackBar não aparece</td><td>A tela não está dentro de um <code>Scaffold</code>, ou o <code>context</code> é de uma tela que já foi fechada.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="tpl"><span class="num">Apoio</span>Modelos para copiar</h2>
+
+<p class="lede">Copie para um documento da squad (Google Docs, por exemplo) e preencha. Todos fazem parte das evidências da UC.</p>
+
+<div class="tpl"><div class="tpl-head"><h4>1. Inventário de telas (Aula 1)</h4><button class="btn" onclick="copiar(this)">Copiar</button></div><pre>INVENTÁRIO DE TELAS — [nome do app] — Squad [nome]
+
+| # | Tela | Elementos principais | Chega de | Vai para | Estados (vazio/erro/carregando) | Prioridade |
+|---|------|----------------------|----------|----------|---------------------------------|------------|
+| 1 |      |                      |          |          |                                 |            |
+| 2 |      |                      |          |          |                                 |            |
+
+DÚVIDAS PARA O CLIENTE
+1.
+2.
+3.
+4.
+5.</pre></div>
+
+<div class="tpl"><div class="tpl-head"><h4>2. Ficha de decisão de interação (Aula 5)</h4><button class="btn" onclick="copiar(this)">Copiar</button></div><pre>FICHA DE DECISÃO DE INTERAÇÃO — Squad [nome]
+
+Tela / fluxo:
+Problema a resolver:
+Usuários afetados (ex.: Seu Antônio, Marta):
+
+ALTERNATIVA A:            Padrão / widget:
+  Prós:
+  Contras:
+ALTERNATIVA B:            Padrão / widget:
+  Prós:
+  Contras:
+
+Referências de mercado consultadas:
+Decisão:
+Justificativa (ligada aos usuários e requisitos):</pre></div>
+
+<div class="tpl"><div class="tpl-head"><h4>3. Planilha de recursos visuais (Aula 8)</h4><button class="btn" onclick="copiar(this)">Copiar</button></div><pre>RECURSOS VISUAIS — [nome do app]
+
+| Arquivo | Onde aparece | Origem (link ou "foto própria") | Autor | Licença | Crédito exigido? | Peso antes | Peso depois | Formato final |
+|---------|--------------|---------------------------------|-------|---------|------------------|------------|-------------|---------------|
+|         |              |                                 |       |         |                  |            |             |               |
+
+Fontes usadas e licença:
+Ícones usados e licença:
+Imagens geradas por IA (ferramenta e prompt):</pre></div>
+
+<div class="tpl"><div class="tpl-head"><h4>4. Guia de estilo (Aula 13)</h4><button class="btn" onclick="copiar(this)">Copiar</button></div><pre>GUIA DE ESTILO — [nome do app]
+
+TOM DE VOZ: [3 a 4 adjetivos]
+Palavras que usamos:            Palavras que evitamos:
+
+CORES
+Cor-semente: #______
+Ação principal (primary):       Erro (error):
+Fundo (surface):                Modo escuro: sim / não
+Contraste texto/fundo conferido: ___:1
+
+TIPOGRAFIA
+Fonte:                          Licença:
+Título da tela: headlineSmall   Nome em cartões: titleMedium
+Texto corrido: bodyMedium       Botões: labelLarge
+
+ESPAÇAMENTOS: 8 / 16 / 24 dp
+Margem da tela:                 Entre cartões:
+
+COMPONENTES
+Botão principal: altura ___ dp, cantos ___, texto ___
+Campo de texto:
+Cartão:</pre></div>
+
+<div class="tpl"><div class="tpl-head"><h4>5. Roteiro de teste de usabilidade (Aula 14)</h4><button class="btn" onclick="copiar(this)">Copiar</button></div><pre>ROTEIRO DE TESTE DE USABILIDADE — [nome do app] — Versão testada: [tag]
+
+Facilitador:           Observador:           Cronometrista:
+Aparelho: emulador [modelo] / celular [modelo]
+
+ABERTURA (ler para o participante)
+"Obrigado por participar. Estamos testando o aplicativo, não você: se algo
+for difícil, a falha é nossa. Pedimos que fale em voz alta o que está
+pensando. Não vamos anotar seu nome. Podemos começar?"
+
+TAREFAS
+T1. Situação:
+    Sucesso quando:
+T2. Situação:
+    Sucesso quando:
+T3. Situação:
+    Sucesso quando:
+
+FICHA — Usuário [A/B/C]
+| Tarefa | Conseguiu? (sim / com dificuldade / não) | Tempo | Nº de erros | Onde hesitou | Frase marcante |
+|--------|------------------------------------------|-------|-------------|--------------|----------------|
+| T1     |                                          |       |             |              |                |
+| T2     |                                          |       |             |              |                |
+| T3     |                                          |       |             |              |                |
+
+PERGUNTAS FINAIS
+1. De 1 a 5, quão fácil foi usar o aplicativo?
+2. O que mais te incomodou?
+3. O que você mudaria?</pre></div>
+
+<div class="tpl"><div class="tpl-head"><h4>6. Checklist de acessibilidade (Aula 15)</h4><button class="btn" onclick="copiar(this)">Copiar</button></div><pre>CHECKLIST DE ACESSIBILIDADE — Tela: [nome]   Data:   Responsável:
+
+CONTRASTE
+[ ] Texto comum com contraste ≥ 4,5:1
+[ ] Texto grande e ícones com contraste ≥ 3:1
+[ ] Informação não depende só de cor (tem texto ou ícone junto)
+
+TOQUE
+[ ] Todos os alvos com pelo menos 48 × 48 dp
+[ ] Espaço entre alvos vizinhos
+[ ] Ação principal na zona do polegar
+[ ] Gestos escondidos têm alternativa com botão
+
+LEITOR DE TELA (TalkBack / VoiceOver)
+[ ] Todo botão de ícone tem tooltip
+[ ] Imagens com significado têm semanticLabel
+[ ] Imagens decorativas são ignoradas
+[ ] Ordem de leitura faz sentido
+[ ] Tarefa principal concluída só ouvindo
+
+TEXTO AMPLIADO (fonte do sistema no máximo)
+[ ] Nenhum texto cortado ou sobreposto
+[ ] Nenhuma faixa de overflow
+[ ] Botões continuam tocáveis
+
+TESTES AUTOMÁTICOS
+[ ] flutter test com meetsGuideline passando
+
+Problemas encontrados:</pre></div>
+
+<div class="tpl"><div class="tpl-head"><h4>7. Relatório de Interface e Testes (Aulas 16–17)</h4><button class="btn" onclick="copiar(this)">Copiar</button></div><pre>RELATÓRIO DE INTERFACE E TESTES — [nome do app] — Squad [nome]
+
+1. RESUMO
+O que o app faz, para quem, e versão avaliada (tag).
+
+2. COMO TESTAMOS
+Quantos usuários-teste (só identificadores), aparelhos, tarefas, data.
+Checklist de acessibilidade e testes automáticos aplicados.
+
+3. RESULTADOS
+Taxa de sucesso por tarefa, tempo médio, principais dificuldades.
+
+4. ACHADOS E PRIORIZAÇÃO
+| # | Achado | Tela | Gravidade (0-4) | Frequência | Decisão | Justificativa |
+|---|--------|------|-----------------|------------|---------|---------------|
+
+5. AJUSTES REALIZADOS
+Para cada ajuste: antes (print), depois (print), commit/branch.
+
+6. O QUE FICOU PARA DEPOIS E POR QUÊ
+
+7. LIÇÕES APRENDIDAS</pre></div>
+
+<div class="tpl"><div class="tpl-head"><h4>8. Manual de Interface (Aula 18)</h4><button class="btn" onclick="copiar(this)">Copiar</button></div><pre>MANUAL DE INTERFACE — [nome do app] — versão [tag]
+
+1. Princípios (3 a 5 frases)
+2. Cores (cor-semente, papéis, contraste)
+3. Tipografia (fonte, papéis de texto, exemplos)
+4. Espaçamentos
+5. Componentes (print + nome do widget + arquivo + quando usar)
+6. Textos (tom de voz, glossário, modelos de mensagem)
+7. Navegação (mapa das telas e padrão escolhido)
+8. Acessibilidade (regras obrigatórias para telas novas)
+9. Próximos passos (melhorias propostas e justificativa)</pre></div>
+
+<div class="tpl"><div class="tpl-head"><h4>9. Ficha de revisão por pares (Aula 19)</h4><button class="btn" onclick="copiar(this)">Copiar</button></div><pre>REVISÃO POR PARES — Squad avaliada: [nome]   Squad revisora: [nome]
+
+Tempo da apresentação: ___ min
+A tarefa principal ficou clara?                    sim / em parte / não
+O app funcionou sem travar?                        sim / em parte / não
+Mostraram o antes e depois dos testes?             sim / em parte / não
+Mostraram acessibilidade (fonte grande/leitor)?    sim / em parte / não
+Todos falaram?                                     sim / não
+
+O ponto mais forte:
+Uma coisa para melhorar antes da demonstração final:
+Uma pergunta que o cliente provavelmente vai fazer:</pre></div>
+
+<div class="tpl"><div class="tpl-head"><h4>10. Autoavaliação e avaliação por pares (Aula 20)</h4><button class="btn" onclick="copiar(this)">Copiar</button></div><pre>AUTOAVALIAÇÃO — Nome:          Squad:
+
+Minha principal contribuição técnica (telas/componentes que fiz):
+Uma decisão de interface que defendi e por quê:
+O que aprendi de Flutter que não sabia:
+Onde ainda tenho dificuldade:
+Como tratei os dados dos usuários-teste:
+
+AVALIAÇÃO DOS COLEGAS (1 = raramente, 3 = às vezes, 5 = sempre)
+| Colega | Cumpriu as tarefas | Colaborou | Propôs soluções | Comentário |
+|--------|--------------------|-----------|-----------------|------------|</pre></div>
+
+<h2 id="aval"><span class="num">Apoio</span>Evidências e avaliação</h2>
+
+<p>A avaliação é contínua e por indicador. Cada indicador recebe menção <b>A</b>, <b>PA</b> ou <b>NA</b>, considerando a evolução entre os checkpoints. Quem tiver algo sinalizado na devolutiva pode reentregar dentro do prazo combinado, até a demonstração final.</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:60px">#</th><th>Onde é observado</th><th>Evidências</th></tr></thead>
+<tbody>
+<tr><td><span class="bg bg-i">I1</span></td><td>Aulas 4 a 7 · Checkpoint 1</td><td>Tela organizada e justificada, ficha de decisão de interação, telas base</td></tr>
+<tr><td><span class="bg bg-i">I2</span></td><td>Aulas 6, 9 e 10 · Checkpoint 1</td><td>Telas no emulador, estrutura MVC, componentes reutilizáveis, repositório com tag</td></tr>
+<tr><td><span class="bg bg-i">I3</span></td><td>Aulas 14 a 17 · Checkpoint 2</td><td>Roteiro e fichas de teste, checklist de acessibilidade, teste automático, relatório</td></tr>
+<tr><td><span class="bg bg-i">I4</span></td><td>Aulas 11, 12 e 17 · Checkpoint 2</td><td>Fluxo navegável, formulários validados, feedback das ações</td></tr>
+<tr><td><span class="bg bg-i">I5</span></td><td>Aulas 13 e 18</td><td>Textos das telas, guia de estilo, <code>tema.dart</code>, Manual de Interface</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>As atitudes e valores (sigilo, iniciativa, proatividade, colaboração, propriedade intelectual, usabilidade e acessibilidade, atualização contínua, cordialidade e atitude propositiva) são observados durante toda a UC: nos commits e revisões, na condução dos testes, no registro das licenças e na postura nas apresentações.</p>
+
+<h2 id="glo"><span class="num">Apoio</span>Glossário</h2>
+<div class="tab-wrap">
+<table>
+<tbody>
+<tr><td style="width:190px"><b>APK</b></td><td>Arquivo de instalação de aplicativo Android.</td></tr>
+<tr><td><b>Asset</b></td><td>Arquivo que vai junto com o app: imagens, fontes, ícones. Declarado no <code>pubspec.yaml</code>.</td></tr>
+<tr><td><b>Branch (ramificação)</b></td><td>Linha paralela de trabalho no Git.</td></tr>
+<tr><td><b>Build</b></td><td>Processo de transformar o código em aplicativo instalável; também a pasta gerada por ele.</td></tr>
+<tr><td><b>Controller</b></td><td>Camada que recebe ações do usuário e altera os dados (MVC).</td></tr>
+<tr><td><b>Dart</b></td><td>Linguagem de programação usada pelo Flutter.</td></tr>
+<tr><td><b>dp</b></td><td>Pixel independente de densidade: unidade de medida que tem o mesmo tamanho físico em qualquer tela.</td></tr>
+<tr><td><b>Emulador (AVD)</b></td><td>Celular virtual rodando no computador.</td></tr>
+<tr><td><b>Hot reload</b></td><td>Aplicar mudanças no app em execução sem reiniciar.</td></tr>
+<tr><td><b>Leitor de tela</b></td><td>Recurso que lê a interface em voz alta (TalkBack no Android, VoiceOver no iOS).</td></tr>
+<tr><td><b>Material Design</b></td><td>Sistema de design do Google; o Flutter implementa a versão 3.</td></tr>
+<tr><td><b>Model</b></td><td>Camada dos dados (MVC).</td></tr>
+<tr><td><b>Overflow</b></td><td>Conteúdo maior que o espaço disponível; no Flutter, aparece como faixa amarela e preta.</td></tr>
+<tr><td><b>Pacote (package)</b></td><td>Biblioteca de terceiros instalada pelo <code>pubspec.yaml</code>, buscada em pub.dev.</td></tr>
+<tr><td><b>Pull Request</b></td><td>Pedido para integrar uma branch na main, com revisão.</td></tr>
+<tr><td><b>PWA</b></td><td>Progressive Web App: site instalável que funciona como aplicativo.</td></tr>
+<tr><td><b>SDK</b></td><td>Kit de desenvolvimento: bibliotecas e ferramentas de uma plataforma.</td></tr>
+<tr><td><b>Semântica</b></td><td>Informação sobre o que cada elemento é e faz, usada por leitores de tela.</td></tr>
+<tr><td><b>Estado (state)</b></td><td>Dados que mudam com o uso e alteram o que aparece na tela.</td></tr>
+<tr><td><b>Tag</b></td><td>Etiqueta fixa num ponto do histórico do Git, usada para marcar versões.</td></tr>
+<tr><td><b>Tema (ThemeData)</b></td><td>Configuração visual central do app: cores, fontes, formato de componentes.</td></tr>
+<tr><td><b>View</b></td><td>Camada da tela (MVC).</td></tr>
+<tr><td><b>WCAG</b></td><td>Diretrizes de acessibilidade para conteúdo web do W3C, usadas como referência também em aplicativos.</td></tr>
+<tr><td><b>Widget</b></td><td>Cada peça da interface no Flutter. Tudo na tela é widget.</td></tr>
+<tr><td><b>Wireframe</b></td><td>Esboço da estrutura de uma tela, sem acabamento visual.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="ref"><span class="num">Apoio</span>Referências</h2>
+<ul>
+<li>Documentação oficial do Flutter — <a href="https://docs.flutter.dev" target="_blank" rel="noopener">docs.flutter.dev</a> (em especial: <i>Layout</i>, <i>Navigation</i>, <i>Forms</i>, <i>Accessibility</i> e o catálogo de widgets).</li>
+<li>Linguagem Dart — <a href="https://dart.dev/language" target="_blank" rel="noopener">dart.dev/language</a>.</li>
+<li>DartPad, para testar código no navegador — <a href="https://dartpad.dev" target="_blank" rel="noopener">dartpad.dev</a>.</li>
+<li>Pacotes Flutter e Dart — <a href="https://pub.dev" target="_blank" rel="noopener">pub.dev</a>.</li>
+<li>Material Design 3 — <a href="https://m3.material.io" target="_blank" rel="noopener">m3.material.io</a>.</li>
+<li>Apple Human Interface Guidelines — <a href="https://developer.apple.com/design/human-interface-guidelines/" target="_blank" rel="noopener">developer.apple.com/design</a>.</li>
+<li>W3C, WCAG 2.2 — <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">w3.org/TR/WCAG22</a>; validador de HTML — <a href="https://validator.w3.org" target="_blank" rel="noopener">validator.w3.org</a>.</li>
+<li>WebAIM, verificador de contraste — <a href="https://webaim.org/resources/contrastchecker/" target="_blank" rel="noopener">webaim.org/resources/contrastchecker</a>.</li>
+<li>web.dev, guia de Progressive Web Apps — <a href="https://web.dev/explore/progressive-web-apps" target="_blank" rel="noopener">web.dev/explore/progressive-web-apps</a>.</li>
+<li>Nielsen Norman Group, artigos sobre teste de usabilidade e escala de gravidade — <a href="https://www.nngroup.com" target="_blank" rel="noopener">nngroup.com</a>.</li>
+<li>Squoosh, compressão de imagens no navegador — <a href="https://squoosh.app" target="_blank" rel="noopener">squoosh.app</a>.</li>
+<li>Creative Commons, explicação das licenças — <a href="https://creativecommons.org/licenses/?lang=pt-BR" target="_blank" rel="noopener">creativecommons.org/licenses</a>.</li>
+<li>Git, documentação oficial — <a href="https://git-scm.com/book/pt-br/v2" target="_blank" rel="noopener">git-scm.com/book/pt-br</a>.</li>
+<li>SENAC. Plano de Curso Desenvolvedor Mobile (DN 2826, versão 2).</li>
+</ul>
+
+<footer style="margin-top:60px;padding-top:20px;border-top:1px solid var(--linha);font-size:12.5px;color:var(--tinta2)">
+<p>Desenvolvedor Mobile — Senac Linhares · Apostila do Aluno da UC3 · Docente: Welton Castoldi.</p>
+<p>As telas de celular desta apostila são recriações ilustrativas feitas em HTML e CSS a partir do projeto-base, não capturas de tela. Flutter, Dart, Android e Material Design são marcas do Google LLC; iOS e VoiceOver são marcas da Apple Inc. Os conteúdos de terceiros referenciados pertencem a seus respectivos autores.</p>
+</footer>
+
+</main>
+</div>
+
+<script>
+// Progresso de leitura
+var prog = document.getElementById('prog');
+function atualizarProgresso(){
+  var h = document.documentElement;
+  var total = h.scrollHeight - h.clientHeight;
+  prog.style.width = (total > 0 ? (h.scrollTop / total) * 100 : 0) + '%';
+}
+window.addEventListener('scroll', atualizarProgresso, {passive:true});
+atualizarProgresso();
+
+// Destaque do item ativo no sumário
+var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+var alvos = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+function marcarAtivo(){
+  var pos = window.scrollY + 120, atual = null;
+  alvos.forEach(function(sec, i){ if (sec.offsetTop <= pos) atual = i; });
+  links.forEach(function(a){ a.classList.remove('ativo'); });
+  if (atual !== null && links[atual]) links[atual].classList.add('ativo');
+}
+window.addEventListener('scroll', marcarAtivo, {passive:true});
+marcarAtivo();
+
+// Realce de sintaxe simples para os blocos Dart
+(function(){
+  var re = /(\/\/[^\n]*)|('(?:[^'\\\n]|\\.)*'|"(?:[^"\\\n]|\\.)*")|(@\w+)|\b(import|class|extends|return|final|const|var|void|if|else|for|in|while|this|super|required|true|false|null|async|await|static|late|bool|int|double|String|List|Map|Future|with|switch|case|break|default|get|set)\b|\b([A-Z]\w*)\b|\b(\d+(?:\.\d+)?)\b/g;
+  var classes = [null, 'c-com', 'c-str', 'c-ann', 'c-kw', 'c-tipo', 'c-num'];
+  function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  document.querySelectorAll('pre[data-lang="dart"]').forEach(function(pre){
+    var t = pre.textContent, out = '', ultimo = 0, m;
+    re.lastIndex = 0;
+    while ((m = re.exec(t)) !== null){
+      out += esc(t.slice(ultimo, m.index));
+      for (var g = 1; g < classes.length; g++){
+        if (m[g] !== undefined){ out += '<span class="' + classes[g] + '">' + esc(m[0]) + '</span>'; break; }
+      }
+      ultimo = re.lastIndex;
+    }
+    pre.innerHTML = out + esc(t.slice(ultimo));
+  });
+  document.querySelectorAll('pre[data-lang="sh"]').forEach(function(pre){
+    pre.innerHTML = esc(pre.textContent).replace(/(#[^\n]*)/g, '<span class="c-com">$1</span>');
+  });
+})();
+
+// Copiar código e modelos
+function copiar(botao){
+  var texto = botao.closest('.tpl, .codigo').querySelector('pre').innerText;
+  var concluir = function(){
+    var original = botao.textContent;
+    botao.textContent = 'Copiado';
+    setTimeout(function(){ botao.textContent = original; }, 1800);
+  };
+  if (navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(texto).then(concluir, function(){ fallback(texto, concluir); });
+  } else {
+    fallback(texto, concluir);
+  }
+}
+function fallback(texto, concluir){
+  var ta = document.createElement('textarea');
+  ta.value = texto;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); concluir(); } catch(e) { window.prompt('Copie o texto abaixo:', texto); }
+  document.body.removeChild(ta);
+}
+</script>
+</body>
+</html>

@@ -17,7 +17,15 @@ curso-dev-mobile/
 │   ├── apostila-do-aluno.html
 │   ├── simulador-briefing-empresario.html          (versão estilizada, com botão de download)
 │   └── simulador-briefing-empresario.md            (arquivo original, para baixar e subir numa IA)
-└── unidade-02-.../                                (próximas unidades seguem o mesmo padrão)
+├── unidade-02-organizar-processo-trabalho/
+│   ├── index.html
+│   └── apostila-do-aluno.html
+├── unidade-03-desenvolver-interface-grafica/
+│   ├── index.html
+│   ├── apostila-do-aluno.html
+│   └── projeto-base/empresta_ai/                   (projeto Flutter: só lib/, test/ e pubspec;
+│                                                    as pastas de plataforma são geradas com `flutter create .`)
+└── unidade-04-.../                                (próximas unidades seguem o mesmo padrão)
 ```
 
 O site publicado (GitHub Pages) é: **https://senac-linhares.github.io/curso-dev-mobile/**

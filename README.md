@@ -29,6 +29,7 @@ Por enquanto este repositório guarda só os materiais das aulas. Mas ao longo d
 |---|---|
 | **UC 01 — Elaborar Projetos de Aplicações** | Apresentação das aulas, apostila do aluno e o simulador de reunião de briefing |
 | **UC 02 — Organizar o Processo de Trabalho no Desenvolvimento de Aplicações** | Apostila do aluno, aula a aula (16 encontros) |
+| **UC 03 — Desenvolver Interface Gráfica para Dispositivos Móveis** | Apostila do aluno com Flutter (20 encontros) e o [projeto-base Empresta Aí](unidade-03-desenvolver-interface-grafica/projeto-base/empresta_ai/) |
 
 Novas unidades vão sendo adicionadas ao longo do curso — tanto materiais de aula quanto, mais adiante, código de projetos.
 
