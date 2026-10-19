@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nivelamento · Lógica de Programação com Dart | Desenvolvedor Mobile – Senac</title>
+<meta name="description" content="Apostila de nivelamento do curso Desenvolvedor Mobile (Senac): lógica de programação com Dart, do zero, com exemplos de código e atividades.">
+<link rel="stylesheet" href="../assets/codigo.css">
+<link rel="stylesheet" href="../assets/apostila.css">
+<script defer src="../assets/codigo.js"></script>
+<script defer src="../assets/apostila.js"></script>
+<style>
+:root{
+  --azul:#00447c; --azul-esc:#002f56; --azul-claro:#e8f1f9;
+  --laranja:#e8730c; --laranja-claro:#fdf0e3;
+  --verde:#1d7a52; --verde-claro:#e6f4ee;
+  --roxo:#6b3fa0; --roxo-claro:#f1ebfa;
+  --vermelho:#b3261e; --vermelho-claro:#fdecea;
+  --tinta:#1a1f26; --tinta2:#455060; --linha:#dfe4ea; --fundo:#ffffff; --fundo2:#f6f8fa;
+  --raio:10px; --sombra:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.06);
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:"SF Mono",Consolas,"Liberation Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{counter-reset:fig;margin:0;background:var(--fundo);color:var(--tinta);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%}
+
+/* ---------- Layout ---------- */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--linha)}
+.topbar-in{max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px}
+.topbar .marca{font-weight:700;color:var(--azul);font-size:15px;letter-spacing:.2px}
+.topbar .marca span{color:var(--laranja)}
+.topbar .uc{font-size:13px;color:var(--tinta2);border-left:1px solid var(--linha);padding-left:14px}
+.topbar .acoes{margin-left:auto;display:flex;gap:8px}
+.btn{font:inherit;font-size:13px;font-weight:600;padding:7px 13px;border-radius:8px;border:1px solid var(--linha);background:#fff;color:var(--tinta2);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--azul);color:var(--azul)}
+.btn-p{background:var(--azul);border-color:var(--azul);color:#fff}
+.btn-p:hover{background:var(--azul-esc);color:#fff}
+.progresso{height:3px;background:var(--laranja);width:0;position:fixed;top:0;left:0;z-index:60;transition:width .1s}
+
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:266px 1fr;gap:44px;align-items:start}
+nav.sumario{position:sticky;top:64px;max-height:calc(100vh - 84px);overflow-y:auto;padding:26px 0 40px;font-size:14px}
+nav.sumario h2{font-size:11px;text-transform:uppercase;letter-spacing:.9px;color:var(--tinta2);margin:0 0 10px}
+nav.sumario ol{list-style:none;margin:0 0 20px;padding:0}
+nav.sumario a{display:block;padding:5px 10px;border-left:2px solid var(--linha);color:var(--tinta2);text-decoration:none;line-height:1.35}
+nav.sumario a:hover{color:var(--azul);border-color:var(--azul);background:var(--azul-claro)}
+nav.sumario a.ativo{color:var(--azul);font-weight:600;border-color:var(--azul);background:var(--azul-claro)}
+nav.sumario .sub a{padding-left:22px;font-size:13px}
+main{padding:26px 0 90px;min-width:0;max-width:860px}
+
+/* ---------- Tipografia ---------- */
+h1{font-size:34px;line-height:1.2;margin:0 0 12px;letter-spacing:-.4px}
+h2{font-size:26px;line-height:1.25;margin:56px 0 14px;padding-top:12px;letter-spacing:-.3px;border-top:3px solid var(--azul)}
+h2 .num{display:block;font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--laranja);margin-bottom:4px}
+h3{font-size:20px;margin:34px 0 8px;color:var(--azul-esc)}
+h4{font-size:16px;margin:22px 0 6px;color:var(--tinta)}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 16px;padding-left:22px}
+li{margin-bottom:7px}
+strong{font-weight:650}
+a{color:var(--azul)}
+code{font-family:var(--mono);font-size:.86em;background:var(--fundo2);border:1px solid var(--linha);border-radius:5px;padding:1px 5px}
+.lede{font-size:19px;color:var(--tinta2);line-height:1.6}
+hr{border:0;border-top:1px solid var(--linha);margin:34px 0}
+
+/* ---------- Capa ---------- */
+.capa{background:linear-gradient(135deg,var(--azul-esc),var(--azul) 55%,#0b6ab0);color:#fff;border-radius:14px;padding:40px 38px;margin:20px 0 8px;box-shadow:var(--sombra)}
+.capa .tag{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:4px 11px;border-radius:99px;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase}
+.capa h1{color:#fff;margin:14px 0 10px;font-size:37px}
+.capa p{color:rgba(255,255,255,.9);margin:0;max-width:60ch}
+.capa .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.capa .meta div{background:rgba(255,255,255,.12);border-radius:8px;padding:9px 14px;font-size:13px}
+.capa .meta b{display:block;font-size:17px;font-weight:700}
+
+/* ---------- Cartões e caixas ---------- */
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--fundo);border:1px solid var(--linha);border-radius:var(--raio);padding:18px 20px}
+.card h4{margin-top:0}
+.card p:last-child,.card ul:last-child,.card ol:last-child{margin-bottom:0}
+
+.box{border-radius:var(--raio);padding:16px 18px 16px 20px;margin:20px 0;border-left:4px solid;font-size:16px}
+.box .rot{display:block;font-size:11px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;margin-bottom:5px}
+.box p:last-child,.box ul:last-child,.box ol:last-child{margin-bottom:0}
+.dica{background:var(--azul-claro);border-color:var(--azul)} .dica .rot{color:var(--azul)}
+.atencao{background:var(--vermelho-claro);border-color:var(--vermelho)} .atencao .rot{color:var(--vermelho)}
+.pratica{background:var(--verde-claro);border-color:var(--verde)} .pratica .rot{color:var(--verde)}
+.docente{background:var(--roxo-claro);border-color:var(--roxo)} .docente .rot{color:var(--roxo)}
+.mercado{background:var(--laranja-claro);border-color:var(--laranja)} .mercado .rot{color:var(--laranja)}
+
+/* ---------- Comparativo certo x errado ---------- */
+.comparativo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
+.comparativo .certo,.comparativo .errado{border-radius:var(--raio);padding:15px 18px;border:1.5px solid}
+.comparativo .certo{background:var(--verde-claro);border-color:#bde0cf}
+.comparativo .errado{background:var(--vermelho-claro);border-color:#f3c6c2}
+.comparativo h4{margin:0 0 9px;font-size:12.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.comparativo h4::before{content:"";width:9px;height:9px;border-radius:99px;flex:none}
+.comparativo .certo h4{color:var(--verde)} .comparativo .certo h4::before{background:var(--verde)}
+.comparativo .errado h4{color:var(--vermelho)} .comparativo .errado h4::before{background:var(--vermelho)}
+.comparativo pre{margin:0 0 9px}
+.comparativo p{font-size:14.5px}
+.comparativo p:last-child{margin-bottom:0}
+
+/* ---------- Tabelas ---------- */
+.tab-wrap{overflow-x:auto;margin:18px 0}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--linha);vertical-align:top}
+thead th{background:var(--fundo2);font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--tinta2);border-bottom:2px solid var(--linha)}
+tbody tr:hover{background:var(--fundo2)}
+td code{white-space:nowrap}
+
+/* ---------- Badges ---------- */
+.bg{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:.4px;vertical-align:middle}
+.bg-i{background:var(--azul-claro);color:var(--azul);border:1px solid #bcd8ee}
+.bg-h{background:var(--verde-claro);color:var(--verde);border:1px solid #bde0cf}
+.bg-a{background:var(--roxo-claro);color:var(--roxo);border:1px solid #d8c9ef}
+.bg-t{background:var(--laranja-claro);color:var(--laranja);border:1px solid #f5d5b0}
+
+/* ---------- Animações desta apostila ----------
+   A moldura e os passos genéricos (s1 a s10) vêm do assets/apostila.css.
+   Aqui ficam só os movimentos próprios destes desenhos. Todos partem do
+   estado final: sem animação, o diagrama continua legível e correto. */
+#d-build,#if-achou,#sw-achou{transform-box:fill-box;transform-origin:center}
+.tocando #d-build{animation:surge .5s 1s both,pulsa .8s 3.8s 2 ease-in-out}
+.tocando #if-achou{animation:cresce .45s 2.1s both}
+.tocando #if-pulados,.tocando #if-aviso,.tocando #if-aviso2{animation:some .6s 3.4s both}
+.tocando #sw-achou{animation:cresce .45s 2.1s both}
+.tocando #sw-default,.tocando #sw-aviso{animation:some .6s 3.2s both}
+
+/* ---------- Figuras ---------- */
+figure{margin:24px 0;padding:18px;background:var(--fundo2);border:1px solid var(--linha);border-radius:var(--raio)}
+figure svg{display:block;margin:0 auto;height:auto}
+figcaption{font-size:13.5px;color:var(--tinta2);margin-top:12px;text-align:center;line-height:1.5;counter-increment:fig}
+figcaption::before{content:"Figura " counter(fig) ". ";font-weight:700;color:var(--tinta)}
+figcaption b{color:var(--tinta)}
+
+/* ---------- Blocos de código ----------
+   A moldura de editor e as cores de sintaxe vêm do assets/codigo.css, ligado
+   no <head> antes deste <style> — de propósito, para que os ajustes locais
+   daqui (como a margem do comparativo, mais abaixo) consigam sobrescrevê-lo. */
+
+/* ---------- Checklists ---------- */
+.check{list-style:none;padding:0}
+.check li{padding-left:28px;position:relative}
+.check li::before{content:"";position:absolute;left:0;top:4px;width:15px;height:15px;border:2px solid var(--azul);border-radius:4px}
+
+/* ---------- Passos ---------- */
+.passos{counter-reset:p;list-style:none;padding:0}
+.passos li{counter-increment:p;padding-left:42px;position:relative;margin-bottom:14px}
+.passos li::before{content:counter(p);position:absolute;left:0;top:0;width:28px;height:28px;background:var(--azul);color:#fff;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:700}
+
+/* ---------- Atividades ---------- */
+.atividade{border:1px solid var(--linha);border-left:5px solid var(--azul);border-radius:var(--raio);padding:18px 20px;margin:16px 0;background:#fff}
+.atividade-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.atividade-n{background:var(--azul);color:#fff;font-weight:700;font-size:12px;letter-spacing:.6px;padding:3px 10px;border-radius:99px}
+.atividade h4{margin:0;font-size:17px;flex:1 1 auto}
+.atividade p:last-child{margin-bottom:0}
+
+footer{border-top:1px solid var(--linha);margin-top:60px;padding:26px 0 60px;font-size:14px;color:var(--tinta2)}
+
+/* ---------- Responsivo ---------- */
+@media (max-width:980px){
+  .wrap{grid-template-columns:1fr;gap:0}
+  nav.sumario{position:static;max-height:none;border-bottom:1px solid var(--linha);margin-bottom:10px}
+  .g3,.g4,.g2,.comparativo{grid-template-columns:1fr}
+  .capa{padding:28px 22px}.capa h1{font-size:28px}
+  h1{font-size:27px}h2{font-size:22px}
+}
+
+/* ---------- Impressão ---------- */
+@media print{
+  nav.sumario,.topbar,.progresso,.tpl-head .btn{display:none!important}
+  body{font-size:11.5pt}
+  .wrap{display:block;max-width:none;padding:0}
+  main{max-width:none;padding:0}
+  .capa{background:#00447c!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  h2{page-break-after:avoid;margin-top:26px}
+  h3,h4{page-break-after:avoid}
+  p,li{orphans:3;widows:3}
+  figure,.atividade,.box,.card,.tpl-head{page-break-inside:avoid}
+  tr{page-break-inside:avoid}
+  .capa{page-break-after:always}
+  .grid{display:block}
+  .grid .card{margin-bottom:10px}
+  a{color:inherit;text-decoration:none}
+  /* o código impresso em versão clara está no assets/codigo.css */
+}
+</style>
+</head>
+<body>
+<div class="progresso" id="prog"></div>
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="marca">Desenvolvedor <span>Mobile</span></div>
+    <div class="uc"><b>Apostila de Nivelamento</b> &middot; Lógica de Programação com Dart</div>
+    <div class="acoes">
+      <a class="btn" href="index.html">&larr; Unidade</a>
+      <button class="btn" onclick="window.print()">Imprimir / PDF</button>
+    </div>
+  </div>
+</div>
+<div class="wrap">
+<nav class="sumario" id="toc">
+  <h2>Sumário</h2>
+  <ol>
+    <li><a href="#ap">Como usar este material</a></li>
+    <li><a href="#porque">Por que começar pela lógica?</a></li>
+  </ol>
+  <h2>Flutter</h2>
+  <ol class="sub">
+    <li><a href="#flutter">1. O que é Flutter</a></li>
+    <li><a href="#pensa">2. Como o Flutter pensa</a></li>
+    <li><a href="#instalar">3. Instalando o Flutter</a></li>
+    <li><a href="#projeto">4. Primeiro projeto web</a></li>
+    <li><a href="#lab">5. O molde do app de treino</a></li>
+    <li><a href="#escrever">6. Lendo e escrevendo código</a></li>
+    <li><a href="#campos">7. Os três campos</a></li>
+  </ol>
+  <h2>Lógica com Dart</h2>
+  <ol class="sub">
+    <li><a href="#c1">1. Variáveis e tipos</a></li>
+    <li><a href="#c2">2. Operadores e números</a></li>
+    <li><a href="#c3">3. Decisões: if/else</a></li>
+    <li><a href="#c4">4. Repetições: for e while</a></li>
+    <li><a href="#c5">5. Listas</a></li>
+    <li><a href="#c6">6. Funções</a></li>
+    <li><a href="#c7">7. Nulidade segura</a></li>
+  </ol>
+  <h2>Apoio</h2>
+  <ol>
+    <li><a href="#exemplos">Exemplos de código</a></li>
+    <li><a href="#ativ">Lista de atividades</a></li>
+    <li><a href="#glo">Glossário</a></li>
+    <li><a href="#ref">Referências</a></li>
+  </ol>
+</nav>
+<main>
+
+<div class="capa">
+  <span class="tag">Módulo de Nivelamento</span>
+  <h1>Lógica de Programação com Dart</h1>
+  <p>Uma introdução ao Flutter e, dentro dele, o treino do raciocínio que está por trás de qualquer aplicativo: receber dados de quem está usando, decidir o que fazer com eles e mostrar o resultado na tela.</p>
+  <div class="meta">
+    <div><b>Flutter Web</b>tudo na tela, sem console</div>
+    <div><b>7</b>conceitos de lógica</div>
+    <div><b>3</b>apps completos</div>
+    <div><b>8</b>telas para construir</div>
+  </div>
+</div>
+<p style="font-size:13px;color:var(--tinta2);margin-top:10px">Material elaborado pelo docente Welton Castoldi como apoio extra do curso Desenvolvedor Mobile (Senac Linhares). Não é uma unidade curricular oficial do plano de curso — é um reforço para quem está começando do zero.</p>
+
+<h2 id="ap"><span class="num">Abertura</span>Como usar este material</h2>
+
+<p class="lede">Se você nunca escreveu uma linha de código na vida, respira: <b>lógica de programação não é matemática difícil nem "dom" de alguns poucos</b>. É um jeito organizado de dar instruções. Este material foi escrito para explicar cada termo técnico em português bem simples antes de usá-lo — se algo parecer complicado, é só voltar e reler a caixa azul "Em bom português" daquele trecho.</p>
+
+<p>O caminho tem duas metades. Na primeira, sete capítulos curtos apresentam o <b>Flutter</b>: como ele pensa, como instalar, como ler e escrever o código e quais campos de preenchimento vamos usar — é a nossa bancada de trabalho. Na segunda, sete conceitos de <b>lógica</b> são treinados ali dentro, sempre com o resultado aparecendo na tela, terminando em três aplicativos completos e oito telas para você construir.</p>
+
+<p>Ao longo do material há <b>animações</b>: onde o assunto é um caminho que o código percorre — uma decisão, uma repetição —, um desenho mostra o passo a passo. Elas tocam sozinhas quando você chega nelas, e o botão <b>Repetir</b> reproduz quantas vezes quiser.</p>
+
+<div class="grid g2">
+  <div class="card"><h4>Não pule etapas</h4><p>Os conceitos estão em ordem: cada um usa o anterior. Se o capítulo 4 parecer confuso, o problema quase sempre está lá atrás, no 1 ou no 2 — volte, não force.</p></div>
+  <div class="card"><h4>Erre à vontade</h4><p>Todo mundo que programa hoje já viu uma tela cheia de erro. Errar é a forma normal de aprender aqui — o computador só está te dizendo onde olhar de novo.</p></div>
+</div>
+
+<h4>Legenda das caixas</h4>
+<div class="box dica"><span class="rot">Em bom português</span><p>Tradução de um termo técnico para uma linguagem do dia a dia, sem enrolação.</p></div>
+<div class="box pratica"><span class="rot">Mão na massa</span><p>Um miniexercício rápido para testar o conceito que você acabou de ler, antes de seguir em frente.</p></div>
+<div class="box atencao"><span class="rot">Cuidado</span><p>Um erro clássico de quem está começando, e como não cair nele.</p></div>
+<div class="box mercado"><span class="rot">No mercado</span><p>Onde esse conceito aparece de verdade no trabalho de um desenvolvedor.</p></div>
+
+<h2 id="porque"><span class="num">Motivação</span>Por que começar pela lógica?</h2>
+
+<p>Neste módulo você vai construir aplicativos de verdade desde o começo — telas que recebem o que a pessoa digita, escolhe e marca, e respondem na hora. Nada de resultado escondido numa janela de texto preta: tudo aparece na tela, do jeito que um app funciona.</p>
+
+<p>Mas repare no que está sendo treinado: não é a parte visual, é o <b>miolo</b>. Cores, animações, layout refinado e navegação entre páginas ficam para as unidades seguintes do curso. Aqui a interface é montada com o mínimo necessário — um campo de texto, uma lista de opções, uma caixinha de marcar, um botão e um cartão de resultado — justamente para que a sua atenção fique onde importa agora: <i>o que o app decide fazer com os dados que recebeu</i>.</p>
+
+<p>Essa é a habilidade que não tem atalho. Copiar uma tela bonita de um tutorial é fácil; fazer o app cobrar o frete certo, validar o cadastro sem deixar brecha e calcular o desconto sem errar centavo é o que realmente se aprende programando. É disso que trata o resto desta apostila.</p>
+
+<div class="box dica"><span class="rot">Em bom português</span><p><b>Lógica de programação</b> é a habilidade de quebrar um problema em passos pequenos, exatos e na ordem certa — do jeito que um computador precisa, porque ele não "adivinha" nada.</p></div>
+
+<h2 id="flutter"><span class="num">Flutter · 1</span>O que é Flutter</h2>
+
+<p class="lede">Flutter é a caixa de ferramentas que vamos usar no curso inteiro. Antes de instalar qualquer coisa, vale entender em uma página o que é cada nome que aparece por aí.</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:150px">Nome</th><th>O que é</th></tr></thead>
+<tbody>
+<tr><td><b>Dart</b></td><td>A <i>linguagem</i> em que o código é escrito — as palavras e regras que você vai aprender nos próximos capítulos.</td></tr>
+<tr><td><b>Flutter</b></td><td>O <i>kit</i> do Google que transforma código Dart em aplicativo de verdade, com botões, textos e telas já prontos para usar.</td></tr>
+<tr><td><b>Flutter Web</b></td><td>Um dos destinos possíveis desse mesmo código: em vez de virar um app de celular, ele vira um site que abre no navegador.</td></tr>
+<tr><td><b>SDK</b></td><td>Sigla de <i>Software Development Kit</i>. É o pacote de programas que você instala no computador para poder criar e rodar os projetos.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>Pense no <b>Dart</b> como o idioma e no <b>Flutter</b> como a oficina: as ferramentas, as peças prontas e a máquina que monta o aplicativo no final. Você escreve em Dart; o Flutter constrói.</p></div>
+
+<h3>Um código, várias plataformas</h3>
+<p>A grande vantagem do Flutter é que o mesmo código pode virar um app Android, um app de iPhone, um site ou um programa de computador. Não é preciso reescrever o aplicativo do zero para cada lugar — e é por isso que o curso se chama Desenvolvedor Mobile mas a gente vai poder treinar no navegador.</p>
+
+<h3>Por que vamos começar pela web</h3>
+<p>Rodar no navegador é o caminho mais curto entre escrever uma linha de código e vê-la funcionando:</p>
+<ul>
+  <li><b>Não precisa de celular nem de emulador.</b> O app abre numa aba do Chrome, como qualquer site.</li>
+  <li><b>Não precisa instalar o Android Studio</b> (que é grande e demorado) só para treinar lógica.</li>
+  <li><b>A lógica é exatamente a mesma.</b> Um <code>if</code> ou um <code>for</code> escrito hoje na web funciona igualzinho no app Android depois: mesmo Dart, mesmo Flutter.</li>
+</ul>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>No Flutter, tudo que aparece na tela é um <b>widget</b> — um bloquinho de interface, como peças de Lego que se encaixam para formar a tela inteira. Um texto é um widget, um botão é um widget, a caixinha de marcar é um widget. Por enquanto você só vai <i>usar</i> widgets já prontos, sem precisar criar os seus.</p></div>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>Empresas de todos os tamanhos usam Flutter justamente por esse "escreve uma vez, publica em vários lugares", que reduz custo e tempo de manutenção. Para quem está começando, isso significa que o que você aprender aqui não serve para uma plataforma só.</p></div>
+
+<h2 id="pensa"><span class="num">Flutter · 2</span>Como o Flutter pensa</h2>
+
+<p class="lede">Antes de escrever código, vale entender uma ideia que muda tudo — e que costuma ser o maior tropeço de quem vem de outras linguagens. No Flutter você <b>não manda a tela mudar</b>. Você descreve como ela deve ser, e ele cuida do resto.</p>
+
+<h3>Mandar fazer x descrever o resultado</h3>
+
+<p>Imagine que você precisa arrumar uma mesa de restaurante. Existem dois jeitos de pedir isso:</p>
+
+<div class="comparativo">
+  <div class="certo">
+    <h4>Declarativo — como o Flutter funciona</h4>
+    <p>"A mesa arrumada tem toalha, dois pratos e quatro taças."</p>
+    <p>Você descreve <b>como deve ficar</b>. Quem executa compara com o estado atual e faz só o que falta.</p>
+  </div>
+  <div class="errado">
+    <h4>Imperativo — o que NÃO fazemos aqui</h4>
+    <p>"Pegue a toalha. Estenda. Agora pegue um prato. Coloque à esquerda. Agora o outro..."</p>
+    <p>Você comanda <b>cada passo</b>. Se algo já estava na mesa, o risco de bagunça é seu.</p>
+  </div>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p><b>Linguagem declarativa</b> quer dizer que o seu código <i>declara</i> (descreve) o resultado desejado, em vez de dar a sequência de ordens para chegar nele. No Flutter, a função <code>build</code> é essa descrição: ela responde à pergunta "com os dados que eu tenho agora, como esta tela deve aparecer?".</p></div>
+
+<p>Por isso, no molde que vamos usar, você nunca vai encontrar um comando do tipo "mude o texto do cartão". O que existe é: a gaveta <code>resultado</code> passa a valer outra coisa, e a tela é descrita de novo já com esse valor novo.</p>
+
+<h3>A tela é uma função do estado</h3>
+
+<p>Essa é a frase que resume o Flutter inteiro, e vale guardar:</p>
+
+<div class="box dica"><span class="rot">A regra de ouro</span><p style="font-size:19px;text-align:center;margin:6px 0"><b>tela = f(estado)</b></p><p><b>Estado</b> são os dados que podem mudar enquanto o app está aberto: o que foi digitado, o que foi escolhido, o que está marcado. Dado o estado, a tela é sempre a mesma — mesma entrada, mesmo desenho. Mudou o estado, o Flutter redesenha.</p></div>
+
+<figure class="anim" data-duracao="5600">
+  <div class="anim-head">
+    <span class="anim-tag">Animação</span>
+    <button class="btn" type="button">Tocar</button>
+  </div>
+<svg viewBox="0 0 700 300" role="img" aria-label="A pessoa toca na caixinha; o setState muda o estado de false para true; o build descreve a tela de novo; a tela aparece com a caixinha marcada">
+  <defs>
+    <marker id="seta-fx" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 z" fill="#00447c"/>
+    </marker>
+    <marker id="seta-fx-lar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 z" fill="#e8730c"/>
+    </marker>
+  </defs>
+
+  <!-- 1. estado -->
+  <g class="s1">
+    <rect x="14" y="36" width="190" height="86" rx="10" fill="#e8f1f9" stroke="#00447c" stroke-width="1.5"/>
+    <text x="109" y="58" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="800" fill="#00447c">1. O ESTADO</text>
+    <text x="109" y="82" text-anchor="middle" font-family="monospace" font-size="12.5" fill="#1a1f26">aceitouTermos</text>
+    <text x="70" y="105" text-anchor="middle" font-family="monospace" font-size="13" fill="#455060">false</text>
+  </g>
+  <text class="s8" x="145" y="105" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#1d7a52">→ true</text>
+
+  <line class="s2" x1="210" y1="79" x2="248" y2="79" stroke="#00447c" stroke-width="1.8" marker-end="url(#seta-fx)"/>
+
+  <!-- 2. build -->
+  <g id="d-build">
+    <rect x="256" y="36" width="176" height="86" rx="10" fill="#fff" stroke="#00447c" stroke-width="1.5"/>
+    <text x="344" y="58" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="800" fill="#00447c">2. O BUILD</text>
+    <text x="344" y="82" text-anchor="middle" font-family="monospace" font-size="12.5" fill="#1a1f26">build()</text>
+    <text x="344" y="103" text-anchor="middle" font-family="sans-serif" font-size="11.5" fill="#455060">descreve a tela</text>
+  </g>
+
+  <line class="s4" x1="440" y1="79" x2="478" y2="79" stroke="#00447c" stroke-width="1.8" marker-end="url(#seta-fx)"/>
+
+  <!-- 3. tela -->
+  <g class="s5">
+    <rect x="486" y="36" width="200" height="86" rx="10" fill="#e6f4ee" stroke="#1d7a52" stroke-width="1.5"/>
+    <text x="586" y="58" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="800" fill="#1d7a52">3. A TELA</text>
+    <rect x="512" y="72" width="20" height="20" rx="4" fill="#fff" stroke="#1d7a52" stroke-width="1.8"/>
+    <text x="546" y="88" font-family="sans-serif" font-size="12.5" fill="#1a1f26">Aceito os termos</text>
+  </g>
+  <path class="s10" d="M516 82 L521 88 L529 76" fill="none" stroke="#1d7a52" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- volta: toque da pessoa -->
+  <g class="s6">
+    <rect x="486" y="190" width="200" height="62" rx="10" fill="#fdf0e3" stroke="#e8730c" stroke-width="1.5"/>
+    <text x="586" y="214" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#b85a08">a pessoa toca</text>
+    <text x="586" y="233" text-anchor="middle" font-family="sans-serif" font-size="11.5" fill="#455060">na caixinha</text>
+  </g>
+  <line class="s6" x1="586" y1="128" x2="586" y2="184" stroke="#e8730c" stroke-width="1.8" marker-end="url(#seta-fx-lar)"/>
+
+  <g class="s7">
+    <path d="M480 221 L150 221 L109 221 L109 132" fill="none" stroke="#e8730c" stroke-width="1.8" marker-end="url(#seta-fx-lar)"/>
+    <rect x="243" y="200" width="150" height="42" rx="8" fill="#fff" stroke="#e8730c" stroke-width="1.5"/>
+    <text x="318" y="226" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#b85a08">setState()</text>
+  </g>
+
+  <text x="350" y="285" text-anchor="middle" font-family="sans-serif" font-size="11.5" fill="#455060">o ciclo só recomeça quando o estado muda — e ele só muda dentro do setState</text>
+</svg>
+<figcaption>Você nunca manda "marque a caixinha". Você muda o <b>estado</b> e avisa com <code>setState</code>; o Flutter roda o <code>build</code> de novo e redesenha o que ficou diferente.</figcaption>
+</figure>
+
+<div class="box atencao"><span class="rot">Cuidado</span><p>Este é <b>o</b> erro número um de quem começa: mudar uma gaveta fora do <code>setState</code>. O valor muda de verdade na memória, mas ninguém avisou o Flutter — então o <code>build</code> não roda, a tela não é redesenhada e parece que "o código não funcionou". Se algo mudou por dentro e não apareceu na tela, procure um <code>setState</code> faltando.</p></div>
+
+<h3>Tudo é widget, e widgets se encaixam</h3>
+
+<p>A tela inteira é montada encaixando widgets uns dentro dos outros, como peças de Lego. O widget de fora segura os de dentro, e é por isso que o código tem tanta indentação. Esta é a estrutura do molde que você vai colar no próximo capítulo:</p>
+
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>a árvore de widgets do molde</h4></div>
+<pre>Scaffold                  o esqueleto da tela
+├─ AppBar                 a barra azul do topo
+└─ SingleChildScrollView  permite rolar quando não cabe
+   └─ Column              empilha os filhos de cima para baixo
+      ├─ TextField        campo de digitação
+      ├─ ElevatedButton   botão
+      └─ Card             o cartão do resultado
+         └─ Text          o texto dentro do cartão</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>Essa estrutura de encaixe se chama <b>árvore de widgets</b>. Widgets que seguram <b>um</b> filho usam o parâmetro <code>child:</code> (o <code>Card</code> acima segura um <code>Text</code>). Os que seguram <b>vários</b> usam <code>children:</code>, com a lista entre colchetes (a <code>Column</code> acima). Essa é a diferença entre as duas palavras que mais confundem no começo.</p></div>
+
+<h3>Com memória e sem memória</h3>
+
+<div class="grid g2">
+  <div class="card"><h4><code>StatelessWidget</code> — sem memória</h4><p>Desenha sempre a mesma coisa a partir do que recebeu. Não guarda nada que mude. No molde, é o <code>AppTreino</code>, que só liga o aplicativo.</p></div>
+  <div class="card"><h4><code>StatefulWidget</code> — com memória</h4><p>Tem gavetas que mudam enquanto o app roda e pode chamar <code>setState</code> para se redesenhar. É a nossa <code>Tela</code>, onde acontece tudo.</p></div>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>Repare que o <code>StatefulWidget</code> vem sempre em dupla: uma classe para o widget e outra, com o nome terminando em <code>State</code>, para guardar o estado e desenhar. É burocracia da linguagem — o Flutter precisa poder jogar o widget fora e recriá-lo sem perder o que estava guardado. Por enquanto é só copiar o formato do molde.</p></div>
+
+<div class="box atencao"><span class="rot">Cuidado</span><p>A função <code>build</code> pode rodar <b>muitas vezes por segundo</b> — a cada mudança de estado, ao girar a tela, ao aparecer o teclado. Por isso ela só deve <i>descrever</i> a tela. Cálculos demorados, gravar arquivo ou pedir dados na internet não vão ali dentro; no nosso molde, esse tipo de coisa fica na função <code>calcular()</code>, que só roda quando o botão é apertado.</p></div>
+
+<h2 id="instalar"><span class="num">Flutter · 3</span>Instalando o Flutter (Windows)</h2>
+
+<p class="lede">Esta é a única parte chata do módulo, e ela acontece uma vez só. Se o computador do laboratório já tiver o Flutter instalado, pule direto para o próximo capítulo.</p>
+
+<ol class="passos">
+  <li><b>Instale o Git para Windows.</b> Baixe em <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">git-scm.com/download/win</a> e avance com as opções padrão. O Flutter usa o Git por dentro, então ele precisa estar instalado antes.</li>
+  <li><b>Instale o Google Chrome</b>, se ainda não tiver. É nele que nossos apps vão abrir.</li>
+  <li><b>Baixe o SDK do Flutter</b> na página oficial <a href="https://docs.flutter.dev/get-started/install/windows" target="_blank" rel="noopener">docs.flutter.dev/get-started/install/windows</a>, escolhendo a opção de desenvolvimento <b>web</b>. É um arquivo <code>.zip</code> grande — pode demorar para baixar.</li>
+  <li><b>Descompacte numa pasta simples</b>, por exemplo <code>C:\dev\flutter</code>. Evite <code>C:\Program Files</code> e evite caminhos com espaços ou acentos — é uma fonte clássica de erro difícil de achar depois.</li>
+  <li><b>Coloque o Flutter no PATH.</b> No menu Iniciar, procure "variáveis de ambiente" → <i>Editar as variáveis de ambiente para a sua conta</i> → selecione <code>Path</code> → <i>Editar</i> → <i>Novo</i> → digite <code>C:\dev\flutter\bin</code> → OK em todas as janelas.</li>
+  <li><b>Abra um terminal novo</b> (PowerShell) e rode <code>flutter doctor</code>. Na primeira vez ele baixa alguns componentes e depois mostra um relatório do que está pronto e do que falta.</li>
+  <li><b>Instale o VS Code</b> e, dentro dele, a extensão <b>Flutter</b> (ela já traz a do Dart junto). Vai ser o nosso editor no curso.</li>
+</ol>
+
+<div class="box dica"><span class="rot">Em bom português</span><p><b>Terminal</b> é aquela janela preta onde a gente digita comandos em texto em vez de clicar em botões. E <b>PATH</b> é a lista de pastas onde o Windows procura programas quando você digita um comando ali. Colocar <code>C:\dev\flutter\bin</code> nessa lista é justamente o que faz o comando <code>flutter</code> funcionar de qualquer pasta.</p></div>
+
+<div class="box atencao"><span class="rot">Cuidado</span><p>O <code>flutter doctor</code> quase certamente vai reclamar de coisas como <i>Android toolchain</i>, <i>Android Studio</i> ou <i>Visual Studio</i>, com um X vermelho. <b>Isso não é problema para nós.</b> Essas partes só são necessárias para gerar apps de Android, iPhone ou Windows. Para treinar lógica no navegador, basta que a linha do <b>Chrome</b> apareça com o visto verde.</p></div>
+
+<div class="box atencao"><span class="rot">Cuidado</span><p>Se o terminal responder algo como <i>"flutter: o termo não é reconhecido"</i>, quase sempre é uma de duas coisas: o caminho digitado no PATH está errado, ou você ainda está num terminal que foi aberto <i>antes</i> da mudança. Feche e abra o terminal de novo antes de tentar qualquer outra coisa.</p></div>
+
+<h2 id="projeto"><span class="num">Flutter · 4</span>Seu primeiro projeto Flutter Web</h2>
+
+<p class="lede">Com o Flutter instalado, criar e rodar um projeto são três comandos. Vale fazer isso uma vez com o projeto de exemplo, antes de mexer em qualquer coisa.</p>
+
+<ol class="passos">
+  <li>Abra o terminal na pasta onde você guarda seus trabalhos (por exemplo <code>C:\dev</code>).</li>
+  <li>Crie o projeto com <code>flutter create laboratorio_logica</code> — o Flutter monta uma pasta com um aplicativo de exemplo já funcionando.</li>
+  <li>Entre na pasta com <code>cd laboratorio_logica</code>.</li>
+  <li>Rode no navegador com <code>flutter run -d chrome</code>. Na primeira vez pode levar alguns minutos; depois o Chrome abre sozinho com um app de contador, aquele com um botão <b>+</b> no canto.</li>
+</ol>
+
+<div class="box dica"><span class="rot">Em bom português</span><p><code>-d chrome</code> quer dizer "rode no <i>device</i> (dispositivo) chamado chrome". É assim que você escolhe onde o app vai abrir. Para ver a lista do que está disponível no seu computador, rode <code>flutter devices</code>.</p></div>
+
+<div class="box atencao"><span class="rot">Cuidado</span><p>Nomes de projeto em Flutter seguem a regra do Dart: tudo minúsculo, sem espaços, sem acentos, palavras separadas por <code>_</code>. <code>laboratorio_logica</code> funciona; <code>Laboratório Lógica</code> dá erro na hora de criar.</p></div>
+
+<h3>O que importa dentro do projeto</h3>
+<p>A pasta criada tem muitos arquivos, e isso assusta no começo. A boa notícia: por enquanto, um só interessa.</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:190px">Arquivo / pasta</th><th>Para que serve</th></tr></thead>
+<tbody>
+<tr><td><code>lib/main.dart</code></td><td><b>É aqui que a gente trabalha.</b> Todo o código deste módulo vai neste arquivo.</td></tr>
+<tr><td><code>pubspec.yaml</code></td><td>A "ficha técnica" do projeto: nome, versão e as bibliotecas que ele usa. Vamos mexer nele mais adiante no curso.</td></tr>
+<tr><td><code>web/</code></td><td>Os arquivos que fazem o app funcionar dentro do navegador. Não precisa tocar.</td></tr>
+<tr><td><code>android/</code>, <code>ios/</code>…</td><td>As versões do projeto para outras plataformas. Ignore por enquanto.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Hot reload: salvar e ver na hora</h3>
+<p>Com o app rodando, abra a pasta do projeto no VS Code, edite o <code>lib/main.dart</code> e salve com Ctrl+S. Em poucos segundos a página no Chrome se atualiza com a sua mudança, sem precisar parar e rodar tudo de novo.</p>
+
+<div class="box dica"><span class="rot">Em bom português</span><p><b>Hot reload</b> ("recarga quente") é essa atualização quase instantânea ao salvar o arquivo. Dependendo da versão do Flutter, na web ele pode recarregar a página inteira em vez de só o trecho alterado — para o nosso uso, o efeito prático é o mesmo. Para encerrar o app, volte ao terminal e aperte <code>q</code>.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p>Com o projeto de exemplo rodando, procure no <code>lib/main.dart</code> o texto <code>'Flutter Demo Home Page'</code>, troque por <code>'Meu laboratório'</code> e salve. Veja o título mudar no navegador. Pronto: você acabou de editar um aplicativo Flutter.</p></div>
+
+<h2 id="lab"><span class="num">Flutter · 5</span>O molde do app de treino</h2>
+
+<p class="lede">Agora vamos trocar o app de exemplo por um molde enxuto: um campo, um botão e um cartão que mostra o resultado. Todo exercício deste material nasce desse mesmo molde — muda só o que está dentro das três regiões marcadas.</p>
+
+<p>Abra o <code>lib/main.dart</code>, <b>apague tudo</b> o que estiver lá e cole o código abaixo.</p>
+
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>lib/main.dart — o molde</h4><span class="bg bg-i">cole uma vez só</span></div>
+<pre>import 'package:flutter/material.dart';
+
+void main() =&gt; runApp(const AppTreino());
+
+class AppTreino extends StatelessWidget {
+  const AppTreino({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Treino de Lógica",
+      theme: ThemeData(colorSchemeSeed: Colors.indigo),
+      home: const Tela(),
+    );
+  }
+}
+
+class Tela extends StatefulWidget {
+  const Tela({super.key});
+
+  @override
+  State&lt;Tela&gt; createState() =&gt; _TelaState();
+}
+
+class _TelaState extends State&lt;Tela&gt; {
+  // ===== 1. AS GAVETAS: o que a tela precisa guardar =====
+  String resultado = "";
+
+  // ===== 2. A LÓGICA: o que acontece ao apertar o botão =====
+  void calcular() {
+    setState(() {
+      resultado = "Tudo pronto! Agora é só programar aqui dentro.";
+    });
+  }
+
+  // ===== 3. A TELA: o que a pessoa vê =====
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Treino de Lógica")),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // os campos de preenchimento entram aqui
+
+            ElevatedButton(
+              onPressed: calcular,
+              child: const Text("Calcular"),
+            ),
+            const SizedBox(height: 24),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(resultado, style: const TextStyle(fontSize: 18)),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>O molde tem <b>três regiões numeradas</b>, e é só nelas que você mexe no material inteiro:</p>
+<ol>
+  <li><b>As gavetas</b> — as variáveis que a tela guarda (o que a pessoa digitou, o resultado a mostrar).</li>
+  <li><b>A lógica</b> — a função <code>calcular()</code>, que roda quando o botão é apertado. É o coração de tudo que você vai aprender.</li>
+  <li><b>A tela</b> — a lista de widgets que aparecem, de cima para baixo.</li>
+</ol>
+<p>O resto do arquivo é encanamento: ele liga o app e cria a janela. Vamos destrinchar esse encanamento nas unidades de Flutter.</p>
+<p>As três regiões conversam entre si: a gaveta <code>resultado</code> é escrita pela lógica e lida pelo cartão da região 3. Se você apagar uma gaveta que a região 3 usa, aparece erro vermelho — por isso os exercícios sempre mostram as três regiões que precisam mudar juntas.</p></div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p><code>setState</code> é o comando que avisa o Flutter: "mudei uma gaveta, redesenhe a tela". Sem ele, o valor muda por dentro mas a tela continua mostrando o antigo. Toda vez que você quiser ver algo novo aparecer, a mudança precisa acontecer dentro de um <code>setState</code>.</p></div>
+
+<h3>Dois ajustes de uma vez só</h3>
+<p>Logo após colar o molde, o VS Code vai apontar dois "problemas" que são só sobras do projeto de exemplo. Resolva agora e não pense mais neles:</p>
+
+<ol class="passos">
+  <li><b>Apague a pasta <code>test/</code>.</b> Ela tem um teste de exemplo que aponta para o código antigo do <code>lib/main.dart</code> — o que acabamos de substituir. Sem apagar, ela fica marcada com erro vermelho para sempre. Testes automatizados são assunto de outra unidade do curso.</li>
+  <li><b>Libere o <code>print()</code></b> (opcional). Se você usar <code>print()</code> para espiar valores, o projeto mostra um aviso amarelo recomendando não usá-lo em apps publicados. Para desligar: abra o <code>analysis_options.yaml</code> na raiz do projeto, encontre a linha <code># avoid_print: false</code> e apague o <code>#</code> e o espaço depois dele, deixando só <code>avoid_print: false</code> recuado como estava.</li>
+</ol>
+
+<div class="box atencao"><span class="rot">Cuidado</span><p>Erro vermelho e aviso amarelo são coisas diferentes. O <b>vermelho</b> impede o app de rodar e precisa ser corrigido. O <b>amarelo</b> (ou azul) é só uma sugestão de estilo: o app roda normalmente. Saber diferenciar os dois evita muito desespero desnecessário no começo.</p></div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>Existe também o <code>print("alguma coisa")</code>, o comando clássico do Dart para escrever uma mensagem. Ela não aparece no app: vai para o <i>Debug Console</i> do VS Code. Neste material o resultado sempre aparece na tela, mas guarde o <code>print()</code> no bolso — ele é ótimo para espiar o valor de uma variável quando algo não funciona como você esperava.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p>Rode o app (<code>flutter run -d chrome</code>), clique em <b>Calcular</b> e veja a mensagem aparecer no cartão. Agora troque o texto dentro do <code>setState</code> por outro qualquer, salve com Ctrl+S e clique de novo. Viu mudar? Seu ambiente está pronto.</p></div>
+
+<h2 id="escrever"><span class="num">Flutter · 6</span>Lendo e escrevendo código Flutter</h2>
+
+<p class="lede">Agora que você tem o molde na tela, vale parar cinco minutos para aprender a <i>ler</i> aquilo. Código Flutter assusta no começo por causa da indentação e da escadinha de parênteses no fim — mas tem um padrão só, que se repete até o fim do curso.</p>
+
+<h3>A anatomia de um widget</h3>
+
+<p>Toda chamada de widget tem a mesma forma: o nome, e dentro dos parênteses uma lista de <b>parâmetros nomeados</b>, cada um com nome, dois-pontos e valor.</p>
+
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>sempre o mesmo formato</h4></div>
+<pre>ElevatedButton(          // nome do widget
+  onPressed: calcular,   // parâmetro "onPressed" recebe a função
+  child: const Text(     // parâmetro "child" recebe OUTRO widget
+    "Calcular",          //   que por sua vez recebe um texto
+  ),
+)                        // fecha o ElevatedButton</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p><b>Parâmetro nomeado</b> é aquele que você passa dizendo o nome dele: <code>onPressed: calcular</code>. É o contrário de passar só o valor na ordem certa, como em <code>calcularMedia(7.0, 8.5)</code>. Quase tudo no Flutter é nomeado — o que deixa o código mais longo, mas muito mais fácil de ler: você não precisa decorar que "o terceiro valor é a cor".</p></div>
+
+<h3>A vírgula do fim faz o código se arrumar sozinho</h3>
+
+<p>Repare que, nos exemplos, o último parâmetro também tem vírgula antes do parêntese de fechamento. Isso não é descuido: é o que faz o formatador automático quebrar o código em linhas legíveis, em vez de amontoar tudo numa linha só.</p>
+
+<div class="comparativo">
+  <div class="certo">
+    <h4>Com vírgula no fim</h4>
+    <pre class="codigo">Card(
+  child: Text(resultado),
+)</pre>
+    <p>O formatador empilha, e dá para ver onde cada widget começa e termina.</p>
+  </div>
+  <div class="errado">
+    <h4>Sem vírgula no fim</h4>
+    <pre class="codigo">Card(child: Text(resultado))</pre>
+    <p>Funciona igual, mas conforme o widget cresce vira uma linha enorme, difícil de ler e de achar erro.</p>
+  </div>
+</div>
+
+<div class="box dica"><span class="rot">Atalho que salva a vida</span><p>Para o VS Code arrumar a indentação do arquivo inteiro, aperte <b>Shift + Alt + F</b>. Faça isso sempre que o código parecer embaralhado: se ele se arrumar bonitinho, os parênteses e chaves estão equilibrados; se o formatador <i>não</i> fizer nada, é sinal de que falta fechar alguma coisa — o que já é uma pista e tanto sobre onde está o erro.</p></div>
+
+<h3>A escada de parênteses</h3>
+
+<p>Como os widgets ficam encaixados uns dentro dos outros, o fim de um trecho costuma ter uma sequência assim:</p>
+
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>o fechamento do molde, de dentro para fora</h4></div>
+<pre>            ),   // fecha o Text
+          ),     // fecha o Padding
+        ),       // fecha o Card
+      ],         // fecha a lista children
+    ),           // fecha a Column
+  ),             // fecha o SingleChildScrollView
+);               // fecha o Scaffold e o return</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>Cada linha dessas fecha um widget, de dentro para fora. Você não precisa contar na mão: clique num parêntese e o VS Code destaca o par dele. A indentação também ajuda — o fechamento fica alinhado com a linha que abriu. E lembre: <code>]</code> fecha lista (<code>children:</code>) e <code>)</code> fecha chamada de widget.</p></div>
+
+<h3>O <code>const</code> que o editor fica sugerindo</h3>
+
+<p>Você vai ver <code>const</code> espalhado pelos exemplos: <code>const Text("Calcular")</code>. Ele marca um widget que <b>nunca muda</b>, e o Flutter aproveita isso para não redesenhá-lo à toa.</p>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>A regra prática: se o conteúdo é fixo, escrito ali no código, cabe <code>const</code> (<code>const Text("Calcular")</code>). Se depende de uma gaveta que muda, não cabe (<code>Text(resultado)</code>). Se você errar, o editor avisa — ou sugerindo acrescentar, ou com erro vermelho dizendo que aquilo não pode ser <code>const</code>. É um aviso barato de resolver, não se assuste com ele.</p></div>
+
+<h3>Pontos de atenção: os erros que todo mundo comete</h3>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:38%">O que aparece</th><th>O que quase sempre é</th></tr></thead>
+<tbody>
+<tr><td>Mudei o valor e a tela não mudou</td><td>Faltou o <code>setState</code>. O valor mudou por dentro, mas ninguém avisou o Flutter para redesenhar.</td></tr>
+<tr><td><i>Expected to find ')'</i> ou uma enxurrada de erros vermelhos de uma vez</td><td>Um parêntese, chave ou colchete a menos (ou a mais). Rode o <b>Shift + Alt + F</b>: se o arquivo não se arrumar, é isso.</td></tr>
+<tr><td><i>The argument type 'String' can't be assigned to the parameter type 'double'</i></td><td>Você usou o texto de um <code>TextField</code> direto numa conta. Converta antes com <code>double.tryParse(...) ?? 0</code>.</td></tr>
+<tr><td><i>A value of type 'bool?' can't be assigned to 'bool'</i></td><td>Um valor que pode vir vazio. No <code>onChanged</code> da caixinha e da seleção, é o que o <code>!</code> resolve: <code>marcado!</code>.</td></tr>
+<tr><td>Faixas amarelas e pretas na tela, com <i>RenderFlex overflowed</i></td><td>O conteúdo não coube. No nosso molde isso é raro porque a tela rola, mas se acontecer é sinal de coisa demais numa <code>Column</code> sem rolagem.</td></tr>
+<tr><td>A tela fica branca e o terminal mostra um erro</td><td>O app quebrou ao desenhar. Leia a <b>primeira</b> linha do erro: ela costuma dizer o arquivo e a linha exatos.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box dica"><span class="rot">Como ler um erro sem pânico</span><p>A mensagem vem em inglês e parece intimidadora, mas quase sempre o que importa está em duas partes: <b>a primeira linha</b> (o que deu errado) e <b>a linha que cita o seu arquivo</b>, algo como <code>main.dart:42</code> — o número 42 é a linha do seu código. Comece por ali. Se a mensagem continuar incompreensível, copie a primeira linha inteira e pesquise: a chance de outra pessoa já ter passado por isso é altíssima.</p></div>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>Ler mensagem de erro é uma habilidade profissional de verdade, e uma das que mais separa quem avança de quem trava. Ninguém decora o Flutter inteiro: a diferença é saber interpretar o que o computador está dizendo e procurar bem. Comece a praticar isso agora, nos exercícios pequenos, onde o estrago é zero.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p>Quebre o seu molde de propósito, uma coisa de cada vez, e veja o que o editor diz: (1) apague um parêntese do fim; (2) tire o <code>setState</code> da função <code>calcular</code> e clique no botão; (3) troque <code>Text(resultado)</code> por <code>const Text(resultado)</code>. Depois desfaça tudo com Ctrl+Z. Provocar o erro de propósito, sabendo a causa, é o jeito mais rápido de aprender a reconhecê-lo depois.</p></div>
+
+<h2 id="campos"><span class="num">Flutter · 7</span>Os três campos: texto, seleção e marcação</h2>
+
+<p class="lede">Um app só fica interessante quando recebe dados de quem está usando. Do catálogo enorme de widgets do Flutter vamos usar só três — e eles são suficientes para alimentar qualquer lógica deste material.</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:190px">Widget</th><th>Serve para</th><th>Guarda numa gaveta do tipo</th></tr></thead>
+<tbody>
+<tr><td><code>TextField</code></td><td>a pessoa digitar um texto ou um número</td><td><code>String</code></td></tr>
+<tr><td><code>DropdownButton</code></td><td>a pessoa escolher uma opção de uma lista (o "select")</td><td><code>String</code> (ou <code>int</code>)</td></tr>
+<tr><td><code>CheckboxListTile</code></td><td>a pessoa marcar sim ou não</td><td><code>bool</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Campo de texto</h3>
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>TextField — para digitar</h4></div>
+<pre>// região 1 — a gaveta
+String nome = "";
+
+// região 3 — dentro do children:
+TextField(
+  decoration: const InputDecoration(labelText: "Seu nome"),
+  onChanged: (texto) =&gt; nome = texto,
+),</pre>
+</div>
+
+<h3>Lista de opções</h3>
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>DropdownButton — para escolher uma opção</h4></div>
+<pre>// região 1 — a gaveta (já começa com uma opção escolhida)
+String plano = "Mensal";
+
+// região 3 — dentro do children:
+DropdownButton&lt;String&gt;(
+  value: plano,
+  isExpanded: true,
+  items: const [
+    DropdownMenuItem(value: "Mensal", child: Text("Mensal")),
+    DropdownMenuItem(value: "Anual", child: Text("Anual")),
+  ],
+  onChanged: (escolha) =&gt; setState(() =&gt; plano = escolha!),
+),</pre>
+</div>
+
+<h3>Caixa de marcar</h3>
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>CheckboxListTile — para marcar sim ou não</h4></div>
+<pre>// região 1 — a gaveta
+bool aceitouTermos = false;
+
+// região 3 — dentro do children:
+CheckboxListTile(
+  title: const Text("Aceito os termos de uso"),
+  contentPadding: EdgeInsets.zero,
+  value: aceitouTermos,
+  onChanged: (marcado) =&gt; setState(() =&gt; aceitouTermos = marcado!),
+),</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p><code>onChanged</code> quer dizer "ao mudar": é o trecho de código que o widget executa toda vez que a pessoa mexe nele. O <code>=&gt;</code> é um atalho para uma função de uma linha só. E o <code>!</code> no fim de <code>escolha!</code> é você garantindo ao Dart que ali vem um valor de verdade, não um vazio — o <a href="#c7">capítulo 7</a> explica esse ponto com calma.</p></div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>Repare que o <code>TextField</code> não precisa de <code>setState</code> no <code>onChanged</code>, mas a seleção e a marcação precisam. O motivo: o campo de texto já sabe se redesenhar sozinho enquanto a pessoa digita — só a gaveta precisa ser atualizada. Já a caixinha marcada e a opção escolhida <i>aparecem</i> na tela, então a tela precisa ser redesenhada para mostrar o novo estado.</p></div>
+
+<div class="box atencao"><span class="rot">Cuidado</span><p>O <code>TextField</code> devolve <b>sempre texto</b>, mesmo quando a pessoa digita um número. Para fazer conta é preciso converter primeiro — é o assunto do <a href="#c2">capítulo 2</a>.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p>Monte uma tela com os três campos e faça o botão mostrar no cartão tudo que foi preenchido, mais ou menos assim: <code>resultado = "Nome: $nome / Plano: $plano / Termos: $aceitouTermos";</code>. É o seu primeiro formulário funcionando.</p></div>
+
+<h2 id="c1"><span class="num">Lógica · 1</span>Variáveis e tipos</h2>
+
+<p class="lede">Todo app precisa guardar informação enquanto trabalha: um nome, um preço, uma escolha. Essas são as gavetas da região 1 do molde.</p>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>Uma <b>variável</b> é uma gaveta com etiqueta. A etiqueta é o nome que você escolhe (<code>preco</code>, <code>nomeCliente</code>); dentro fica um valor (<code>59.90</code>, <code>"Ana"</code>). Você pode abrir a gaveta depois para usar — ou trocar — o que está dentro.</p></div>
+
+<p>Em Dart, toda gaveta tem um <b>tipo</b>: um aviso sobre que tipo de coisa cabe ali dentro. Quatro tipos dão conta de quase tudo:</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:110px">Tipo</th><th>Guarda</th><th>Num app, costuma ser</th></tr></thead>
+<tbody>
+<tr><td><code>int</code></td><td>número inteiro, sem vírgula</td><td>quantidade de itens, número de parcelas</td></tr>
+<tr><td><code>double</code></td><td>número com casas decimais</td><td>preço, peso, nota, distância</td></tr>
+<tr><td><code>String</code></td><td>texto, sempre entre aspas</td><td>nome, e-mail, endereço, mensagem</td></tr>
+<tr><td><code>bool</code></td><td>verdadeiro ou falso, sem meio-termo</td><td>aceitou os termos, é cliente vip, entrega rápida</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p><b>bool</b> (booleano) é o tipo que só aceita duas respostas: <code>true</code> (verdadeiro) ou <code>false</code> (falso) — como um interruptor, que só está ligado ou desligado. É exatamente o que uma caixinha de marcar produz.</p></div>
+
+<h3>Três jeitos de declarar</h3>
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>var, final e const</h4></div>
+<pre>var quantidade = 3;        // Dart entende sozinho que é int; pode mudar depois
+final nomeLoja = "Senac";  // definida uma vez, não muda mais
+const taxaServico = 0.10;  // igual ao final, mas fixa desde antes de rodar</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p><code>var</code> é uma gaveta cujo conteúdo pode ser trocado. <code>final</code> e <code>const</code> ficam trancadas depois de preenchidas. Use <code>final</code>/<code>const</code> sempre que der: se um valor não muda, existe um erro a menos para acontecer.</p></div>
+
+<h3>Mostrando variáveis na tela</h3>
+<p>Para colar o valor de uma gaveta dentro de um texto, use o cifrão:</p>
+
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>cartão de perfil</h4><span class="bg bg-i">regiões 1 e 2</span></div>
+<pre>// ===== 1. AS GAVETAS =====
+String nome = "Ana Souza";
+String cargo = "Desenvolvedora mobile";
+int idade = 23;
+bool disponivel = true;
+String resultado = "";
+
+// ===== 2. A LÓGICA =====
+void calcular() {
+  setState(() {
+    resultado = "$nome, $idade anos\n"
+        "$cargo\n"
+        "Disponível para projetos: $disponivel";
+  });
+}</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p><b>Interpolação</b> é só o nome técnico de "colar o valor de uma variável dentro de um texto". <code>$nome</code> encaixa o valor direto. Se precisar de uma conta ou de um ponto no meio, use chaves: <code>${idade + 1}</code>, <code>${preco.toStringAsFixed(2)}</code>. E <code>\n</code> quebra a linha.</p></div>
+
+<div class="comparativo">
+  <div class="certo">
+    <h4>Nome de variável claro</h4>
+    <pre class="codigo">double precoFrete = 12.90;</pre>
+    <p>Dá para entender o que é só de olhar.</p>
+  </div>
+  <div class="errado">
+    <h4>Nome de variável confuso</h4>
+    <pre class="codigo">double x = 12.90;</pre>
+    <p>Funciona igual, mas daqui a 30 linhas ninguém lembra o que <code>x</code> era — nem você.</p>
+  </div>
+</div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p>Troque as gavetas do cartão de perfil pelos seus próprios dados e rode. Depois acrescente uma gaveta <code>String cidade</code> e mostre ela também no cartão.</p></div>
+
+<h2 id="c2"><span class="num">Lógica · 2</span>Operadores e conversão de números</h2>
+
+<p class="lede">Operadores são os símbolos que fazem contas e perguntas de sim ou não. É com eles que um app calcula um total, um desconto ou um frete.</p>
+
+<h3>Operadores aritméticos</h3>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:70px">Símbolo</th><th>Faz</th><th>Exemplo</th></tr></thead>
+<tbody>
+<tr><td><code>+</code></td><td>soma</td><td><code>50 + 12</code> → <code>62</code></td></tr>
+<tr><td><code>-</code></td><td>subtração</td><td><code>50 - 12</code> → <code>38</code></td></tr>
+<tr><td><code>*</code></td><td>multiplicação</td><td><code>50 * 2</code> → <code>100</code></td></tr>
+<tr><td><code>/</code></td><td>divisão (sempre devolve <code>double</code>)</td><td><code>50 / 4</code> → <code>12.5</code></td></tr>
+<tr><td><code>~/</code></td><td>divisão inteira (descarta o resto)</td><td><code>50 ~/ 4</code> → <code>12</code></td></tr>
+<tr><td><code>%</code></td><td>resto da divisão</td><td><code>50 % 4</code> → <code>2</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>O <code>%</code> responde "sobrou alguma coisa?". Num app ele aparece quando você precisa saber se algo <b>divide exato</b>: se a conta do rodízio fecha redonda entre os amigos, se dá para montar caixas cheias com o estoque, se a parcela sai sem sobrar centavo.</p></div>
+
+<h3>Convertendo texto em número</h3>
+<p>Como o <code>TextField</code> sempre entrega texto, fazer conta com o que foi digitado exige uma conversão:</p>
+
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>de String para número</h4></div>
+<pre>double preco = double.tryParse(precoDigitado) ?? 0;   // "59.90" -&gt; 59.90
+int pessoas = int.tryParse(pessoasDigitado) ?? 1;     // "4"     -&gt; 4</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p><code>double.tryParse</code> significa "<i>tente</i> transformar este texto em número". Se a pessoa digitou algo que não é número (ou deixou vazio), a tentativa falha e devolve vazio — e aí o <code>?? 0</code> entra como valor reserva: "se não deu, use 0". É isso que evita o app quebrar quando alguém digita "abc" no campo de preço.</p></div>
+
+<div class="box atencao"><span class="rot">Cuidado</span><p>O Dart usa <b>ponto</b> como separador decimal, não vírgula: <code>59.90</code> funciona, <code>59,90</code> não converte e cai no valor reserva. Avise isso aos usuários do seu app — ou trate a vírgula antes de converter, com <code>precoDigitado.replaceAll(",", ".")</code>.</p></div>
+
+<h3>Exemplo: dividir a conta do rodízio</h3>
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>calculadora de conta com serviço</h4><span class="bg bg-i">regiões 1, 2 e 3</span></div>
+<pre>// ===== 1. AS GAVETAS =====
+String contaDigitada = "";
+String pessoasDigitadas = "";
+String resultado = "";
+
+// ===== 2. A LÓGICA =====
+void calcular() {
+  double conta = double.tryParse(contaDigitada) ?? 0;
+  int pessoas = int.tryParse(pessoasDigitadas) ?? 1;
+
+  double comServico = conta * 1.10;          // acrescenta os 10%
+  double porPessoa = comServico / pessoas;
+
+  setState(() {
+    resultado = "Total com serviço: R\$ ${comServico.toStringAsFixed(2)}\n"
+        "Cada pessoa paga: R\$ ${porPessoa.toStringAsFixed(2)}";
+  });
+}
+
+// ===== 3. A TELA (dentro do children:) =====
+TextField(
+  decoration: const InputDecoration(labelText: "Valor da conta"),
+  keyboardType: TextInputType.number,
+  onChanged: (texto) =&gt; contaDigitada = texto,
+),
+TextField(
+  decoration: const InputDecoration(labelText: "Quantas pessoas"),
+  keyboardType: TextInputType.number,
+  onChanged: (texto) =&gt; pessoasDigitadas = texto,
+),</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p><code>toStringAsFixed(2)</code> arredonda o número para duas casas decimais e devolve como texto — é o que transforma <code>12.333333</code> em <code>12.33</code>. Sempre use isso para mostrar dinheiro na tela. O <code>R\$</code> tem a barra invertida porque o cifrão sozinho seria confundido com uma interpolação.</p></div>
+
+<h3>Operadores de comparação e lógicos</h3>
+<p>Comparações sempre devolvem <code>true</code> ou <code>false</code>, e são a matéria-prima das decisões do próximo capítulo.</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:80px">Símbolo</th><th>Pergunta</th><th>Num app</th></tr></thead>
+<tbody>
+<tr><td><code>==</code></td><td>são iguais?</td><td><code>plano == "Anual"</code></td></tr>
+<tr><td><code>!=</code></td><td>são diferentes?</td><td><code>estado != "ES"</code></td></tr>
+<tr><td><code>&gt;</code> <code>&lt;</code></td><td>maior / menor que?</td><td><code>total &gt; 200</code></td></tr>
+<tr><td><code>&gt;=</code> <code>&lt;=</code></td><td>maior / menor ou igual?</td><td><code>senha.length &gt;= 6</code></td></tr>
+<tr><td><code>&amp;&amp;</code></td><td>"E" — as duas precisam ser verdadeiras</td><td><code>vip &amp;&amp; total &gt; 100</code></td></tr>
+<tr><td><code>||</code></td><td>"OU" — basta uma ser verdadeira</td><td><code>vip || aniversariante</code></td></tr>
+<tr><td><code>!</code></td><td>"NÃO" — inverte</td><td><code>!aceitouTermos</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="comparativo">
+  <div class="certo">
+    <h4>Comparar valores</h4>
+    <pre class="codigo">if (plano == "Anual") { ... }</pre>
+    <p><code>==</code> (dois iguais) <b>pergunta</b> se são iguais.</p>
+  </div>
+  <div class="errado">
+    <h4>Confundir com atribuição</h4>
+    <pre class="codigo">if (plano = "Anual") { ... }</pre>
+    <p><code>=</code> (um igual) <b>guarda</b> um valor na gaveta, não compara. Em Dart isso nem compila — o erro vermelho aparece na hora, o que ajuda.</p>
+  </div>
+</div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p>Monte a calculadora da conta e teste: digite <code>abc</code> no valor e clique em Calcular. O app quebra? Não — graças ao <code>?? 0</code>. Depois troque os 10% de serviço por 15% e veja o total mudar.</p></div>
+
+<h2 id="c3"><span class="num">Lógica · 3</span>Decisões: if / else</h2>
+
+<p class="lede">Decisões são o que dão vida ao app: "se o campo está vazio, avise; se não, siga". Toda tela de cadastro, todo carrinho e todo login do mundo é feito disso.</p>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>Um <b>condicional</b> (<code>if</code>/<code>else</code>) é uma bifurcação na estrada. O app chega numa pergunta de sim ou não e segue por um caminho ou pelo outro — nunca pelos dois.</p></div>
+
+<figure class="anim" data-duracao="4300">
+  <div class="anim-head">
+    <span class="anim-tag">Animação</span>
+    <button class="btn" type="button">Tocar</button>
+  </div>
+<svg viewBox="0 0 700 330" role="img" aria-label="Com nome preenchido e senha curta, a primeira condição dá falso, a segunda dá verdadeiro e mostra o aviso da senha; as condições seguintes nem chegam a ser testadas">
+  <defs>
+    <marker id="seta-if" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 z" fill="#455060"/>
+    </marker>
+  </defs>
+
+  <!-- os dados que entram -->
+  <g class="s1">
+    <rect x="14" y="10" width="672" height="36" rx="8" fill="#f6f8fa" stroke="#dfe4ea" stroke-width="1.2"/>
+    <text x="28" y="33" font-family="monospace" font-size="12.5" fill="#455060">nome = "Ana"   ·   senha = "123"   ·   aceitouTermos = true</text>
+  </g>
+
+  <!-- 1a condicao: falso -->
+  <g class="s2">
+    <rect x="14" y="60" width="430" height="46" rx="8" fill="#fff" stroke="#00447c" stroke-width="1.5"/>
+    <text x="28" y="88" font-family="monospace" font-size="12.5" fill="#1a1f26">if (nome.isEmpty)</text>
+  </g>
+  <g class="s3">
+    <rect x="456" y="66" width="86" height="34" rx="17" fill="#fdecea" stroke="#b3261e" stroke-width="1.4"/>
+    <text x="499" y="88" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#b3261e">falso</text>
+    <text x="566" y="88" font-family="sans-serif" font-size="11.5" fill="#455060">segue adiante</text>
+  </g>
+  <line class="s3" x1="229" y1="108" x2="229" y2="126" stroke="#455060" stroke-width="1.6" marker-end="url(#seta-if)"/>
+
+  <!-- 2a condicao: verdadeiro -->
+  <g class="s4">
+    <rect x="14" y="132" width="430" height="46" rx="8" fill="#fff" stroke="#00447c" stroke-width="1.5"/>
+    <text x="28" y="160" font-family="monospace" font-size="12.5" fill="#1a1f26">else if (senha.length &lt; 6)</text>
+  </g>
+  <rect id="if-achou" x="14" y="132" width="430" height="46" rx="8" fill="none" stroke="#1d7a52" stroke-width="3"/>
+  <g class="s5">
+    <rect x="456" y="138" width="130" height="34" rx="17" fill="#e6f4ee" stroke="#1d7a52" stroke-width="1.4"/>
+    <text x="521" y="160" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#1d7a52">verdadeiro</text>
+  </g>
+
+  <!-- resultado -->
+  <g class="s6">
+    <rect x="60" y="196" width="470" height="44" rx="8" fill="#e6f4ee" stroke="#1d7a52" stroke-width="1.5"/>
+    <text x="76" y="223" font-family="sans-serif" font-size="12.5" fill="#1a1f26">mensagem = "A senha precisa ter pelo menos 6 caracteres."</text>
+  </g>
+  <line class="s6" x1="229" y1="180" x2="229" y2="192" stroke="#1d7a52" stroke-width="1.6" marker-end="url(#seta-if)"/>
+
+  <!-- as que nem sao testadas -->
+  <g id="if-pulados">
+    <rect x="14" y="254" width="430" height="30" rx="7" fill="#fff" stroke="#dfe4ea" stroke-width="1.3"/>
+    <text x="28" y="274" font-family="monospace" font-size="12" fill="#455060">else if (!aceitouTermos)</text>
+    <rect x="14" y="290" width="430" height="30" rx="7" fill="#fff" stroke="#dfe4ea" stroke-width="1.3"/>
+    <text x="28" y="310" font-family="monospace" font-size="12" fill="#455060">else</text>
+  </g>
+  <text id="if-aviso" x="460" y="282" font-family="sans-serif" font-size="12" font-weight="700" fill="#b85a08">nem são testadas</text>
+  <text id="if-aviso2" x="460" y="300" font-family="sans-serif" font-size="11.5" fill="#455060">o caminho já foi decidido</text>
+</svg>
+<figcaption>A cadeia é lida <b>de cima para baixo</b> e para na primeira condição verdadeira. Mesmo que uma condição de baixo também fosse verdadeira, ela não seria testada — por isso a ordem em que você escreve as regras muda o resultado.</figcaption>
+</figure>
+
+<h3>Validando um cadastro</h3>
+<p>Este é, de longe, o uso mais comum de <code>if</code> na vida real: conferir o que a pessoa preencheu antes de deixar ela seguir.</p>
+
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>validação de cadastro</h4><span class="bg bg-i">regiões 1 e 2</span></div>
+<pre>// ===== 1. AS GAVETAS =====
+String nome = "";
+String senha = "";
+bool aceitouTermos = false;
+String resultado = "";
+
+// ===== 2. A LÓGICA =====
+void calcular() {
+  String mensagem;
+
+  if (nome.isEmpty) {
+    mensagem = "Digite seu nome para continuar.";
+  } else if (senha.length &lt; 6) {
+    mensagem = "A senha precisa ter pelo menos 6 caracteres.";
+  } else if (!aceitouTermos) {
+    mensagem = "Você precisa aceitar os termos de uso.";
+  } else {
+    mensagem = "Cadastro concluído. Bem-vindo(a), $nome!";
+  }
+
+  setState(() =&gt; resultado = mensagem);
+}</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>O Dart lê as condições <b>de cima para baixo</b> e para na primeira que for verdadeira — as de baixo nem são olhadas. Por isso a ordem importa: aqui o nome vazio é avisado antes da senha, e é isso que faz o app reclamar de um problema por vez, em vez de despejar tudo junto. <code>nome.isEmpty</code> pergunta "o texto está vazio?" e <code>senha.length</code> devolve quantos caracteres ele tem.</p></div>
+
+<h3>Muitas opções de um mesmo valor: switch</h3>
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>frete por estado</h4></div>
+<pre>double frete;
+
+switch (estado) {
+  case "ES":
+    frete = 9.90;
+    break;
+  case "MG":
+  case "RJ":
+    frete = 14.90;
+    break;
+  default:
+    frete = 24.90;
+}</pre>
+</div>
+
+<figure class="anim" data-duracao="4100">
+  <div class="anim-head">
+    <span class="anim-tag">Animação</span>
+    <button class="btn" type="button">Tocar</button>
+  </div>
+<svg viewBox="0 0 700 300" role="img" aria-label="O valor MG é comparado com cada case: não é ES, casa com o grupo MG e RJ, define o frete e o default não é usado">
+  <defs>
+    <marker id="seta-sw" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 z" fill="#455060"/>
+    </marker>
+  </defs>
+
+  <g class="s1">
+    <rect x="14" y="14" width="200" height="44" rx="8" fill="#e8f1f9" stroke="#00447c" stroke-width="1.5"/>
+    <text x="114" y="35" text-anchor="middle" font-family="monospace" font-size="12.5" fill="#1a1f26">switch (estado)</text>
+    <text x="114" y="51" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">o valor é "MG"</text>
+  </g>
+
+  <!-- case ES: nao casa -->
+  <g class="s2">
+    <rect x="70" y="80" width="300" height="38" rx="8" fill="#fff" stroke="#00447c" stroke-width="1.4"/>
+    <text x="86" y="104" font-family="monospace" font-size="12.5" fill="#1a1f26">case "ES":</text>
+  </g>
+  <g class="s3">
+    <rect x="386" y="84" width="118" height="30" rx="15" fill="#fdecea" stroke="#b3261e" stroke-width="1.3"/>
+    <text x="445" y="104" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#b3261e">não casa</text>
+  </g>
+  <line class="s3" x1="114" y1="62" x2="114" y2="76" stroke="#455060" stroke-width="1.6" marker-end="url(#seta-sw)"/>
+  <line class="s3" x1="114" y1="120" x2="114" y2="134" stroke="#455060" stroke-width="1.6" marker-end="url(#seta-sw)"/>
+
+  <!-- grupo MG / RJ: casa -->
+  <g class="s4">
+    <rect x="70" y="138" width="300" height="66" rx="8" fill="#fff" stroke="#00447c" stroke-width="1.4"/>
+    <text x="86" y="162" font-family="monospace" font-size="12.5" fill="#1a1f26">case "MG":</text>
+    <text x="86" y="186" font-family="monospace" font-size="12.5" fill="#1a1f26">case "RJ":</text>
+  </g>
+  <rect id="sw-achou" x="70" y="138" width="300" height="66" rx="8" fill="none" stroke="#1d7a52" stroke-width="3"/>
+  <g class="s5">
+    <rect x="386" y="156" width="118" height="30" rx="15" fill="#e6f4ee" stroke="#1d7a52" stroke-width="1.3"/>
+    <text x="445" y="176" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#1d7a52">casou</text>
+    <text x="516" y="176" font-family="sans-serif" font-size="11.5" fill="#455060">os dois levam</text>
+    <text x="516" y="191" font-family="sans-serif" font-size="11.5" fill="#455060">ao mesmo bloco</text>
+  </g>
+
+  <g class="s6">
+    <rect x="102" y="216" width="268" height="36" rx="8" fill="#e6f4ee" stroke="#1d7a52" stroke-width="1.5"/>
+    <text x="118" y="240" font-family="monospace" font-size="12.5" fill="#1a1f26">frete = 14.90;  break;</text>
+  </g>
+
+  <!-- default: nao usado -->
+  <g id="sw-default">
+    <rect x="70" y="264" width="300" height="30" rx="7" fill="#fff" stroke="#dfe4ea" stroke-width="1.3"/>
+    <text x="86" y="284" font-family="monospace" font-size="12" fill="#455060">default:</text>
+  </g>
+  <text id="sw-aviso" x="386" y="284" font-family="sans-serif" font-size="12" fill="#455060">só valeria se nenhum case casasse</text>
+</svg>
+<figcaption>O <code>switch</code> compara o valor com cada <code>case</code> até achar o primeiro que casa. Dois <code>case</code> colados compartilham o mesmo bloco, e o <code>break</code> encerra ali. O <code>default</code> é a saída para quando nada casa.</figcaption>
+</figure>
+
+<div class="box dica"><span class="rot">Em bom português</span><p><code>switch</code> é um <code>if</code>/<code>else if</code> especializado em comparar <i>uma</i> variável com vários valores possíveis. Cada <code>case</code> é uma opção, <code>default</code> é o "nenhuma das anteriores" e <code>break</code> diz "encerra aqui". Dois <code>case</code> colados, como MG e RJ, compartilham o mesmo resultado.</p></div>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>Regras de negócio — quem tem desconto, qual o frete, quem pode acessar o quê — são quase sempre montes de <code>if</code> bem escritos. Boa parte do trabalho de um desenvolvedor é transformar o que o cliente explica em palavras ("clientes antigos pagam menos, mas não na Black Friday") em condições que não deixam brecha.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p>Monte a validação de cadastro com os três campos na tela e teste cada caminho: nome vazio, senha curta, termos desmarcados e tudo certo. Depois acrescente uma regra: a senha também não pode ser igual ao nome.</p></div>
+
+<h2 id="c4"><span class="num">Lógica · 4</span>Repetições: for e while</h2>
+
+<p class="lede">Repetição evita copiar e colar a mesma linha vinte vezes. Num app, é o que monta uma tabela de parcelas, uma lista de horários ou as opções de um cardápio.</p>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>Um <b>loop</b> (laço de repetição) manda o app "fazer isso de novo, e de novo, até uma condição parar de ser verdadeira". Cada repetição se chama <b>iteração</b> — uma volta do laço.</p></div>
+
+<figure class="anim" data-duracao="4800">
+  <div class="anim-head">
+    <span class="anim-tag">Animação</span>
+    <button class="btn" type="button">Tocar</button>
+  </div>
+<svg viewBox="0 0 700 320" role="img" aria-label="A cada volta do laço a variável vezes aumenta e uma linha de parcela é acrescentada na lista; quando vezes passa de 12 a condição fica falsa e o laço termina">
+  <defs>
+    <marker id="seta-lp" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 z" fill="#455060"/>
+    </marker>
+  </defs>
+
+  <g class="s1">
+    <rect x="14" y="12" width="672" height="38" rx="8" fill="#f6f8fa" stroke="#dfe4ea" stroke-width="1.2"/>
+    <text x="28" y="36" font-family="monospace" font-size="12.5" fill="#1a1f26">for (int vezes = 1; vezes &lt;= 12; vezes++)   ·   valor = 900.00</text>
+  </g>
+
+  <!-- coluna esquerda: as voltas -->
+  <text class="s2" x="28" y="80" font-family="sans-serif" font-size="11" font-weight="800" fill="#00447c">CADA VOLTA</text>
+
+  <g class="s2">
+    <rect x="24" y="90" width="230" height="34" rx="8" fill="#e8f1f9" stroke="#00447c" stroke-width="1.4"/>
+    <text x="40" y="112" font-family="monospace" font-size="12.5" fill="#1a1f26">vezes = 1</text>
+  </g>
+  <g class="s4">
+    <rect x="24" y="130" width="230" height="34" rx="8" fill="#e8f1f9" stroke="#00447c" stroke-width="1.4"/>
+    <text x="40" y="152" font-family="monospace" font-size="12.5" fill="#1a1f26">vezes = 2</text>
+  </g>
+  <g class="s6">
+    <rect x="24" y="170" width="230" height="34" rx="8" fill="#e8f1f9" stroke="#00447c" stroke-width="1.4"/>
+    <text x="40" y="192" font-family="monospace" font-size="12.5" fill="#1a1f26">vezes = 3</text>
+  </g>
+  <text class="s8" x="40" y="228" font-family="monospace" font-size="14" fill="#455060">...</text>
+  <g class="s8">
+    <rect x="24" y="238" width="230" height="34" rx="8" fill="#e8f1f9" stroke="#00447c" stroke-width="1.4"/>
+    <text x="40" y="260" font-family="monospace" font-size="12.5" fill="#1a1f26">vezes = 12</text>
+  </g>
+
+  <!-- saida do laco -->
+  <g class="s9">
+    <rect x="24" y="278" width="230" height="34" rx="8" fill="#fdf0e3" stroke="#e8730c" stroke-width="1.4"/>
+    <text x="40" y="300" font-family="monospace" font-size="12.5" fill="#b85a08">vezes = 13 → para</text>
+  </g>
+
+  <!-- setas para a direita -->
+  <line class="s3" x1="262" y1="107" x2="322" y2="107" stroke="#455060" stroke-width="1.5" marker-end="url(#seta-lp)"/>
+  <line class="s5" x1="262" y1="147" x2="322" y2="147" stroke="#455060" stroke-width="1.5" marker-end="url(#seta-lp)"/>
+  <line class="s7" x1="262" y1="187" x2="322" y2="187" stroke="#455060" stroke-width="1.5" marker-end="url(#seta-lp)"/>
+  <line class="s8" x1="262" y1="255" x2="322" y2="255" stroke="#455060" stroke-width="1.5" marker-end="url(#seta-lp)"/>
+
+  <!-- coluna direita: a lista que cresce -->
+  <text class="s2" x="330" y="80" font-family="sans-serif" font-size="11" font-weight="800" fill="#1d7a52">O QUE APARECE NA TELA</text>
+  <rect class="s2" x="326" y="88" width="360" height="188" rx="10" fill="#e6f4ee" stroke="#1d7a52" stroke-width="1.4"/>
+
+  <text class="s3" x="346" y="112" font-family="monospace" font-size="12.5" fill="#1a1f26">1x de R$ 900,00</text>
+  <text class="s5" x="346" y="152" font-family="monospace" font-size="12.5" fill="#1a1f26">2x de R$ 450,00</text>
+  <text class="s7" x="346" y="192" font-family="monospace" font-size="12.5" fill="#1a1f26">3x de R$ 300,00</text>
+  <text class="s8" x="346" y="228" font-family="monospace" font-size="14" fill="#455060">...</text>
+  <text class="s8" x="346" y="260" font-family="monospace" font-size="12.5" fill="#1a1f26">12x de R$ 75,00</text>
+
+  <text class="s9" x="346" y="300" font-family="sans-serif" font-size="12" font-weight="700" fill="#b85a08">12 linhas, escritas por 3 linhas de código</text>
+</svg>
+<figcaption>Cada volta do laço produz uma linha. É por isso que repetição e interface combinam tanto: o <code>for</code> escreve uma vez e o app desenha quantas vezes precisar — com 12 parcelas ou com 300.</figcaption>
+</figure>
+
+<h3>for: quando você sabe quantas voltas</h3>
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>simulador de parcelamento</h4><span class="bg bg-i">regiões 1, 2 e 3</span></div>
+<pre>// ===== 1. AS GAVETAS =====
+String valorDigitado = "";
+String resultado = "";           // o molde usa esta no cartão; mantenha declarada
+List&lt;String&gt; parcelas = [];
+
+// ===== 2. A LÓGICA =====
+void calcular() {
+  double valor = double.tryParse(valorDigitado) ?? 0;
+  List&lt;String&gt; lista = [];
+
+  for (int vezes = 1; vezes &lt;= 12; vezes++) {
+    double parcela = valor / vezes;
+    lista.add("${vezes}x de R\$ ${parcela.toStringAsFixed(2)}");
+  }
+
+  setState(() =&gt; parcelas = lista);
+}
+
+// ===== 3. A TELA (dentro do children:) =====
+TextField(
+  decoration: const InputDecoration(labelText: "Valor da compra"),
+  keyboardType: TextInputType.number,
+  onChanged: (texto) =&gt; valorDigitado = texto,
+),
+// ... botão ...
+...parcelas.map((linha) =&gt; Text(linha, style: const TextStyle(fontSize: 16))),</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>O <code>for (int vezes = 1; vezes &lt;= 12; vezes++)</code> tem três partes: <b>onde começar</b> (<code>vezes = 1</code>), <b>até quando continuar</b> (<code>vezes &lt;= 12</code>) e <b>o que muda a cada volta</b> (<code>vezes++</code>, que soma 1). Os três pontinhos de <code>...parcelas.map(...)</code> "despejam" a lista de textos ali dentro da tela, um widget por item — é assim que uma lista de dados vira uma lista visível.</p></div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p><code>${vezes}x</code> precisa das chaves porque, sem elas, o Dart tentaria ler uma variável chamada <code>vezesx</code>. Sempre que o que vem depois da variável puder se confundir com o nome dela, use chaves.</p></div>
+
+<h3>while: quando você não sabe quantas voltas</h3>
+<p>Muitas lojas só parcelam se a prestação não ficar abaixo de um valor mínimo. Aí você não sabe de antemão quantas parcelas vão caber:</p>
+
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>parcelas com valor mínimo de R$ 50</h4></div>
+<pre>void calcular() {
+  double valor = double.tryParse(valorDigitado) ?? 0;
+  List&lt;String&gt; lista = [];
+
+  int vezes = 1;
+  while (valor / vezes &gt;= 50) {
+    lista.add("${vezes}x de R\$ ${(valor / vezes).toStringAsFixed(2)}");
+    vezes++;
+  }
+
+  if (lista.isEmpty) {
+    lista.add("Valor baixo demais para parcelar.");
+  }
+
+  setState(() =&gt; parcelas = lista);
+}</pre>
+</div>
+
+<div class="box atencao"><span class="rot">Cuidado</span><p>Se você esquecer o <code>vezes++</code>, a condição nunca fica falsa: é o <b>loop infinito</b>. No Flutter Web ele congela a aba do navegador e nada mais responde. Não entre em pânico: feche a aba, corrija e rode de novo. Antes de rodar um laço, confira sempre "tem algo aqui dentro que aproxima a condição de ficar falsa?".</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p>Monte o simulador de parcelamento e teste com R$ 1.200. Depois mude o <code>for</code> para ir só até 6 vezes. Por último, acrescente juros de 2% por parcela a partir da quarta — sim, isso vai precisar de um <code>if</code> dentro do <code>for</code>.</p></div>
+
+<h2 id="c5"><span class="num">Lógica · 5</span>Listas</h2>
+
+<p class="lede">Um app raramente lida com um item só: são vários produtos no carrinho, vários pedidos, vários contatos. Para isso existe a lista.</p>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>Uma <b>lista</b> (<code>List</code>) é uma fileira numerada de gavetas com a mesma etiqueta. Em vez de <code>item1</code>, <code>item2</code>, <code>item3</code>, você tem uma única <code>itens</code> com várias posições dentro — e pode acrescentar ou remover posições enquanto o app roda.</p></div>
+
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>o essencial de uma lista</h4></div>
+<pre>List&lt;String&gt; itens = ["Camiseta", "Boné"];
+
+itens[0]              // "Camiseta"  -&gt; a primeira posição é a ZERO
+itens.length          // 2           -&gt; quantos itens tem
+itens.add("Tênis");   // acrescenta no fim
+itens.remove("Boné"); // tira pelo conteúdo
+itens.isEmpty         // true se não tiver nada dentro</pre>
+</div>
+
+<div class="box atencao"><span class="rot">Cuidado</span><p>A contagem das posições <b>começa em zero</b>. Numa lista de 3 itens, os índices válidos são <code>0</code>, <code>1</code> e <code>2</code> — pedir <code>itens[3]</code> quebra o app. É o erro mais comum com listas, em qualquer linguagem.</p></div>
+
+<h3>Uma lista que cresce na tela</h3>
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>lista de compras</h4><span class="bg bg-i">regiões 1, 2 e 3</span></div>
+<pre>// ===== 1. AS GAVETAS =====
+List&lt;String&gt; itens = [];
+String novoItem = "";
+String resultado = "";           // o molde usa esta no cartão; mantenha declarada
+
+// ===== 2. A LÓGICA =====
+void calcular() {
+  if (novoItem.isEmpty) return; // nada a fazer, sai da função
+
+  setState(() {
+    itens.add(novoItem);
+  });
+}
+
+// ===== 3. A TELA (dentro do children:) =====
+TextField(
+  decoration: const InputDecoration(labelText: "Novo item"),
+  onChanged: (texto) =&gt; novoItem = texto,
+),
+// ... botão (troque o rótulo para "Adicionar") ...
+Text("${itens.length} item(ns) na lista",
+    style: const TextStyle(fontWeight: FontWeight.bold)),
+...itens.map((item) =&gt; Text("• $item")),</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p><code>return</code> sozinho, no meio de uma função, quer dizer "encerra aqui e não faça o resto". É um jeito limpo de tratar o caso em que não há nada a fazer — bem melhor que embrulhar toda a função dentro de um <code>if</code> gigante.</p></div>
+
+<div class="box atencao"><span class="rot">Cuidado</span><p>Depois de adicionar, o texto continua escrito no campo. Limpar o campo exige um <code>TextEditingController</code>, que é assunto da unidade de Flutter — por enquanto, apague na mão e siga.</p></div>
+
+<h3>Somando uma lista de preços</h3>
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>total do carrinho</h4></div>
+<pre>List&lt;double&gt; precos = [59.90, 39.90, 249.90];
+
+void calcular() {
+  double total = 0;
+
+  for (int i = 0; i &lt; precos.length; i++) {
+    total = total + precos[i];
+  }
+
+  setState(() {
+    resultado = "${precos.length} itens\nTotal: R\$ ${total.toStringAsFixed(2)}";
+  });
+}</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>Repare que o limite do <code>for</code> é <code>precos.length</code>, não um número fixo. Assim o mesmo código funciona com 3 preços ou com 300 — e continua certo depois que alguém acrescentar um item. Escrever <code>i &lt; precos.length</code> (menor que, não menor ou igual) é o que respeita a contagem a partir do zero.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p>Monte a lista de compras. Depois acrescente uma regra: não deixar adicionar um item que já está na lista (dica: <code>itens.contains(novoItem)</code> responde se ele já existe).</p></div>
+
+<h2 id="c6"><span class="num">Lógica · 6</span>Funções</h2>
+
+<p class="lede">Você já escreveu funções neste material: <code>calcular()</code> é uma. Agora vamos criar as suas próprias para não repetir a mesma conta em vários lugares.</p>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>Uma <b>função</b> é uma receita reutilizável: um pedaço de código com nome, que recebe ingredientes (os <b>parâmetros</b>) e devolve um resultado (o <b>retorno</b>). Em vez de reescrever a conta toda vez, você chama a função pelo nome.</p></div>
+
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>regra de desconto numa função só</h4><span class="bg bg-i">regiões 1 e 2</span></div>
+<pre>// ===== 1. AS GAVETAS =====
+String valorDigitado = "";
+String tipoCliente = "Novo";
+bool aniversariante = false;
+String resultado = "";
+
+// ===== 2. A LÓGICA =====
+// a função: recebe três ingredientes e devolve o valor final
+double aplicarDesconto(double valor, String tipo, bool aniversario) {
+  double desconto = 0;
+
+  if (tipo == "Fidelidade") {
+    desconto = desconto + 0.10; // 10%
+  }
+  if (aniversario) {
+    desconto = desconto + 0.05; // mais 5%
+  }
+
+  return valor - (valor * desconto);
+}
+
+void calcular() {
+  double valor = double.tryParse(valorDigitado) ?? 0;
+  double final_ = aplicarDesconto(valor, tipoCliente, aniversariante);
+
+  setState(() {
+    resultado = "De R\$ ${valor.toStringAsFixed(2)}\n"
+        "por R\$ ${final_.toStringAsFixed(2)}";
+  });
+}</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>Em <code>double aplicarDesconto(double valor, String tipo, bool aniversario)</code>: o primeiro <code>double</code> é o tipo do que a função <b>devolve</b> (o <code>return</code>); depois vem o nome; e entre parênteses os <b>parâmetros</b>, os ingredientes que ela recebe. Uma função que não devolve nada usa <code>void</code>, como a <code>calcular()</code>.</p></div>
+
+<div class="box atencao"><span class="rot">Cuidado</span><p>A variável se chama <code>final_</code> com um risquinho no fim porque <code>final</code> é palavra reservada do Dart (aquela das gavetas trancadas) e não pode ser usada como nome. Quando o Dart reclamar de um nome, quase sempre é isso: você pegou uma palavra que a linguagem já usa.</p></div>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>Separar a regra de negócio numa função é o que permite testá-la sozinha, reaproveitá-la em outra tela e mudá-la num lugar só quando o cliente mudar de ideia. É um dos hábitos que mais separa código profissional de código de iniciante — e você já pode começar com ele.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p>Monte a tela de desconto com o campo de valor, uma seleção "Novo/Fidelidade" e a marcação de aniversariante. Depois crie uma segunda função, <code>double calcularFrete(double valor)</code>, que devolve 0 se a compra passar de R$ 200 e 24.90 se não passar — e mostre os dois valores no cartão.</p></div>
+
+<h2 id="c7"><span class="num">Lógica · 7</span>Nulidade segura (null safety)</h2>
+
+<p class="lede">Este é o conceito mais "de Dart" da lista, e você já o usou sem saber: todo <code>?? 0</code> deste material é null safety em ação.</p>
+
+<div class="box dica"><span class="rot">Em bom português</span><p><b>Nulo</b> (<code>null</code>) quer dizer "essa gaveta está vazia": não tem nada dentro, nem zero, nem texto vazio — <i>nada</i>. O Dart tem uma regra chamada <b>null safety</b> (nulidade segura): por padrão nenhuma gaveta pode ficar vazia, e se você quiser permitir isso precisa avisar com um <code>?</code>.</p></div>
+
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>um campo que pode não ser preenchido</h4></div>
+<pre>// ===== 1. AS GAVETAS =====
+String rua = "";
+String numero = "";
+String? complemento;   // o "?" avisa: esta gaveta pode ficar vazia
+String resultado = "";
+
+// ===== 2. A LÓGICA =====
+void calcular() {
+  // se estiver vazia, usa o texto reserva
+  String textoComplemento = complemento ?? "sem complemento";
+
+  setState(() {
+    resultado = "Entrega em: $rua, $numero\n$textoComplemento";
+  });
+}</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>Três símbolos resumem o assunto:</p>
+<ul>
+  <li><code>?</code> depois do tipo — "esta gaveta pode ficar vazia" (<code>String?</code>).</li>
+  <li><code>??</code> — "se estiver vazia, use este valor reserva". É o que já salvou suas contas quando o campo estava em branco.</li>
+  <li><code>!</code> — "eu garanto que aqui não está vazio". Use com cuidado: se você garantir errado, o app quebra na hora. É o que aparece no <code>escolha!</code> dos campos de seleção.</li>
+</ul></div>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>"Deu erro de null" é provavelmente a falha mais comum em aplicativos. O Dart obriga você a pensar nisso <i>enquanto escreve</i>, e não quando o usuário reclama — é chato no começo e economiza muito depois.</p></div>
+
+<div class="box atencao"><span class="rot">Cuidado</span><p>Não se cobre entender null safety 100% agora. Reconhecer a ideia (gaveta vazia, gaveta com placa de "pode ficar vazia" e valor reserva) já é o suficiente para não travar quando o Dart reclamar. Vamos voltar a isso nas unidades de Flutter.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p>Monte uma tela de endereço com rua, número e complemento, sendo o complemento opcional (<code>String?</code>). Mostre o endereço completo no cartão, escrevendo "sem complemento" quando o campo ficar vazio.</p></div>
+
+<h2 id="exemplos"><span class="num">Apoio</span>Exemplos de código</h2>
+
+<p class="lede">Três aplicativos completos, do <code>import</code> ao último fecha-chaves, cada um resolvendo um problema que existe de verdade. Cole um deles inteiro no lugar do seu <code>lib/main.dart</code>, rode e depois mexa.</p>
+
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>Exemplo 1 — Calculadora de conta dividida</h4><span class="bg bg-h">texto · operadores · conversão</span></div>
+<pre>import 'package:flutter/material.dart';
+
+void main() =&gt; runApp(const AppTreino());
+
+class AppTreino extends StatelessWidget {
+  const AppTreino({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Dividir a conta",
+      theme: ThemeData(colorSchemeSeed: Colors.indigo),
+      home: const Tela(),
+    );
+  }
+}
+
+class Tela extends StatefulWidget {
+  const Tela({super.key});
+
+  @override
+  State&lt;Tela&gt; createState() =&gt; _TelaState();
+}
+
+class _TelaState extends State&lt;Tela&gt; {
+  String contaDigitada = "";
+  String pessoasDigitadas = "";
+  bool incluirServico = true;
+  String resultado = "";
+
+  void calcular() {
+    double conta = double.tryParse(contaDigitada.replaceAll(",", ".")) ?? 0;
+    int pessoas = int.tryParse(pessoasDigitadas) ?? 1;
+
+    if (pessoas &lt; 1) pessoas = 1;
+
+    double total = incluirServico ? conta * 1.10 : conta;
+    double porPessoa = total / pessoas;
+
+    setState(() {
+      resultado = "Total: R\$ ${total.toStringAsFixed(2)}\n"
+          "Cada um paga: R\$ ${porPessoa.toStringAsFixed(2)}";
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Dividir a conta")),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextField(
+              decoration: const InputDecoration(labelText: "Valor da conta"),
+              keyboardType: TextInputType.number,
+              onChanged: (texto) =&gt; contaDigitada = texto,
+            ),
+            TextField(
+              decoration: const InputDecoration(labelText: "Quantas pessoas"),
+              keyboardType: TextInputType.number,
+              onChanged: (texto) =&gt; pessoasDigitadas = texto,
+            ),
+            CheckboxListTile(
+              title: const Text("Incluir 10% de serviço"),
+              contentPadding: EdgeInsets.zero,
+              value: incluirServico,
+              onChanged: (marcado) =&gt; setState(() =&gt; incluirServico = marcado!),
+            ),
+            ElevatedButton(
+              onPressed: calcular,
+              child: const Text("Calcular"),
+            ),
+            const SizedBox(height: 24),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(resultado, style: const TextStyle(fontSize: 18)),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>Apareceu uma novidade: <code>incluirServico ? conta * 1.10 : conta</code>. Isso se lê "se <code>incluirServico</code> for verdadeiro, use <code>conta * 1.10</code>; senão, use <code>conta</code>". É um <code>if</code>/<code>else</code> encurtado para quando você só precisa <i>escolher um valor</i>. Chama-se operador ternário.</p></div>
+
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>Exemplo 2 — Cadastro com validação</h4><span class="bg bg-h">decisões · texto · marcação</span></div>
+<pre>import 'package:flutter/material.dart';
+
+void main() =&gt; runApp(const AppCadastro());
+
+class AppCadastro extends StatelessWidget {
+  const AppCadastro({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Cadastro",
+      theme: ThemeData(colorSchemeSeed: Colors.teal),
+      home: const TelaCadastro(),
+    );
+  }
+}
+
+class TelaCadastro extends StatefulWidget {
+  const TelaCadastro({super.key});
+
+  @override
+  State&lt;TelaCadastro&gt; createState() =&gt; _TelaCadastroState();
+}
+
+class _TelaCadastroState extends State&lt;TelaCadastro&gt; {
+  String nome = "";
+  String email = "";
+  String senha = "";
+  String plano = "Mensal";
+  bool aceitouTermos = false;
+  String resultado = "";
+  bool deuCerto = false;
+
+  void cadastrar() {
+    String mensagem;
+    bool ok = false;
+
+    if (nome.isEmpty) {
+      mensagem = "Digite seu nome.";
+    } else if (!email.contains("@")) {
+      mensagem = "Esse e-mail não parece válido.";
+    } else if (senha.length &lt; 6) {
+      mensagem = "A senha precisa ter pelo menos 6 caracteres.";
+    } else if (!aceitouTermos) {
+      mensagem = "Você precisa aceitar os termos de uso.";
+    } else {
+      mensagem = "Tudo certo, $nome! Plano $plano ativado.";
+      ok = true;
+    }
+
+    setState(() {
+      resultado = mensagem;
+      deuCerto = ok;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Criar conta")),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextField(
+              decoration: const InputDecoration(labelText: "Nome"),
+              onChanged: (texto) =&gt; nome = texto,
+            ),
+            TextField(
+              decoration: const InputDecoration(labelText: "E-mail"),
+              onChanged: (texto) =&gt; email = texto,
+            ),
+            TextField(
+              decoration: const InputDecoration(labelText: "Senha"),
+              obscureText: true,
+              onChanged: (texto) =&gt; senha = texto,
+            ),
+            const SizedBox(height: 16),
+            DropdownButton&lt;String&gt;(
+              value: plano,
+              isExpanded: true,
+              items: const [
+                DropdownMenuItem(value: "Mensal", child: Text("Plano mensal")),
+                DropdownMenuItem(value: "Anual", child: Text("Plano anual")),
+              ],
+              onChanged: (escolha) =&gt; setState(() =&gt; plano = escolha!),
+            ),
+            CheckboxListTile(
+              title: const Text("Aceito os termos de uso"),
+              contentPadding: EdgeInsets.zero,
+              value: aceitouTermos,
+              onChanged: (marcado) =&gt; setState(() =&gt; aceitouTermos = marcado!),
+            ),
+            ElevatedButton(
+              onPressed: cadastrar,
+              child: const Text("Criar conta"),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              resultado,
+              style: TextStyle(
+                fontSize: 18,
+                color: deuCerto ? Colors.green : Colors.red,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>Duas coisas novas e bem reais aqui: <code>obscureText: true</code> esconde a senha atrás de bolinhas, e a cor do aviso muda conforme o resultado (<code>deuCerto ? Colors.green : Colors.red</code>). Verde para sucesso, vermelho para erro — a lógica decidindo até a aparência.</p></div>
+
+<div class="tpl codigo">
+  <div class="tpl-head"><h4>Exemplo 3 — Carrinho com desconto e frete</h4><span class="bg bg-a">listas · loop · funções</span></div>
+<pre>import 'package:flutter/material.dart';
+
+void main() =&gt; runApp(const AppCarrinho());
+
+class AppCarrinho extends StatelessWidget {
+  const AppCarrinho({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Carrinho",
+      theme: ThemeData(colorSchemeSeed: Colors.deepOrange),
+      home: const TelaCarrinho(),
+    );
+  }
+}
+
+class TelaCarrinho extends StatefulWidget {
+  const TelaCarrinho({super.key});
+
+  @override
+  State&lt;TelaCarrinho&gt; createState() =&gt; _TelaCarrinhoState();
+}
+
+class _TelaCarrinhoState extends State&lt;TelaCarrinho&gt; {
+  List&lt;String&gt; nomes = [];
+  List&lt;double&gt; precos = [];
+
+  String nomeDigitado = "";
+  String precoDigitado = "";
+  String tipoCliente = "Novo";
+  bool aniversariante = false;
+  String resumo = "";
+
+  // soma tudo que está no carrinho
+  double somarItens() {
+    double total = 0;
+    for (int i = 0; i &lt; precos.length; i++) {
+      total = total + precos[i];
+    }
+    return total;
+  }
+
+  // a regra de desconto da loja, isolada numa função
+  double aplicarDesconto(double valor, String tipo, bool aniversario) {
+    double desconto = 0;
+    if (tipo == "Fidelidade") desconto = desconto + 0.10;
+    if (aniversario) desconto = desconto + 0.05;
+    return valor - (valor * desconto);
+  }
+
+  double calcularFrete(double valor) {
+    return valor &gt;= 200 ? 0 : 24.90;
+  }
+
+  void adicionar() {
+    double preco = double.tryParse(precoDigitado.replaceAll(",", ".")) ?? 0;
+    if (nomeDigitado.isEmpty || preco &lt;= 0) return;
+
+    setState(() {
+      nomes.add(nomeDigitado);
+      precos.add(preco);
+      resumo = "";
+    });
+  }
+
+  void fecharPedido() {
+    if (nomes.isEmpty) {
+      setState(() =&gt; resumo = "Seu carrinho está vazio.");
+      return;
+    }
+
+    double subtotal = somarItens();
+    double comDesconto = aplicarDesconto(subtotal, tipoCliente, aniversariante);
+    double frete = calcularFrete(comDesconto);
+
+    setState(() {
+      resumo = "Subtotal: R\$ ${subtotal.toStringAsFixed(2)}\n"
+          "Com desconto: R\$ ${comDesconto.toStringAsFixed(2)}\n"
+          "Frete: R\$ ${frete.toStringAsFixed(2)}\n"
+          "TOTAL: R\$ ${(comDesconto + frete).toStringAsFixed(2)}";
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Meu carrinho")),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextField(
+              decoration: const InputDecoration(labelText: "Produto"),
+              onChanged: (texto) =&gt; nomeDigitado = texto,
+            ),
+            TextField(
+              decoration: const InputDecoration(labelText: "Preço"),
+              keyboardType: TextInputType.number,
+              onChanged: (texto) =&gt; precoDigitado = texto,
+            ),
+            ElevatedButton(
+              onPressed: adicionar,
+              child: const Text("Adicionar ao carrinho"),
+            ),
+            const SizedBox(height: 24),
+
+            Text("${nomes.length} item(ns)",
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            for (int i = 0; i &lt; nomes.length; i++)
+              Text("• ${nomes[i]} — R\$ ${precos[i].toStringAsFixed(2)}"),
+
+            const SizedBox(height: 24),
+            DropdownButton&lt;String&gt;(
+              value: tipoCliente,
+              isExpanded: true,
+              items: const [
+                DropdownMenuItem(value: "Novo", child: Text("Cliente novo")),
+                DropdownMenuItem(
+                    value: "Fidelidade", child: Text("Cliente fidelidade")),
+              ],
+              onChanged: (escolha) =&gt; setState(() =&gt; tipoCliente = escolha!),
+            ),
+            CheckboxListTile(
+              title: const Text("Aniversariante do mês"),
+              contentPadding: EdgeInsets.zero,
+              value: aniversariante,
+              onChanged: (marcado) =&gt; setState(() =&gt; aniversariante = marcado!),
+            ),
+            ElevatedButton(
+              onPressed: fecharPedido,
+              child: const Text("Fechar pedido"),
+            ),
+            const SizedBox(height: 16),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(resumo, style: const TextStyle(fontSize: 17)),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}</pre>
+</div>
+
+<div class="box dica"><span class="rot">Em bom português</span><p>Repare no <code>for</code> usado <b>direto na tela</b>, dentro do <code>children:</code> — ele cria um <code>Text</code> por item do carrinho. Loop e interface, a mesma ferramenta que você treinou, agora desenhando a lista na tela. Esse app junta praticamente tudo: gavetas, conversão, decisões, listas, laços e três funções com responsabilidades separadas.</p></div>
+
+<h2 id="ativ"><span class="num">Apoio</span>Lista de atividades</h2>
+
+<p class="lede">Oito telas para construir, todas coisas que existem em aplicativos de verdade. Comece pelo molde, use só os três campos que você aprendeu e mostre o resultado na tela. Faça na ordem: cada uma usa algo da anterior.</p>
+
+<div class="box dica"><span class="rot">Como entregar</span><p>Cada atividade é um <code>lib/main.dart</code> funcionando. Tire um print da tela com o resultado aparecendo e guarde o código — vamos revisar juntos em aula.</p></div>
+
+<div class="atividade">
+  <div class="atividade-top"><span class="atividade-n">1</span><h4>Crachá do evento</h4><span class="bg bg-h">Fácil</span></div>
+  <p>Uma tela com campos para nome, empresa e cargo. Ao apertar o botão, o cartão mostra os três dados formatados como um crachá, cada um em sua linha. <b>Treina:</b> gavetas, interpolação e campo de texto.</p>
+</div>
+
+<div class="atividade">
+  <div class="atividade-top"><span class="atividade-n">2</span><h4>Conversor de moeda da viagem</h4><span class="bg bg-h">Fácil</span></div>
+  <p>Campo para o valor em reais e uma seleção com "Dólar", "Euro" e "Peso argentino". Use uma cotação fixa para cada moeda (invente os valores) e mostre quanto dá na moeda escolhida, com duas casas decimais. <b>Treina:</b> conversão de texto em número, operadores e seleção.</p>
+</div>
+
+<div class="atividade">
+  <div class="atividade-top"><span class="atividade-n">3</span><h4>Login com bloqueio</h4><span class="bg bg-t">Médio</span></div>
+  <p>Campos de e-mail e senha (use <code>obscureText: true</code>) e uma marcação "manter conectado". Regras, na ordem: e-mail precisa conter <code>@</code>; senha precisa ter 6+ caracteres; se tudo estiver certo, mostre "Bem-vindo(a)" em verde, senão o aviso em vermelho. Se a marcação estiver ligada, acrescente "sessão salva por 30 dias". <b>Treina:</b> decisões encadeadas e lógica mudando a aparência.</p>
+</div>
+
+<div class="atividade">
+  <div class="atividade-top"><span class="atividade-n">4</span><h4>Calculadora de frete</h4><span class="bg bg-t">Médio</span></div>
+  <p>Campo para o valor da compra, seleção do estado (pelo menos ES, MG, RJ e "outro") e marcação "entrega expressa". Monte a regra com <code>switch</code>: ES custa 9,90, MG e RJ custam 14,90, os outros 24,90; expressa dobra o valor; compras acima de R$ 200 têm frete grátis, exceto se for expressa. Mostre o frete e o total. <b>Treina:</b> switch, regras combinadas e ordem das condições.</p>
+</div>
+
+<div class="atividade">
+  <div class="atividade-top"><span class="atividade-n">5</span><h4>Simulador de parcelas</h4><span class="bg bg-t">Médio</span></div>
+  <p>Campo para o valor da compra e uma seleção de quantas parcelas no máximo (6 ou 12). Mostre na tela uma linha por parcela ("1x de R$ 900,00", "2x de R$ 450,00"...), pulando as que ficarem abaixo de R$ 50. Se nenhuma couber, avise que o valor é baixo demais para parcelar. <b>Treina:</b> laço gerando itens na tela e condição dentro do laço.</p>
+</div>
+
+<div class="atividade">
+  <div class="atividade-top"><span class="atividade-n">6</span><h4>Lista de tarefas</h4><span class="bg bg-t">Médio</span></div>
+  <p>Campo de texto e botão "Adicionar" que vai empilhando tarefas numa lista visível na tela, com o total no topo ("3 tarefas"). Não deixe adicionar texto vazio nem tarefa repetida. Acrescente um botão "Limpar tudo". <b>Treina:</b> listas que crescem, <code>contains</code> e desenhar lista na tela.</p>
+</div>
+
+<div class="atividade">
+  <div class="atividade-top"><span class="atividade-n">7</span><h4>Busca no catálogo</h4><span class="bg bg-a">Desafio</span></div>
+  <p>Comece com uma lista fixa de uns 8 produtos no código. Um campo de texto filtra: ao digitar e apertar o botão, a tela mostra só os produtos cujo nome contém o texto digitado (dica: <code>produto.toLowerCase().contains(busca.toLowerCase())</code>). Mostre "nenhum produto encontrado" quando não houver resultado. <b>Treina:</b> percorrer lista com <code>if</code> dentro, montar uma lista nova a partir de outra.</p>
+</div>
+
+<div class="atividade">
+  <div class="atividade-top"><span class="atividade-n">8</span><h4>Pesquisa de satisfação</h4><span class="bg bg-a">Desafio</span></div>
+  <p>Seleção com nota de 1 a 5 (use <code>DropdownButton&lt;int&gt;</code>), marcação "recomendaria a um amigo" e um campo de comentário <b>opcional</b> (<code>String?</code>). Ao enviar: nota abaixo de 3 mostra "Vamos melhorar, obrigado pelo retorno"; nota 3 ou mais com recomendação mostra "Que bom que você gostou!"; os outros casos, "Obrigado pela participação". Se o comentário ficar vazio, escreva "sem comentários" no lugar dele. Separe a escolha da mensagem numa função própria, <code>String montarResposta(int nota, bool recomenda)</code>. <b>Treina:</b> tudo junto — seleção, marcação, decisões, função e nulidade segura.</p>
+</div>
+
+<h2 id="glo"><span class="num">Apoio</span>Glossário</h2>
+
+<p class="lede">Todos os termos técnicos usados nesta apostila, traduzidos de novo, num só lugar, para consulta rápida.</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:190px">Termo</th><th>Em bom português</th></tr></thead>
+<tbody>
+<tr><td><b>Variável</b></td><td>Uma gaveta com etiqueta (nome) que guarda um valor.</td></tr>
+<tr><td><b>Tipo de dado</b></td><td>O aviso do que pode ser guardado numa variável (número, texto, verdadeiro/falso...).</td></tr>
+<tr><td><b>Booleano (bool)</b></td><td>Um tipo com só duas respostas possíveis: verdadeiro ou falso.</td></tr>
+<tr><td><b>Operador</b></td><td>Um símbolo que faz uma conta ou uma comparação (<code>+</code>, <code>==</code>, <code>&amp;&amp;</code>...).</td></tr>
+<tr><td><b>Condicional (if/else)</b></td><td>Uma bifurcação: o programa escolhe um caminho com base numa pergunta de sim/não.</td></tr>
+<tr><td><b>Loop / repetição</b></td><td>Uma instrução para repetir um bloco de código várias vezes.</td></tr>
+<tr><td><b>Iteração</b></td><td>Uma "volta" individual de um loop.</td></tr>
+<tr><td><b>Loop infinito</b></td><td>Um loop cuja condição nunca fica falsa, travando o programa.</td></tr>
+<tr><td><b>Lista</b></td><td>Uma fileira numerada de gavetas do mesmo tipo.</td></tr>
+<tr><td><b>Índice</b></td><td>A posição de um item numa lista, começando sempre do zero.</td></tr>
+<tr><td><b>Função</b></td><td>Uma receita de código reutilizável, com nome, ingredientes (parâmetros) e resultado (retorno).</td></tr>
+<tr><td><b>Parâmetro</b></td><td>Um valor que uma função recebe para trabalhar.</td></tr>
+<tr><td><b>Retorno</b></td><td>O valor que uma função devolve no final.</td></tr>
+<tr><td><b>Null / nulo</b></td><td>"Vazio" — quando uma gaveta não tem absolutamente nada dentro.</td></tr>
+<tr><td><b>Null safety</b></td><td>A regra do Dart que obriga a avisar quando uma variável pode ficar vazia.</td></tr>
+<tr><td><b>Flutter</b></td><td>O kit do Google que transforma código Dart em aplicativo (de celular, web ou computador).</td></tr>
+<tr><td><b>Flutter Web</b></td><td>Rodar esse mesmo projeto Flutter dentro do navegador, como se fosse um site.</td></tr>
+<tr><td><b>SDK</b></td><td>O pacote de programas que você instala para poder criar e rodar projetos Flutter.</td></tr>
+<tr><td><b>Interpolação</b></td><td>Colar o valor de uma variável dentro de um texto, com <code>$nome</code> ou <code>${conta}</code>.</td></tr>
+<tr><td><b>tryParse</b></td><td>"Tente transformar este texto em número" — devolve vazio se não der, e aí o <code>??</code> entra com o valor reserva.</td></tr>
+<tr><td><b>toStringAsFixed(2)</b></td><td>Arredonda um número para duas casas decimais e devolve como texto. É o jeito de mostrar dinheiro.</td></tr>
+<tr><td><b>Ternário (? :)</b></td><td>Um <code>if</code>/<code>else</code> encurtado, usado quando só se precisa escolher entre dois valores.</td></tr>
+<tr><td><b>Widget</b></td><td>Um bloquinho de interface do Flutter (um texto, um botão, uma caixa de marcar...).</td></tr>
+<tr><td><b>Estado (state)</b></td><td>As informações de uma tela que podem mudar enquanto o app está aberto.</td></tr>
+<tr><td><b>setState</b></td><td>O comando que avisa o Flutter para redesenhar a tela com os valores atualizados.</td></tr>
+<tr><td><b>onChanged</b></td><td>"Ao mudar": o código que um campo executa quando a pessoa mexe nele.</td></tr>
+<tr><td><b>Spread (...)</b></td><td>Os três pontinhos que despejam uma lista de widgets dentro da tela, um por item.</td></tr>
+<tr><td><b>Terminal</b></td><td>A janela onde se digita comandos em texto, em vez de clicar em botões.</td></tr>
+<tr><td><b>PATH</b></td><td>A lista de pastas onde o Windows procura programas quando você digita um comando no terminal.</td></tr>
+<tr><td><b>Hot reload</b></td><td>A atualização quase instantânea do app na tela poucos segundos depois de salvar o arquivo.</td></tr>
+<tr><td><b>Debug Console</b></td><td>O painel do VS Code onde aparecem as mensagens de <code>print()</code> do app.</td></tr>
+<tr><td><b>Compilar / rodar</b></td><td>O processo de transformar o código escrito em algo que o computador consegue executar.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="ref"><span class="num">Apoio</span>Referências</h2>
+
+<ul>
+  <li><a href="https://docs.flutter.dev/get-started/install/windows" target="_blank" rel="noopener">docs.flutter.dev/get-started/install/windows</a> — passo a passo oficial de instalação do Flutter no Windows.</li>
+  <li><a href="https://git-scm.com/download/win" target="_blank" rel="noopener">git-scm.com/download/win</a> — download do Git para Windows, exigido pelo Flutter.</li>
+  <li><a href="https://docs.flutter.dev" target="_blank" rel="noopener">docs.flutter.dev</a> — documentação oficial do Flutter, incluindo o catálogo de widgets prontos.</li>
+  <li><a href="https://dart.dev/language" target="_blank" rel="noopener">dart.dev/language</a> — documentação oficial da linguagem Dart (em inglês).</li>
+  <li><a href="https://wallysondevs.github.io/flutter-book/#/tipos" target="_blank" rel="noopener">wallysondevs.github.io/flutter-book</a> — material de apoio em português sobre tipos e outros fundamentos, indicado pelo instrutor.</li>
+</ul>
+
+</main>
+</div>
+<footer style="text-align:center">Desenvolvedor Mobile — Senac Linhares · Instrutor: Welton Castoldi</footer>
+</body>
+</html>

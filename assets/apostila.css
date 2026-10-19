@@ -1,0 +1,84 @@
+/* Desenvolvedor Mobile — Senac Linhares
+   Peças compartilhadas das apostilas: as animações explicativas.
+
+   ---------------------------------------------------------------------------
+   COMO USAR NUMA PÁGINA NOVA
+
+     <link rel="stylesheet" href="../assets/apostila.css">
+     <script defer src="../assets/apostila.js"></script>
+
+   O apostila.js cuida de três coisas, todas opcionais (ele só liga o que a
+   página tiver): a barra de progresso (#prog), o destaque do item atual no
+   sumário (#toc) e o botão que toca as animações.
+
+   Uma animação é uma <figure class="anim">:
+
+     <figure class="anim" data-duracao="5200">
+       <div class="anim-head">
+         <span class="anim-tag">Animação</span>
+         <button class="btn" type="button">Tocar</button>
+       </div>
+       <svg ...>  ... elementos com class="s1", "s2", ... ...  </svg>
+       <figcaption>O que a animação mostra.</figcaption>
+     </figure>
+
+   As classes s1 a s10 fazem os elementos aparecerem em sequência, um a cada
+   meio segundo. Para animações com passos próprios, escreva os @keyframes no
+   <style> da própria página e prenda-os a ".tocando #id-do-elemento".
+
+   O data-duracao (em milissegundos) é o tempo total, usado só para o botão
+   voltar a dizer "Repetir" no fim. Sem ele, vale 6000.
+
+   ---------------------------------------------------------------------------
+   IMPORTANTE AO DESENHAR UMA ANIMAÇÃO
+
+   Ela precisa fazer sentido PARADA. Quem pediu menos animação no sistema
+   (prefers-reduced-motion) e quem imprime a apostila vê todos os elementos de
+   uma vez, no estado final. Então nunca empilhe dois textos no mesmo lugar
+   contando com o fato de que um some: lado a lado, o desenho continua legível.
+   --------------------------------------------------------------------------- */
+
+/* ---------- Moldura da animação ---------- */
+.anim{position:relative}
+.anim-head{display:flex;align-items:center;gap:10px;margin:-4px 0 12px}
+.anim-tag{
+  font-size:10.5px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;
+  color:#6b3fa0;background:#f1ebfa;border:1px solid #d8c9ef;
+  padding:3px 10px;border-radius:99px;
+}
+.anim-head .btn{margin-left:auto;padding:5px 12px;font-size:12.5px}
+.anim-head .btn:hover{border-color:#6b3fa0;color:#6b3fa0}
+
+/* ---------- Movimentos reaproveitáveis ---------- */
+@keyframes surge{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes surgeE{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulsa{0%,100%{opacity:1;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+@keyframes some{from{opacity:1}to{opacity:.18}}
+@keyframes cresce{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
+@keyframes risca{to{stroke-dashoffset:0}}
+
+/* ---------- Entrada em sequência (s1 a s10) ---------- */
+.anim svg .s1,.anim svg .s2,.anim svg .s3,.anim svg .s4,.anim svg .s5,
+.anim svg .s6,.anim svg .s7,.anim svg .s8,.anim svg .s9,.anim svg .s10{
+  transform-box:fill-box;transform-origin:center;
+}
+.tocando .s1{animation:surge .5s 0s both}
+.tocando .s2{animation:surge .5s .5s both}
+.tocando .s3{animation:surge .5s 1s both}
+.tocando .s4{animation:surge .5s 1.5s both}
+.tocando .s5{animation:surge .5s 2s both}
+.tocando .s6{animation:surge .5s 2.5s both}
+.tocando .s7{animation:surge .5s 3s both}
+.tocando .s8{animation:surge .5s 3.5s both}
+.tocando .s9{animation:surge .5s 4s both}
+.tocando .s10{animation:surge .5s 4.5s both}
+
+/* ---------- Acessibilidade e impressão ----------
+   Sem animação, tudo aparece de uma vez no estado final. */
+@media (prefers-reduced-motion:reduce){
+  .tocando *{animation:none!important}
+}
+@media print{
+  .anim-head{display:none}
+  .tocando *{animation:none!important}
+}

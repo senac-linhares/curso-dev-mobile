@@ -27,6 +27,7 @@ Por enquanto este repositório guarda só os materiais das aulas. Mas ao longo d
 
 | Unidade | Conteúdo |
 |---|---|
+| **Nivelamento — Lógica de Programação com Dart** | Introdução ao Flutter, montagem do ambiente (Flutter Web) e os conceitos básicos de lógica, com exemplos de código e atividades |
 | **UC 01 — Elaborar Projetos de Aplicações** | Apresentação das aulas, apostila do aluno e o simulador de reunião de briefing |
 | **UC 02 — Organizar o Processo de Trabalho no Desenvolvimento de Aplicações** | Apostila do aluno, aula a aula (16 encontros) |
 | **UC 03 — Desenvolver Interface Gráfica para Dispositivos Móveis** | Apostila do aluno com Flutter (20 encontros) e o [projeto-base Empresta Aí](unidade-03-desenvolver-interface-grafica/projeto-base/empresta_ai/) |
@@ -40,3 +41,5 @@ Dúvidas sobre o conteúdo das aulas ou sobre como acessar algum material: fale 
 ---
 
 <sub>Documentação técnica de manutenção deste repositório: [docs/publicar-novas-unidades.md](docs/publicar-novas-unidades.md)</sub>
+
+Links úteis: https://wallysondevs.github.io/flutter-book/#/tipos
