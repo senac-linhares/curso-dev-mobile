@@ -28,6 +28,7 @@ Por enquanto este repositório guarda só os materiais das aulas. Mas ao longo d
 | Unidade | Conteúdo |
 |---|---|
 | **UC 01 — Elaborar Projetos de Aplicações** | Apresentação das aulas, apostila do aluno e o simulador de reunião de briefing |
+| **UC 02 — Organizar o Processo de Trabalho no Desenvolvimento de Aplicações** | Apostila do aluno, aula a aula (16 encontros) |
 
 Novas unidades vão sendo adicionadas ao longo do curso — tanto materiais de aula quanto, mais adiante, código de projetos.
 

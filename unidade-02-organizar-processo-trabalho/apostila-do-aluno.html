@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UC2 · Apostila do Aluno | Desenvolvedor Mobile – Senac</title>
+<meta name="description" content="Apostila do aluno da Unidade Curricular 2 do curso Desenvolvedor Mobile (Senac, 48h): organizar o processo de trabalho no desenvolvimento de aplicações.">
+<style>
+:root{
+  --azul:#00447c; --azul-esc:#002f56; --azul-claro:#e8f1f9;
+  --laranja:#e8730c; --laranja-claro:#fdf0e3;
+  --verde:#1d7a52; --verde-claro:#e6f4ee;
+  --roxo:#6b3fa0; --roxo-claro:#f1ebfa;
+  --vermelho:#b3261e; --vermelho-claro:#fdecea;
+  --tinta:#1a1f26; --tinta2:#455060; --linha:#dfe4ea; --fundo:#ffffff; --fundo2:#f6f8fa;
+  --raio:10px; --sombra:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.06);
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:"SF Mono",Consolas,"Liberation Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{counter-reset:fig;margin:0;background:var(--fundo);color:var(--tinta);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%}
+
+/* ---------- Layout ---------- */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--linha)}
+.topbar-in{max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px}
+.topbar .marca{font-weight:700;color:var(--azul);font-size:15px;letter-spacing:.2px}
+.topbar .marca span{color:var(--laranja)}
+.topbar .uc{font-size:13px;color:var(--tinta2);border-left:1px solid var(--linha);padding-left:14px}
+.topbar .acoes{margin-left:auto;display:flex;gap:8px}
+.btn{font:inherit;font-size:13px;font-weight:600;padding:7px 13px;border-radius:8px;border:1px solid var(--linha);background:#fff;color:var(--tinta2);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--azul);color:var(--azul)}
+.btn-p{background:var(--azul);border-color:var(--azul);color:#fff}
+.btn-p:hover{background:var(--azul-esc);color:#fff}
+.progresso{height:3px;background:var(--laranja);width:0;position:fixed;top:0;left:0;z-index:60;transition:width .1s}
+
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:266px 1fr;gap:44px;align-items:start}
+nav.sumario{position:sticky;top:64px;max-height:calc(100vh - 84px);overflow-y:auto;padding:26px 0 40px;font-size:14px}
+nav.sumario h2{font-size:11px;text-transform:uppercase;letter-spacing:.9px;color:var(--tinta2);margin:0 0 10px}
+nav.sumario ol{list-style:none;margin:0 0 20px;padding:0}
+nav.sumario a{display:block;padding:5px 10px;border-left:2px solid var(--linha);color:var(--tinta2);text-decoration:none;line-height:1.35}
+nav.sumario a:hover{color:var(--azul);border-color:var(--azul);background:var(--azul-claro)}
+nav.sumario a.ativo{color:var(--azul);font-weight:600;border-color:var(--azul);background:var(--azul-claro)}
+nav.sumario .sub a{padding-left:22px;font-size:13px}
+main{padding:26px 0 90px;min-width:0;max-width:860px}
+
+/* ---------- Tipografia ---------- */
+h1{font-size:34px;line-height:1.2;margin:0 0 12px;letter-spacing:-.4px}
+h2{font-size:26px;line-height:1.25;margin:56px 0 14px;padding-top:12px;letter-spacing:-.3px;border-top:3px solid var(--azul)}
+h2 .num{display:block;font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--laranja);margin-bottom:4px}
+h3{font-size:20px;margin:34px 0 8px;color:var(--azul-esc)}
+h4{font-size:16px;margin:22px 0 6px;color:var(--tinta)}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 16px;padding-left:22px}
+li{margin-bottom:7px}
+strong{font-weight:650}
+a{color:var(--azul)}
+code{font-family:var(--mono);font-size:.86em;background:var(--fundo2);border:1px solid var(--linha);border-radius:5px;padding:1px 5px}
+.lede{font-size:19px;color:var(--tinta2);line-height:1.6}
+hr{border:0;border-top:1px solid var(--linha);margin:34px 0}
+
+/* ---------- Capa ---------- */
+.capa{background:linear-gradient(135deg,var(--azul-esc),var(--azul) 55%,#0b6ab0);color:#fff;border-radius:14px;padding:40px 38px;margin:20px 0 8px;box-shadow:var(--sombra)}
+.capa .tag{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:4px 11px;border-radius:99px;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase}
+.capa h1{color:#fff;margin:14px 0 10px;font-size:37px}
+.capa p{color:rgba(255,255,255,.9);margin:0;max-width:60ch}
+.capa .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.capa .meta div{background:rgba(255,255,255,.12);border-radius:8px;padding:9px 14px;font-size:13px}
+.capa .meta b{display:block;font-size:17px;font-weight:700}
+
+/* ---------- Cartões e caixas ---------- */
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--fundo);border:1px solid var(--linha);border-radius:var(--raio);padding:18px 20px}
+.card h4{margin-top:0}
+.card p:last-child,.card ul:last-child,.card ol:last-child{margin-bottom:0}
+
+.box{border-radius:var(--raio);padding:16px 18px 16px 20px;margin:20px 0;border-left:4px solid;font-size:16px}
+.box .rot{display:block;font-size:11px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;margin-bottom:5px}
+.box p:last-child,.box ul:last-child,.box ol:last-child{margin-bottom:0}
+.dica{background:var(--azul-claro);border-color:var(--azul)} .dica .rot{color:var(--azul)}
+.atencao{background:var(--vermelho-claro);border-color:var(--vermelho)} .atencao .rot{color:var(--vermelho)}
+.pratica{background:var(--verde-claro);border-color:var(--verde)} .pratica .rot{color:var(--verde)}
+.docente{background:var(--roxo-claro);border-color:var(--roxo)} .docente .rot{color:var(--roxo)}
+.mercado{background:var(--laranja-claro);border-color:var(--laranja)} .mercado .rot{color:var(--laranja)}
+
+/* ---------- Comparativo certo x errado ---------- */
+.comparativo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
+.comparativo .certo,.comparativo .errado{border-radius:var(--raio);padding:15px 18px;border:1.5px solid}
+.comparativo .certo{background:var(--verde-claro);border-color:#bde0cf}
+.comparativo .errado{background:var(--vermelho-claro);border-color:#f3c6c2}
+.comparativo h4{margin:0 0 9px;font-size:12.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.comparativo h4::before{content:"";width:9px;height:9px;border-radius:99px;flex:none}
+.comparativo .certo h4{color:var(--verde)} .comparativo .certo h4::before{background:var(--verde)}
+.comparativo .errado h4{color:var(--vermelho)} .comparativo .errado h4::before{background:var(--vermelho)}
+.comparativo ul{margin:0;padding-left:19px;font-size:14.5px}
+.comparativo li{margin-bottom:6px}
+.comparativo p{font-size:14.5px}
+.comparativo p:last-child{margin-bottom:0}
+
+/* ---------- Figuras fotográficas reais ---------- */
+figure.foto img{display:block;margin:0 auto;max-width:100%;border-radius:6px;border:1px solid var(--linha);background:#fff}
+.creditos{display:block;margin-top:6px;opacity:.72;font-size:12px;font-style:italic}
+
+/* ---------- Tabelas ---------- */
+.tab-wrap{overflow-x:auto;margin:18px 0}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--linha);vertical-align:top}
+thead th{background:var(--fundo2);font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--tinta2);border-bottom:2px solid var(--linha)}
+tbody tr:hover{background:var(--fundo2)}
+td code{white-space:nowrap}
+
+/* ---------- Badges ---------- */
+.bg{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:.4px;vertical-align:middle}
+.bg-i{background:var(--azul-claro);color:var(--azul);border:1px solid #bcd8ee}
+.bg-h{background:var(--verde-claro);color:var(--verde);border:1px solid #bde0cf}
+.bg-a{background:var(--roxo-claro);color:var(--roxo);border:1px solid #d8c9ef}
+.bg-t{background:var(--laranja-claro);color:var(--laranja);border:1px solid #f5d5b0}
+
+/* ---------- Figuras ---------- */
+figure{margin:24px 0;padding:18px;background:var(--fundo2);border:1px solid var(--linha);border-radius:var(--raio)}
+figure svg{display:block;margin:0 auto;height:auto}
+figcaption{font-size:13.5px;color:var(--tinta2);margin-top:12px;text-align:center;line-height:1.5;counter-increment:fig}
+figcaption::before{content:"Figura " counter(fig) ". ";font-weight:700;color:var(--tinta)}
+figcaption b{color:var(--tinta)}
+
+/* ---------- Templates ---------- */
+.tpl{border:1px solid var(--linha);border-radius:var(--raio);margin:20px 0;overflow:hidden}
+.tpl-head{display:flex;align-items:center;gap:10px;background:var(--fundo2);padding:10px 14px;border-bottom:1px solid var(--linha)}
+.tpl-head h4{margin:0;font-size:14px}
+.tpl-head .btn{margin-left:auto;padding:5px 10px;font-size:12px}
+.tpl pre{margin:0;padding:16px 18px;font-family:var(--mono);font-size:13.2px;line-height:1.6;white-space:pre-wrap;overflow-x:auto;background:#fff;color:var(--tinta)}
+
+/* ---------- Aulas ---------- */
+.aula{border:1px solid var(--linha);border-left:5px solid var(--azul);border-radius:var(--raio);padding:20px 22px;margin:18px 0;background:#fff}
+.aula-top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.aula-n{background:var(--azul);color:#fff;font-weight:700;font-size:12px;letter-spacing:.6px;padding:3px 10px;border-radius:99px}
+.aula h3{margin:0;font-size:19px}
+.aula .ch{margin-left:auto;font-size:12px;color:var(--tinta2);font-weight:600}
+.aula dl{display:grid;grid-template-columns:132px 1fr;gap:2px 14px;margin:14px 0 0;font-size:15px}
+.aula dt{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--tinta2);padding-top:3px}
+.aula dd{margin:0 0 8px}
+.aula dd ul{margin:0;padding-left:18px}
+.aula dd li{margin-bottom:3px}
+
+/* ---------- Checklists ---------- */
+.check{list-style:none;padding:0}
+.check li{padding-left:28px;position:relative}
+.check li::before{content:"";position:absolute;left:0;top:4px;width:15px;height:15px;border:2px solid var(--azul);border-radius:4px}
+
+/* ---------- Passos ---------- */
+.passos{counter-reset:p;list-style:none;padding:0}
+.passos li{counter-increment:p;padding-left:42px;position:relative;margin-bottom:14px}
+.passos li::before{content:counter(p);position:absolute;left:0;top:0;width:28px;height:28px;background:var(--azul);color:#fff;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:700}
+
+/* ---------- Mockups de interface (recriações ilustrativas, não prints oficiais) ---------- */
+.mockup{border:1px solid var(--linha);border-radius:12px;margin:22px 0;overflow:hidden;box-shadow:var(--sombra);background:#fff}
+.mockup-bar{display:flex;align-items:center;gap:6px;padding:9px 14px;background:#eef1f5;border-bottom:1px solid var(--linha)}
+.mockup-bar .dot{width:9px;height:9px;border-radius:50%;background:#dcdfe4}
+.mockup-bar .dot.r{background:#ec6a5e}.mockup-bar .dot.y{background:#f4bf4f}.mockup-bar .dot.g{background:#61c454}
+.mockup-bar .url{margin-left:10px;font-size:11.5px;color:var(--tinta2);background:#fff;border:1px solid var(--linha);border-radius:6px;padding:3px 12px;flex:1;max-width:360px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mockup-body{padding:16px;background:#f4f6f8;overflow-x:auto}
+.mockup figcaption{background:var(--fundo2);margin:0;padding:12px 16px;border-top:1px solid var(--linha);text-align:left}
+.mk-row{display:flex;gap:12px;min-width:max-content}
+.kb-col{width:172px;flex:none;background:#e9ebef;border-radius:8px;padding:9px}
+.kb-col h5{margin:0 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--tinta2);display:flex;justify-content:space-between}
+.kb-col h5 span{background:#fff;border-radius:99px;padding:0 6px;font-weight:700;color:var(--tinta)}
+.kb-card{background:#fff;border-radius:7px;padding:9px 10px;margin-bottom:8px;box-shadow:0 1px 2px rgba(16,24,40,.12);font-size:12.5px;line-height:1.4}
+.kb-card b{display:block;font-size:12.5px;margin-bottom:5px}
+.kb-tags{display:flex;gap:4px;margin-bottom:6px}
+.kb-tags i{display:inline-block;width:26px;height:6px;border-radius:3px;background:var(--azul)}
+.kb-meta{display:flex;gap:8px;margin-top:6px;font-size:11px;color:var(--tinta2)}
+.frm-card{background:#fff;border-radius:10px;padding:18px 20px;max-width:460px;margin:0 auto;box-shadow:0 1px 2px rgba(16,24,40,.1)}
+.frm-card .barra{height:8px;border-radius:8px 8px 0 0;background:linear-gradient(90deg,var(--azul),#0b6ab0);margin:-18px -20px 16px}
+.frm-q{border:1px solid var(--linha);border-radius:8px;padding:12px 14px;margin-bottom:12px}
+.frm-q label{display:block;font-size:13px;font-weight:600;margin-bottom:8px}
+.frm-q .campo{height:30px;border:1px solid var(--linha);border-radius:6px;background:#fbfbfc}
+.frm-q .op{display:flex;align-items:center;gap:8px;font-size:12.5px;margin-bottom:6px;color:var(--tinta2)}
+.frm-q .op i{width:14px;height:14px;border-radius:50%;border:2px solid #b6bec9;display:inline-block}
+.sh-grid{background:#fff;border:1px solid var(--linha);border-radius:8px;overflow:hidden;font-size:12px}
+.sh-row{display:grid;grid-template-columns:110px repeat(4,70px);border-bottom:1px solid var(--linha)}
+.sh-row div{padding:6px 8px;border-right:1px solid var(--linha)}
+.sh-row.head{background:#eef1f5;font-weight:700;color:var(--tinta2)}
+.sh-chart{margin-top:12px;background:#fff;border:1px solid var(--linha);border-radius:8px;padding:14px;display:flex;align-items:flex-end;gap:10px;height:120px}
+.sh-chart i{display:block;width:22px;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#0b6ab0,var(--azul))}
+.sl-strip{display:flex;gap:10px;overflow-x:auto}
+.sl-thumb{flex:none;width:150px;height:88px;border-radius:6px;border:1px solid var(--linha);background:#fff;padding:8px;font-size:9px;color:var(--tinta2);position:relative}
+.sl-thumb b{display:block;font-size:10.5px;color:var(--tinta);margin-bottom:4px}
+.sl-thumb .n{position:absolute;bottom:5px;right:7px;font-weight:700;color:#c3c9d1}
+
+footer{border-top:1px solid var(--linha);margin-top:60px;padding:26px 0 60px;font-size:14px;color:var(--tinta2)}
+
+/* ---------- Responsivo ---------- */
+@media (max-width:980px){
+  .wrap{grid-template-columns:1fr;gap:0}
+  nav.sumario{position:static;max-height:none;border-bottom:1px solid var(--linha);margin-bottom:10px}
+  .g3,.g4,.g2,.comparativo{grid-template-columns:1fr}
+  .capa{padding:28px 22px}.capa h1{font-size:28px}
+  h1{font-size:27px}h2{font-size:22px}
+  .aula dl{grid-template-columns:1fr}
+  .aula dt{margin-top:8px}
+}
+
+/* ---------- Animações ---------- */
+.anim{position:relative}
+.anim-head{display:flex;align-items:center;gap:10px;margin:-4px 0 12px}
+.anim-tag{font-size:10.5px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:var(--roxo);background:var(--roxo-claro);border:1px solid #d8c9ef;padding:3px 10px;border-radius:99px}
+.anim-head .btn{margin-left:auto;padding:5px 12px;font-size:12.5px}
+.anim-head .btn:hover{border-color:var(--roxo);color:var(--roxo)}
+
+@keyframes surge{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes surgeE{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulsa{0%,100%{opacity:1;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
+@keyframes some{from{opacity:1}to{opacity:.18}}
+@keyframes cresce{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
+@keyframes risca{to{stroke-dashoffset:0}}
+
+.anim svg .s1,.anim svg .s2,.anim svg .s3,.anim svg .s4,.anim svg .s5,
+.anim svg .s6,.anim svg .s7,.anim svg .s8{transform-box:fill-box;transform-origin:center}
+.tocando .s1{animation:surge .5s 0s both}
+.tocando .s2{animation:surge .5s .4s both}
+.tocando .s3{animation:surge .5s .8s both}
+.tocando .s4{animation:surge .5s 1.2s both}
+.tocando .s5{animation:surge .5s 1.6s both}
+.tocando .s6{animation:surge .5s 2s both}
+.tocando .s7{animation:surge .5s 2.4s both}
+.tocando .s8{animation:surge .5s 2.8s both}
+
+/* Kanban */
+.tocando .kf-card{transform-box:fill-box;transform-origin:center}
+.tocando #kf-c1{animation:kfMove1 4.6s ease-in-out both}
+.tocando #kf-c2{animation:kfMove2 4.6s .3s ease-in-out both}
+.tocando #kf-c3{animation:kfMove3 4.6s .6s ease-in-out both}
+@keyframes kfMove1{0%{opacity:0;transform:translateX(0)}8%{opacity:1}30%{transform:translateX(0)}45%{transform:translateX(178px)}70%{transform:translateX(178px)}85%{transform:translateX(356px)}100%{opacity:1;transform:translateX(356px)}}
+@keyframes kfMove2{0%{opacity:0;transform:translateX(0)}10%{opacity:1}38%{transform:translateX(0)}55%{transform:translateX(178px)}100%{opacity:1;transform:translateX(178px)}}
+@keyframes kfMove3{0%{opacity:0;transform:translateX(0)}12%{opacity:1}100%{opacity:1;transform:translateX(0)}}
+
+/* Ciclo de ocorrência */
+.tocando .oc-etapa{opacity:.25}
+.tocando #oc-1{animation:ocAtiva .9s .2s both}
+.tocando #oc-2{animation:ocAtiva .9s 1.3s both}
+.tocando #oc-3{animation:ocAtiva .9s 2.4s both}
+.tocando #oc-4{animation:ocAtiva .9s 3.5s both}
+@keyframes ocAtiva{0%{opacity:.25}20%{opacity:1}80%{opacity:1}100%{opacity:1}}
+.tocando .oc-seta{stroke-dasharray:34;stroke-dashoffset:34}
+.tocando #oc-s1{animation:risca .3s 1.05s both}
+.tocando #oc-s2{animation:risca .3s 2.15s both}
+.tocando #oc-s3{animation:risca .3s 3.25s both}
+
+/* Feedback (loop) */
+.tocando #fb-p1{animation:surge .5s .2s both}
+.tocando #fb-p2{animation:surge .5s 1.1s both}
+.tocando #fb-p3{animation:surge .5s 2s both}
+.tocando #fb-loop{stroke-dasharray:520;stroke-dashoffset:520;animation:risca 2.6s .3s ease-in-out both}
+
+/* Conflito: escalar x mediar */
+.tocando #cf-esc{animation:cfPath 2.4s .3s ease-in both}
+.tocando #cf-med{animation:cfPath 2.4s .3s ease-in both}
+@keyframes cfPath{from{stroke-dashoffset:340}to{stroke-dashoffset:0}}
+.tocando #cf-ruim{animation:cresce .5s 2.6s both}
+.tocando #cf-bom{animation:cresce .5s 2.6s both,pulsa 1.4s 3.2s 2}
+
+/* Replanejamento */
+.tocando .rp-no{opacity:0}
+.tocando #rp-1{animation:surge .5s .1s both}
+.tocando #rp-2{animation:surge .5s 1s both}
+.tocando #rp-3a{animation:surge .5s 1.9s both}
+.tocando #rp-3b{animation:surge .5s 1.9s both}
+.tocando #rp-4{animation:surge .5s 2.9s both,pulsa 1.3s 3.5s 2}
+
+/* Métricas */
+.tocando .mt-barra{transform-box:fill-box;transform-origin:bottom}
+.tocando #mt-b1{animation:mtCresce .6s .2s both}
+.tocando #mt-b2{animation:mtCresce .6s .5s both}
+.tocando #mt-b3{animation:mtCresce .6s .8s both}
+.tocando #mt-b4{animation:mtCresce .6s 1.1s both}
+.tocando #mt-b5{animation:mtCresce .6s 1.4s both}
+.tocando #mt-b6{animation:mtCresce .6s 1.7s both}
+@keyframes mtCresce{from{transform:scaleY(0);opacity:0}to{transform:scaleY(1);opacity:1}}
+.tocando #mt-linha{stroke-dasharray:420;stroke-dashoffset:420;animation:risca 1.8s 2.1s ease-out both}
+
+@media (prefers-reduced-motion:reduce){
+  .tocando *{animation:none!important}
+}
+@media print{ .anim-head{display:none} }
+
+/* ---------- Impressão ---------- */
+@media print{
+  nav.sumario,.topbar,.progresso,.tpl-head .btn{display:none!important}
+  body{font-size:11.5pt}
+  .wrap{display:block;max-width:none;padding:0}
+  main{max-width:none;padding:0}
+  .capa{background:#00447c!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  h2{page-break-after:avoid;margin-top:26px}
+  h3,h4{page-break-after:avoid}
+  p,li{orphans:3;widows:3}
+  figure,.aula,.box,.card,.tpl-head{page-break-inside:avoid}
+  tr{page-break-inside:avoid}
+  .capa{page-break-after:always}
+  .grid{display:block}
+  .grid .card{margin-bottom:10px}
+  a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<div class="progresso" id="prog"></div>
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="marca">Desenvolvedor <span>Mobile</span></div>
+    <div class="uc"><b>Apostila do Aluno</b> &middot; UC2 · Organizar o processo de trabalho no desenvolvimento de aplicações &middot; 48h</div>
+    <div class="acoes">
+      <button class="btn" onclick="window.print()">Imprimir / PDF</button>
+    </div>
+  </div>
+</div>
+<div class="wrap">
+<nav class="sumario" id="toc">
+  <h2>Sumário</h2>
+  <ol>
+    <li><a href="#ap">Como usar este material</a></li>
+    <li><a href="#uc">A UC2 em uma página</a></li>
+    <li><a href="#met">Metodologia Senac</a></li>
+    <li><a href="#plano">Nossos 16 encontros</a></li>
+    <li><a href="#caso">A agência em operação</a></li>
+  </ol>
+  <h2>Aula a aula</h2>
+  <ol class="sub">
+    <li><a href="#a1">1. Etapas de trabalho e equipe</a></li>
+    <li><a href="#a2">2. Cronograma e kanban</a></li>
+    <li><a href="#a3">3. Configurando o quadro</a></li>
+    <li><a href="#a4">4. Suporte e atendimento</a></li>
+    <li><a href="#a5">5. Registro de ocorrências</a></li>
+    <li><a href="#a6">6. Checkpoint 1</a></li>
+    <li><a href="#a7">7. Comunicação assertiva</a></li>
+    <li><a href="#a8">8. Conflitos I — conceitos</a></li>
+    <li><a href="#a9">9. Conflitos II — simulação</a></li>
+    <li><a href="#a10">10. Evento disruptivo</a></li>
+    <li><a href="#a11">11. Checkpoint 2</a></li>
+    <li><a href="#a12">12. Fornecedores e terceiros</a></li>
+    <li><a href="#a13">13. Relatórios e métricas</a></li>
+    <li><a href="#a14">14. Carreira e postura</a></li>
+    <li><a href="#a15">15. Diversidade e consolidação</a></li>
+    <li><a href="#a16">16. Reunião de status final</a></li>
+  </ol>
+  <h2>Apoio</h2>
+  <ol>
+    <li><a href="#ativ">Atividades práticas</a></li>
+    <li><a href="#tpl">Modelos para copiar</a></li>
+    <li><a href="#aval">Evidências e avaliação</a></li>
+    <li><a href="#glo">Glossário</a></li>
+    <li><a href="#ref">Referências</a></li>
+  </ol>
+</nav>
+<main>
+
+<div class="capa">
+  <span class="tag">Apostila do Aluno &middot; Unidade Curricular 2</span>
+  <h1>Organizar o processo de trabalho no desenvolvimento de aplicações</h1>
+  <p>Material de estudo e trabalho da UC2 — curso <b>Desenvolvedor Mobile</b>, eixo tecnológico Informação e Comunicação.</p>
+  <div class="meta">
+    <div><b>48h</b>carga horária</div>
+    <div><b>3</b>indicadores</div>
+    <div><b>7</b>elementos de conhecimento</div>
+    <div><b>16</b>encontros de 3h</div>
+  </div>
+</div>
+<p style="font-size:13px;color:var(--tinta2);margin-top:10px">Material didático de apoio elaborado pelo docente Welton Castoldi com base no Plano de Curso Desenvolvedor Mobile (Código DN 2826, versão 2). Não substitui o plano de curso nem os documentos oficiais do Modelo Pedagógico Senac.</p>
+
+<h2 id="ap"><span class="num">Abertura</span>Como usar este material</h2>
+
+<p class="lede">Esta apostila acompanha exatamente o caminho que a turma percorre em sala — mas, diferente da apostila da UC1, aqui cada seção é uma aula: leia a seção correspondente antes do encontro, chegue com a teoria já processada e use o tempo de sala para praticar.</p>
+
+<div class="grid g2">
+  <div class="card"><h4>Para o aluno</h4><p>Leia a seção da aula antes do encontro correspondente (veja <a href="#plano">Nossos 16 encontros</a>). Faça as atividades marcadas em verde: elas constroem, peça por peça, o Relatório de Processo que você entrega no fim da unidade.</p></div>
+  <div class="card"><h4>Para a turma toda</h4><p>O conteúdo continua o projeto da <a href="#caso">Agência Web Linhares</a> aberto na UC1: o mesmo cliente, agora em fase de operação. Se sua squad ainda não tem um projeto aprovado, use o caso Empresta Aí como base.</p></div>
+</div>
+
+<h4>Legenda das caixas</h4>
+<div class="box dica"><span class="rot">Conceito-chave</span><p>Definição que costuma cair em avaliação e que você vai usar no dia a dia profissional.</p></div>
+<div class="box pratica"><span class="rot">Mão na massa</span><p>Atividade prática. Produz um artefato que entra no Relatório de Processo final.</p></div>
+<div class="box mercado"><span class="rot">No mercado</span><p>Como isso acontece de verdade em agências, softwarehouses e no trabalho autônomo.</p></div>
+<div class="box atencao"><span class="rot">Atenção</span><p>Erro frequente ou armadilha que custa caro em um processo de trabalho real.</p></div>
+
+<h2 id="uc"><span class="num">Referência</span>A UC2 em uma página</h2>
+
+<p>A competência desta unidade é <b>organizar o processo de trabalho no desenvolvimento de aplicações</b>. Repare, de novo, no verbo: não é <i>desenvolver</i>, é <i>organizar o processo</i>. Nesta unidade ninguém escreve uma linha de código de aplicativo — o olhar aqui é administrativo, não técnico. A base técnica do projeto ficou fechada na UC1, e a codificação só recomeça na UC3.</p>
+
+<p>É também a competência menos visível e mais decisiva do trabalho de um desenvolvedor: a diferença entre uma equipe que entrega no prazo e comunica bem, e uma equipe tecnicamente boa mas que ninguém quer contratar de novo, quase sempre está aqui — em como o trabalho é organizado, registrado e comunicado, não em quem escreve o código mais elegante.</p>
+
+<h3>Os três indicadores</h3>
+<p>Indicadores são as evidências observáveis de que a competência foi desenvolvida. São eles que recebem menção <b>A</b>, <b>PA</b> ou <b>NA</b> ao longo do processo.</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:60px">#</th><th>Indicador</th><th>O que você entrega</th></tr></thead>
+<tbody>
+<tr><td><span class="bg bg-i">I1</span></td><td>Executa procedimentos de controle e registro de ocorrência em softwares de gestão, de acordo com o fluxo de trabalho.</td><td>Quadro de tarefas configurado + ocorrências registradas, classificadas e encerradas</td></tr>
+<tr><td><span class="bg bg-i">I2</span></td><td>Identifica a necessidade de adaptação das etapas e cronograma de trabalho, de acordo com os procedimentos da organização.</td><td>Ficha de decisão de replanejamento diante de um evento disruptivo</td></tr>
+<tr><td><span class="bg bg-i">I3</span></td><td>Elabora relatórios dos processos de trabalho conforme métricas de uma organização.</td><td>Relatório de Processo com métricas, gráficos e retrospectiva</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Elementos da competência</h3>
+<div class="grid g3">
+  <div class="card">
+    <h4>Conhecimentos</h4>
+    <ol style="font-size:14.5px;padding-left:18px">
+      <li>Etapas de trabalho: tipos de equipe, cultura organizacional, cronograma, acompanhamento e custos</li>
+      <li>Empreendedorismo: características, intraempreendedorismo e mercado de trabalho</li>
+      <li>Serviços de terceiros: levantamento de fornecedores, prioridades, custos e características</li>
+      <li>Suporte técnico: comunicação, controle e registro de ocorrências, ações corretivas</li>
+      <li>Negociação de conflitos: mediação, comunicação, ruídos e feedbacks</li>
+      <li>Carreira profissional: itinerário, limites de atuação, etiqueta pessoal e profissional</li>
+      <li>Relatórios de desenvolvimento: tipos, coerência e coesão textual, estrutura</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h4>Habilidades</h4>
+    <ol style="font-size:14.5px;padding-left:18px">
+      <li>Comunicar-se de forma assertiva</li>
+      <li>Operar editor de texto, planilha eletrônica e apresentação de slides</li>
+      <li>Mediar conflitos nas situações de trabalho</li>
+      <li>Pesquisar dados e informações do desenvolvimento do trabalho</li>
+      <li>Analisar as etapas de trabalho</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h4>Atitudes e valores</h4>
+    <ol style="font-size:14.5px;padding-left:18px">
+      <li>Cordialidade e empatia no trato com as pessoas</li>
+      <li>Colaboração no desenvolvimento do trabalho em equipe</li>
+      <li>Responsabilidade e comprometimento com os acordos estabelecidos</li>
+      <li>Sigilo no tratamento de dados e informações</li>
+      <li>Zelo na apresentação pessoal e postura profissional</li>
+      <li>Proatividade no atendimento e na resolução de problemas</li>
+      <li>Respeito à diversidade humana</li>
+    </ol>
+  </div>
+</div>
+
+<figure>
+<svg viewBox="0 0 760 210" role="img" aria-label="Fluxo das etapas da UC2, da organização da equipe ao relatório final">
+  <defs>
+    <marker id="setaB" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#00447c"/></marker>
+  </defs>
+  <rect x="4" y="60" width="126" height="72" rx="9" fill="#e8f1f9" stroke="#00447c" stroke-width="1.5"/>
+  <text x="67" y="86" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#00447c">Organizar</text>
+  <text x="67" y="105" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">equipe, cronograma,</text>
+  <text x="67" y="118" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">quadro de tarefas</text>
+
+  <rect x="162" y="60" width="126" height="72" rx="9" fill="#e8f1f9" stroke="#00447c" stroke-width="1.5"/>
+  <text x="225" y="86" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#00447c">Atender</text>
+  <text x="225" y="105" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">registrar e tratar</text>
+  <text x="225" y="118" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">ocorrências</text>
+
+  <rect x="320" y="60" width="126" height="72" rx="9" fill="#f1ebfa" stroke="#6b3fa0" stroke-width="1.5"/>
+  <text x="383" y="86" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#5a3384">Comunicar</text>
+  <text x="383" y="105" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">feedback e</text>
+  <text x="383" y="118" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">mediação de conflito</text>
+
+  <rect x="478" y="60" width="126" height="72" rx="9" fill="#fdf0e3" stroke="#e8730c" stroke-width="1.5"/>
+  <text x="541" y="86" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#b85a08">Replanejar</text>
+  <text x="541" y="105" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">adaptar etapas</text>
+  <text x="541" y="118" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">e cronograma</text>
+
+  <rect x="636" y="60" width="120" height="72" rx="9" fill="#e6f4ee" stroke="#1d7a52" stroke-width="1.5"/>
+  <text x="696" y="86" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#1d7a52">Reportar</text>
+  <text x="696" y="105" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">métricas e</text>
+  <text x="696" y="118" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#455060">retrospectiva</text>
+
+  <line x1="132" y1="96" x2="158" y2="96" stroke="#00447c" stroke-width="1.6" marker-end="url(#setaB)"/>
+  <line x1="290" y1="96" x2="316" y2="96" stroke="#00447c" stroke-width="1.6" marker-end="url(#setaB)"/>
+  <line x1="448" y1="96" x2="474" y2="96" stroke="#00447c" stroke-width="1.6" marker-end="url(#setaB)"/>
+  <line x1="606" y1="96" x2="632" y2="96" stroke="#00447c" stroke-width="1.6" marker-end="url(#setaB)"/>
+
+  <text x="67" y="42" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#e8730c">I1</text>
+  <text x="225" y="42" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#e8730c">I1</text>
+  <text x="383" y="42" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#e8730c">—</text>
+  <text x="541" y="42" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#e8730c">I2</text>
+  <text x="696" y="42" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#e8730c">I3</text>
+
+  <path d="M67 140 L67 172 L696 172 L696 142" fill="none" stroke="#8a97a8" stroke-width="1.2" stroke-dasharray="4 4"/>
+  <text x="383" y="192" text-anchor="middle" font-family="sans-serif" font-size="11.5" fill="#455060">nada disso é sequencial de verdade — organizar, atender e comunicar acontecem todos os dias, em paralelo</text>
+</svg>
+<figcaption>O caminho da UC2 e os indicadores alimentados em cada etapa. Ao contrário da UC1, aqui não existe uma entrega única no fim: o processo é avaliado enquanto acontece.</figcaption>
+</figure>
+
+<h2 id="met"><span class="num">Fundamento</span>A metodologia Senac aplicada à UC2</h2>
+
+<p class="lede">O Senac não organiza o ensino por conteúdos a serem transmitidos, e sim por <b>competências a serem desenvolvidas</b>. Na UC2 isso fica especialmente claro: não existe prova sobre "o que é um kanban" — existe uma squad que precisa manter um kanban funcionando de verdade, com prazo e cliente reais (ainda que simulados).</p>
+
+<div class="box dica"><span class="rot">Conceito-chave</span><p><b>Competência</b> é a "ação/fazer profissional observável, potencialmente criativa, que articula conhecimentos, habilidades e atitudes/valores e que permite desenvolvimento contínuo" (Senac DN, 2022). Na UC2, o "observável" é literal: seu quadro de tarefas e seus registros de ocorrência são a evidência, não um resumo que você escreve sobre eles depois.</p></div>
+
+<h3>Situação de aprendizagem: o coração do método</h3>
+<p>Em vez de aula expositiva seguida de exercício de fixação, o percurso parte de uma <b>situação desafiadora</b> retirada da realidade profissional. Na UC1 o desafio era descobrir o que o cliente realmente precisava. Na UC2 o desafio muda de natureza: o projeto já está definido, e o que falta é sustentar o trabalho — com imprevistos, gente cansada, cliente ansioso e prazo em cima — sem que o processo vire bagunça.</p>
+
+<p>Por isso boa parte da UC2 é simulação de ambiente de trabalho: você vai receber chamados simulados de "clientes", vai enfrentar um imprevisto de verdade (mesmo que fabricado pelo docente) e vai precisar decidir, documentar e comunicar — exatamente como se decide, documenta e comunica em uma equipe real.</p>
+
+<h3>Marcas formativas</h3>
+<p>Seis marcas atravessam o curso inteiro. Na UC2 três delas ganham destaque especial:</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:210px">Marca formativa</th><th>Onde ela aparece na UC2</th></tr></thead>
+<tbody>
+<tr><td><b>Colaboração e comunicação</b></td><td>É o centro da unidade: atendimento ao cliente, feedback estruturado, mediação de conflito, defesa do relatório final.</td></tr>
+<tr><td><b>Atitude empreendedora</b></td><td>Intraempreendedorismo, relação com fornecedores, plano de carreira individual — postura de quem entende o negócio, não só a tarefa.</td></tr>
+<tr><td><b>Visão crítica</b></td><td>Ler o impacto real de um imprevisto antes de reagir a ele; separar o que é ruído do que é sinal em uma reclamação de cliente.</td></tr>
+<tr><td><b>Domínio técnico-científico</b></td><td>Uso correto do fluxo de status do quadro de tarefas e do vocabulário de suporte técnico (chamado, ação corretiva, SLA).</td></tr>
+<tr><td><b>Autonomia digital</b></td><td>Configurar sozinho o quadro de tarefas, a planilha de métricas e os gráficos, sem depender do instrutor para cada passo.</td></tr>
+<tr><td><b>Atitude sustentável</b></td><td>Sigilo dos dados do cliente e respeito à diversidade humana no ambiente de trabalho, como práticas do dia a dia.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Avaliação: como as menções funcionam</h3>
+<p>A avaliação é <b>diagnóstica</b> no início, <b>formativa</b> durante todo o percurso e <b>somativa</b> no fechamento. Não existe nota numérica.</p>
+
+<div class="grid g2">
+<div class="card"><h4>Durante o processo — por indicador</h4><p><span class="bg bg-i">A</span> Atendido &nbsp; <span class="bg bg-t">PA</span> Parcialmente atendido &nbsp; <span class="bg bg-a">NA</span> Não atendido</p><p style="margin-top:8px;font-size:15px">PA é o mais importante dos três: sinaliza que ainda há tempo de ajustar o processo dentro da própria unidade.</p></div>
+<div class="card"><h4>No fim da unidade curricular</h4><p>Cada indicador recebe <span class="bg bg-i">A</span> ou <span class="bg bg-a">NA</span>. A UC recebe <b>D</b> (desenvolvida) ou <b>ND</b> (não desenvolvida).</p><p style="margin-top:8px;font-size:15px"><b>Basta um indicador NA para a UC ser ND.</b> Como os dois checkpoints (aulas 6 e 11) avaliam I1 e I2 no meio do caminho, você tem tempo de reagir antes do relatório final.</p></div>
+</div>
+
+<p>A recuperação ocorre <b>imediatamente à constatação da dificuldade</b>, com devolutiva escrita e reentrega orientada — nunca só no fim da unidade.</p>
+
+<h2 id="plano"><span class="num">Percurso</span>Nossos 16 encontros</h2>
+
+<p class="lede">A unidade tem 48 horas divididas em 16 encontros de 3h. Diferente da UC1, aqui não existe uma "Entrega N" por aula — o que existe é um processo contínuo, com dois checkpoints e uma entrega final.</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:56px">Aula</th><th>O que vamos fazer</th><th style="width:230px">O que você entrega</th></tr></thead>
+<tbody>
+<tr><td><b>1</b></td><td>Reabertura da agência: etapas de trabalho, tipos de equipe, cultura organizacional</td><td>Squads reconfiguradas e papéis definidos</td></tr>
+<tr><td><b>2</b></td><td>Cronograma e panorama de quadros kanban</td><td>Cronograma inicial de etapas</td></tr>
+<tr><td><b>3</b></td><td>Configuração do quadro de tarefas na ferramenta escolhida</td><td>Quadro de tarefas publicado</td></tr>
+<tr><td><b>4</b></td><td>Suporte técnico e simulação de central de atendimento</td><td>Primeiros chamados respondidos</td></tr>
+<tr><td><b>5</b></td><td>Registro, classificação e encerramento de ocorrências</td><td>5+ ocorrências tratadas</td></tr>
+<tr><td><b>6</b></td><td>Consolidação e <b>Checkpoint 1</b></td><td><b>Entrega 1</b> — Plano de Processo</td></tr>
+<tr><td><b>7</b></td><td>Comunicação assertiva e estrutura de feedback</td><td>Feedbacks estruturados praticados</td></tr>
+<tr><td><b>8</b></td><td>Negociação de conflitos: conceitos e estudo de caso</td><td>Proposta de mediação por grupo</td></tr>
+<tr><td><b>9</b></td><td>Negociação de conflitos: simulação com rodízio de papéis</td><td>Ficha de observação de mediação</td></tr>
+<tr><td><b>10</b></td><td>Evento disruptivo simulado e análise de impacto</td><td>Ficha de decisão de replanejamento</td></tr>
+<tr><td><b>11</b></td><td>Consolidação e <b>Checkpoint 2</b></td><td><b>Entrega 2</b> — Cronograma replanejado</td></tr>
+<tr><td><b>12</b></td><td>Levantamento e comparação de fornecedores/terceiros</td><td>Quadro comparativo de fornecedores</td></tr>
+<tr><td><b>13</b></td><td>Relatórios de desenvolvimento, planilha e gráficos</td><td>Planilha de métricas + slides</td></tr>
+<tr><td><b>14</b></td><td>Carreira profissional, intraempreendedorismo e etiqueta</td><td>Plano de carreira individual</td></tr>
+<tr><td><b>15</b></td><td>Diversidade humana no trabalho e consolidação do Manual</td><td>Manual de Processos consolidado</td></tr>
+<tr><td><b>16</b></td><td>Reunião de status final com o "gestor"</td><td><b>Entrega final</b> — Relatório de Processo e defesa</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box dica"><span class="rot">Como aproveitar melhor</span><p>Leia a seção da aula <b>antes</b> do encontro. Boa parte do tempo em sala é oficina e simulação — quem chega tendo lido participa mais e recebe uma devolutiva mais útil.</p></div>
+
+<div class="box atencao"><span class="rot">Atenção ao evento da Aula 10</span><p>Cada squad recebe um imprevisto diferente — mudança de escopo, atraso de fornecedor ou ausência de integrante — sem saber qual será antecipadamente. Isso é proposital: no mercado, imprevisto ninguém agenda. A nota (menção) não avalia se você "acertou" a decisão, e sim se o processo de decidir e registrar foi coerente.</p></div>
+
+<h2 id="caso"><span class="num">Fio condutor</span>A Agência Web Linhares em operação</h2>
+
+<p class="lede">A Agência Web Linhares, aberta na UC1, continua funcionando — inclusive com os mesmos clientes, como o <b>Empresta Aí</b>, de Dona Ilza. Só que agora o projeto já foi aprovado: o que falta não é decidir o que construir, é sustentar o trabalho de construir.</p>
+
+<div class="card" style="border-left:5px solid var(--laranja)">
+<h4>Onde paramos, e o que muda agora</h4>
+<p>Na UC1, a squad entregou o projeto do Empresta Aí e ouviu de Dona Ilza: <i>"gostei, pode seguir."</i> Seis semanas depois — já na UC2 — chega a primeira mensagem dela fora do combinado: <i>"Meu genro disse que também dá pra avisar quando alguém devolve o item atrasado. Dá pra colocar isso também? E aquele Sr. Joaquim, do 302, não tá conseguindo usar, ele disse que trava."</i> Isso não é briefing — é o trabalho de todo dia de quem mantém um projeto rodando: um pedido de mudança e uma reclamação de suporte, os dois de uma vez.</p>
+</div>
+
+<h3>Por que continuar com o mesmo caso</h3>
+<ul>
+<li><b>O processo, não o produto, é o objeto de estudo agora.</b> Reabrir com um cliente e um projeto já conhecidos tira o "custo de entender o negócio de novo" e deixa a atenção inteira no como organizar o trabalho.</li>
+<li><b>O pedido do genro e a reclamação do Sr. Joaquim são coisas diferentes.</b> Um é mudança de escopo (vira ficha de replanejamento nas aulas 10-11); o outro é uma ocorrência de suporte (vira chamado registrado nas aulas 4-5). Aprender a distinguir os dois é, em si, uma competência desta UC.</li>
+<li><b>Tem um idoso real no meio da história.</b> O Sr. Joaquim já apareceu na UC1 como parte do público-alvo que exige acessibilidade. Na UC2 ele volta como lembrete de que "chamado de suporte" é sempre uma pessoa do outro lado.</li>
+</ul>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 0 — Retomada (15 min, em squad).</b> Releiam o documento de projeto que produziram na UC1 (ou o caso Empresta Aí, se não tiverem um projeto próprio). Listem: (a) quem são os três tipos de usuário que podem abrir um chamado; (b) três coisas que podem dar errado no primeiro mês de uso; (c) o que vocês combinariam entre si, hoje, antes de começar a operar. Guardem a lista — vocês vão comparar com o Plano de Processo na Aula 6.</p></div>
+
+<h2 id="a1"><span class="num">Aula 1</span>Etapas de trabalho e cultura de equipe</h2>
+
+<p class="lede">A UC1 terminou com um documento aprovado. A UC2 começa com uma pergunta diferente: quem faz o quê, quando, e como a squad se organiza para isso não virar caos assim que o trabalho vira rotina?</p>
+
+<h3>1.1 Tipos de equipe e cultura organizacional</h3>
+<p>Uma equipe pode se organizar de formas bem diferentes, e a escolha muda como o trabalho flui:</p>
+<div class="grid g3">
+  <div class="card"><h4>Funcional</h4><p style="font-size:14.5px">Pessoas agrupadas por especialidade (todo o front junto, todo o back junto). Ganha profundidade técnica, perde visão do todo.</p></div>
+  <div class="card"><h4>Multidisciplinar (squad)</h4><p style="font-size:14.5px">Uma equipe pequena com todas as competências para entregar algo sozinha. É o modelo da Agência Web Linhares.</p></div>
+  <div class="card"><h4>Matricial</h4><p style="font-size:14.5px">A pessoa responde a dois líderes: o do projeto e o da sua especialidade. Comum em empresas grandes.</p></div>
+</div>
+
+<div class="box dica"><span class="rot">Conceito-chave</span><p><b>Cultura organizacional</b> é o conjunto de valores, hábitos e regras não escritas que orientam como as pessoas de um grupo realmente se comportam — diferente do que está no manual. Uma squad define sua cultura nos primeiros dias: como avisa um atraso, se é normal discordar em público, o que acontece quando alguém erra.</p></div>
+
+<h3>1.2 Cronograma, acompanhamento e custos do trabalho</h3>
+<p>Cronograma não é uma lista de datas — é uma previsão de como o trabalho vai se distribuir no tempo, feita para ser revista, não para ser adivinhada com precisão. Três coisas compõem o acompanhamento de qualquer cronograma de projeto:</p>
+<ul>
+<li><b>Marcos (milestones):</b> pontos de verificação com uma entrega clara associada — os dois checkpoints desta UC são marcos.</li>
+<li><b>Responsáveis:</b> toda etapa precisa de uma pessoa (não uma squad inteira) que responde por ela.</li>
+<li><b>Custo do trabalho:</b> mesmo em um projeto simulado, cada hora de squad tem um custo — é o que separa "dá pra fazer" de "vale a pena fazer".</li>
+</ul>
+
+<h3>1.3 Papéis operacionais da squad</h3>
+<p>Na fase de operação, os papéis mudam de foco: não é mais sobre quem desenha e quem escreve, é sobre quem garante que o processo continue rodando.</p>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:170px">Papel</th><th>Responsabilidade principal</th></tr></thead>
+<tbody>
+<tr><td><b>Líder de processo</b></td><td>Mantém o cronograma e o quadro de tarefas atualizados; convoca a squad quando algo trava.</td></tr>
+<tr><td><b>Atendimento</b></td><td>Primeira resposta a qualquer chamado do cliente; garante que ninguém fique sem retorno.</td></tr>
+<tr><td><b>Documentação</b></td><td>Registra decisões, mantém o Manual de Processos atualizado.</td></tr>
+<tr><td><b>Controle de qualidade</b></td><td>Revisa se o que foi combinado foi de fato registrado e encerrado corretamente.</td></tr>
+</tbody>
+</table>
+</div>
+<p style="font-size:14.5px;color:var(--tinta2)">Isso não significa que cada pessoa faz <i>só</i> aquilo — em uma squad de 3 ou 4, os papéis se acumulam. O que importa é que, para cada responsabilidade, exista sempre um nome, nunca "a squad".</p>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>Em softwarehouses pequenas, é comum que os quatro papéis acima sejam feitos por 2 ou 3 pessoas ao mesmo tempo — e é exatamente por isso que definir o papel por escrito, mesmo acumulado, evita o "achei que era você que ia responder o cliente".</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 1 — Acordo de funcionamento (25 min, em squad).</b> Definam quem assume cada um dos quatro papéis (podem acumular). Redijam um acordo curto de funcionamento: canal de comunicação oficial, horário limite de resposta entre integrantes, e o que fazer quando alguém não conseguir cumprir um prazo. Este acordo atualiza o contrato de convivência da UC1 e entra no Plano de Processo da Aula 6.</p></div>
+
+<h2 id="a2"><span class="num">Aula 2</span>Cronograma e o quadro kanban</h2>
+
+<p class="lede">Antes de abrir qualquer ferramenta, é preciso entender a lógica por trás dela. Um quadro de tarefas não organiza o trabalho sozinho — ele só torna visível uma organização que a squad já precisa ter na cabeça.</p>
+
+<h3>2.1 O método kanban</h3>
+<p><b>Kanban</b> (看板, "cartão visual" em japonês) é um método de gestão visual do trabalho nascido na manufatura da Toyota nos anos 1940 e adotado, décadas depois, por equipes de desenvolvimento de software. A ideia central: todo trabalho vira um cartão, e todo cartão vive em uma coluna que representa seu estado atual.</p>
+
+<div class="box dica"><span class="rot">Conceito-chave</span><p>O fluxo de status mais comum tem quatro colunas: <b>A Fazer</b> (ainda não começou) → <b>Em Andamento</b> (alguém está trabalhando agora) → <b>Em Revisão</b> (pronto, esperando conferência) → <b>Concluído</b> (revisado e aceito). Cada squad pode adaptar os nomes, mas a lógica de "nada pula etapa" deve se manter.</p></div>
+
+<figure class="anim" id="an-kanban">
+<div class="anim-head"><span class="anim-tag">Animação</span><span style="font-size:13px;color:var(--tinta2)">Como um cartão se move pelo fluxo de status</span><button class="btn" onclick="tocarAnim(this)">Reproduzir</button></div>
+<svg viewBox="0 0 760 210" role="img" aria-label="Três cartões se movendo da coluna A Fazer até Concluído, em velocidades diferentes">
+  <rect x="10" y="20" width="170" height="176" rx="8" fill="#eef1f5"/>
+  <text x="95" y="40" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#455060">A FAZER</text>
+  <rect x="200" y="20" width="170" height="176" rx="8" fill="#eef1f5"/>
+  <text x="285" y="40" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#455060">EM ANDAMENTO</text>
+  <rect x="390" y="20" width="170" height="176" rx="8" fill="#eef1f5"/>
+  <text x="475" y="40" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#455060">EM REVISÃO</text>
+  <rect x="580" y="20" width="170" height="176" rx="8" fill="#e6f4ee"/>
+  <text x="665" y="40" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1d7a52">CONCLUÍDO</text>
+
+  <g class="kf-card" id="kf-c1"><rect x="22" y="52" width="146" height="46" rx="6" fill="#fff" stroke="#00447c" stroke-width="1.3"/><text x="30" y="72" font-family="sans-serif" font-size="11" fill="#1a1f26">Avisar devolução</text><text x="30" y="88" font-family="sans-serif" font-size="9.5" fill="#455060">atrasada (chamado)</text></g>
+  <g class="kf-card" id="kf-c2"><rect x="22" y="108" width="146" height="46" rx="6" fill="#fff" stroke="#e8730c" stroke-width="1.3"/><text x="30" y="128" font-family="sans-serif" font-size="11" fill="#1a1f26">Responder Sr.</text><text x="30" y="144" font-family="sans-serif" font-size="9.5" fill="#455060">Joaquim (bug de login)</text></g>
+  <g class="kf-card" id="kf-c3"><rect x="22" y="164" width="146" height="26" rx="6" fill="#fff" stroke="#1d7a52" stroke-width="1.3"/><text x="30" y="181" font-family="sans-serif" font-size="10.5" fill="#1a1f26">Configurar quadro</text></g>
+</svg>
+</figure>
+
+<h3>2.2 Como o cronograma vira cartões</h3>
+<p>O cronograma que sua squad vai montar hoje é uma lista de etapas com prazo. No próximo encontro, cada etapa dessa lista vira um ou mais cartões no quadro — é assim que um cronograma "morto" (um documento que ninguém olha) vira um cronograma "vivo" (algo que a squad movimenta todo dia).</p>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 2 — Cronograma inicial (40 min, em squad).</b> A partir do que foi entregue na UC1 (briefing, requisitos, protótipo), listem de 8 a 12 etapas de trabalho para o período da UC2, com prazo estimado para cada uma. Não se preocupem em acertar — vocês vão revisar isso pelo menos uma vez, na Aula 10.</p></div>
+
+<div class="box atencao"><span class="rot">Atenção</span><p>Um erro comum é criar colunas demais ("A fazer", "Planejado", "Em breve", "Backlog"...). Quanto mais colunas, mais fácil um cartão ficar "esquecido" em algum lugar do meio. Comece com quatro colunas — só adicione uma quinta se a squad sentir falta de verdade, depois de usar por pelo menos uma semana.</p></div>
+
+<h2 id="a3"><span class="num">Aula 3</span>Configurando o quadro de tarefas</h2>
+
+<p class="lede">Hoje o cronograma sai do papel e vira um quadro que a squad inteira acessa e movimenta.</p>
+
+<h3>3.1 Ferramentas recomendadas</h3>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:150px">Ferramenta</th><th>Quando faz sentido</th></tr></thead>
+<tbody>
+<tr><td><b>Trello</b></td><td>Mais simples de configurar, ótimo para squads pequenas. Cartões, etiquetas coloridas, responsáveis e datas.</td></tr>
+<tr><td><b>GitHub Projects</b></td><td>Se o projeto já vive em um repositório GitHub (como o da UC1), o quadro fica ao lado do próprio código e dos arquivos — reduz o número de ferramentas diferentes que a squad precisa checar.</td></tr>
+</tbody>
+</table>
+</div>
+
+<figure class="mockup">
+<div class="mockup-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="url">app.trello.com/b/agencia-web-linhares</span></div>
+<div class="mockup-body">
+<div class="mk-row">
+  <div class="kb-col"><h5>A fazer <span>3</span></h5>
+    <div class="kb-card"><div class="kb-tags"><i style="background:#e8730c"></i></div><b>Registro.br — checar domínio</b>Pesquisar disponibilidade e custo anual<div class="kb-meta">👤 Ana · 🗓 sex</div></div>
+    <div class="kb-card"><div class="kb-tags"><i style="background:#6b3fa0"></i></div><b>Plano de carreira</b>Rascunho individual<div class="kb-meta">👤 Davi</div></div>
+    <div class="kb-card"><b>Quadro comparativo hospedagem</b>3 fornecedores<div class="kb-meta">👤 Ana</div></div>
+  </div>
+  <div class="kb-col"><h5>Em andamento <span>2</span></h5>
+    <div class="kb-card"><div class="kb-tags"><i style="background:#b3261e"></i></div><b>Chamado #14 — Sr. Joaquim</b>Login trava no celular antigo<div class="kb-meta">👤 Bia · ⏱ 2h</div></div>
+    <div class="kb-card"><b>Relatório de métricas</b>Planilha da semana 3<div class="kb-meta">👤 Davi</div></div>
+  </div>
+  <div class="kb-col"><h5>Em revisão <span>1</span></h5>
+    <div class="kb-card"><div class="kb-tags"><i style="background:#1d7a52"></i></div><b>Chamado #12 — notificação atraso</b>Pedido do genro da Dona Ilza<div class="kb-meta">👤 Ana · 💬 3</div></div>
+  </div>
+  <div class="kb-col"><h5>Concluído <span>5</span></h5>
+    <div class="kb-card" style="opacity:.7"><b>Acordo de funcionamento</b>Assinado pela squad<div class="kb-meta">✓ Aula 1</div></div>
+    <div class="kb-card" style="opacity:.7"><b>Cronograma inicial</b>10 etapas<div class="kb-meta">✓ Aula 2</div></div>
+  </div>
+</div>
+</div>
+<figcaption>Recriação ilustrativa do padrão atual de quadros kanban (não é print oficial de nenhuma ferramenta) — o mesmo layout de colunas e cartões vale tanto para o Trello quanto para o GitHub Projects em 2026. <span class="creditos">Fluxo de colunas conferido nos quadros públicos reais trello.com/b/ZqN99gGN (Trello Engineering) e github.com/orgs/github/projects/4247 (GitHub Public Roadmap).</span></figcaption>
+</figure>
+
+<h3>3.2 O que configurar hoje</h3>
+<ol class="passos">
+<li><b>Colunas:</b> A Fazer, Em Andamento, Em Revisão, Concluído (ajustem os nomes se preferirem, mas mantenham quatro).</li>
+<li><b>Cartões:</b> transcrevam cada etapa do cronograma da Aula 2 como um cartão em "A Fazer".</li>
+<li><b>Etiquetas:</b> criem pelo menos duas categorias — por exemplo, tipo de trabalho (atendimento, documentação, pesquisa) e prioridade.</li>
+<li><b>Responsável e data:</b> todo cartão precisa de uma pessoa e um prazo, mesmo que estimado.</li>
+</ol>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>Muitas equipes ágeis usam <b>limites de WIP</b> ("work in progress"): um número máximo de cartões permitido na coluna "Em Andamento" por pessoa (geralmente 1 ou 2). A regra existe para combater o hábito de começar tudo e não terminar nada — vale a pena a squad experimentar.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 3 — Quadro publicado.</b> Ao final da aula, compartilhem o link do quadro com o docente. Ele deve ter as quatro colunas, todos os cartões do cronograma, e pelo menos um responsável e uma data em cada cartão.</p></div>
+
+<h2 id="a4"><span class="num">Aula 4</span>Suporte técnico e atendimento ao cliente</h2>
+
+<p class="lede">É hoje que a agência "abre para o público". A partir de agora, sua squad vai receber pedidos e reclamações — simulados, mas tratados como reais.</p>
+
+<h3>4.1 Chamado, ocorrência e ação corretiva</h3>
+<div class="box dica"><span class="rot">Conceito-chave</span><p>Um <b>chamado</b> (ou <b>ocorrência</b>) é qualquer relato de problema, dúvida ou pedido que chega de um cliente ou usuário e precisa de resposta. Uma <b>ação corretiva</b> é o que a squad faz para resolvê-lo — pode ser uma correção imediata, uma explicação, ou o registro de um pedido de melhoria para o futuro.</p></div>
+
+<p>Nem todo chamado é um "problema". No caso do Empresta Aí, dois chamados chegaram juntos na Aula 2: o pedido do genro (notificar atraso na devolução — uma <i>melhoria</i>) e a reclamação do Sr. Joaquim (login trava no celular antigo dele — um <i>bug real ou uma dificuldade de uso</i>, a squad ainda não sabe qual). Parte do trabalho de atendimento é justamente descobrir qual é qual antes de prometer prazo.</p>
+
+<h3>4.2 Central de atendimento simulada</h3>
+<p>A partir de hoje, os "clientes" da turma (outra squad, ou o docente) vão enviar chamados por um formulário simples. Cada chamado cai no quadro de tarefas como um novo cartão em "A Fazer".</p>
+
+<figure class="mockup">
+<div class="mockup-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="url">forms.google.com/central-atendimento-agencia</span></div>
+<div class="mockup-body">
+<div class="frm-card">
+<div class="barra"></div>
+<h4 style="margin:0 0 4px">Central de Atendimento — Agência Web Linhares</h4>
+<p style="font-size:12px;color:var(--tinta2);margin-bottom:16px">Conte o que está acontecendo. Respondemos em até 1 dia útil.</p>
+<div class="frm-q"><label>Qual projeto?</label><div class="op"><i></i> Empresta Aí (Condomínio Jardim das Palmeiras)</div><div class="op"><i></i> Outro projeto da squad</div></div>
+<div class="frm-q"><label>Descreva o que aconteceu *</label><div class="campo"></div></div>
+<div class="frm-q"><label>Isso te impede de usar o sistema?</label><div class="op"><i></i> Sim, travei</div><div class="op"><i></i> Não, é só uma sugestão</div></div>
+</div>
+</div>
+<figcaption>Recriação ilustrativa de um formulário de chamados (padrão de interface do Google Forms em 2026, sem reproduzir a marca) — na prática, qualquer formulário online com essas três perguntas já funciona.</figcaption>
+</figure>
+
+<h3>4.3 Escuta ativa e resposta cordial</h3>
+<div class="comparativo">
+<div class="errado"><h4>Resposta fria</h4><ul><li>"Não temos essa funcionalidade."</li><li>"Vou ver depois."</li><li>Responde só o que foi perguntado, sem confirmar o entendimento.</li></ul></div>
+<div class="certo"><h4>Escuta ativa</h4><ul><li>"Entendi — você quer ser avisado quando alguém devolver um item atrasado, certo?"</li><li>"Vamos analisar e te retorno até quinta com um prazo."</li><li>Confirma o que entendeu antes de prometer qualquer coisa.</li></ul></div>
+</div>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>Times de suporte técnico costumam trabalhar com <b>SLA</b> (Service Level Agreement): um prazo máximo combinado para a primeira resposta a um chamado, mesmo que a solução demore mais. Prometer "eu já te aviso quando eu souber o prazo" costuma valer mais do que sumir até ter a resposta final.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 4 — Primeiros chamados.</b> Recebam os chamados simulados pelo formulário. Para cada um: confirmem o entendimento por escrito e classifiquem, ainda que informalmente, se é problema técnico, dúvida ou pedido de melhoria. A classificação formal acontece na Aula 5.</p></div>
+
+<h2 id="a5"><span class="num">Aula 5</span>Registro e controle de ocorrências</h2>
+
+<p class="lede">Um chamado respondido de forma gentil, mas nunca registrado em lugar nenhum, se perde. Hoje a squad aprende a dar rastro a cada ocorrência.</p>
+
+<h3>5.1 O ciclo de vida de uma ocorrência</h3>
+<figure class="anim" id="an-ocorrencia">
+<div class="anim-head"><span class="anim-tag">Animação</span><span style="font-size:13px;color:var(--tinta2)">Do chamado aberto ao encerramento</span><button class="btn" onclick="tocarAnim(this)">Reproduzir</button></div>
+<svg viewBox="0 0 760 170" role="img" aria-label="Quatro etapas do ciclo de uma ocorrência: aberta, classificada, ação corretiva, encerrada">
+  <g class="oc-etapa" id="oc-1"><rect x="10" y="30" width="160" height="90" rx="9" fill="#fdecea" stroke="#b3261e" stroke-width="1.4"/><text x="90" y="58" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#b3261e">1. Aberta</text><text x="90" y="78" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">chamado recebido,</text><text x="90" y="93" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">entendimento confirmado</text></g>
+  <line class="oc-seta" id="oc-s1" x1="178" y1="75" x2="212" y2="75" stroke="#8a97a8" stroke-width="1.6" marker-end="url(#setaB)"/>
+  <g class="oc-etapa" id="oc-2"><rect x="220" y="30" width="160" height="90" rx="9" fill="#fdf0e3" stroke="#e8730c" stroke-width="1.4"/><text x="300" y="58" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#b85a08">2. Classificada</text><text x="300" y="78" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">tipo e prioridade</text><text x="300" y="93" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">definidos</text></g>
+  <line class="oc-seta" id="oc-s2" x1="388" y1="75" x2="422" y2="75" stroke="#8a97a8" stroke-width="1.6" marker-end="url(#setaB)"/>
+  <g class="oc-etapa" id="oc-3"><rect x="430" y="30" width="160" height="90" rx="9" fill="#e8f1f9" stroke="#00447c" stroke-width="1.4"/><text x="510" y="58" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#00447c">3. Ação corretiva</text><text x="510" y="78" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">responsável e prazo</text><text x="510" y="93" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">definidos e cumpridos</text></g>
+  <line class="oc-seta" id="oc-s3" x1="598" y1="75" x2="632" y2="75" stroke="#8a97a8" stroke-width="1.6" marker-end="url(#setaB)"/>
+  <g class="oc-etapa" id="oc-4"><rect x="640" y="30" width="112" height="90" rx="9" fill="#e6f4ee" stroke="#1d7a52" stroke-width="1.4"/><text x="696" y="58" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#1d7a52">4. Encerrada</text><text x="696" y="78" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">cliente avisado,</text><text x="696" y="93" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">cartão movido</text></g>
+  <text x="380" y="150" text-anchor="middle" font-family="sans-serif" font-size="11.5" fill="#455060">nenhuma etapa é pulada — mesmo um chamado resolvido em 5 minutos passa pelas quatro</text>
+</svg>
+</figure>
+
+<h3>5.2 Classificar por tipo e prioridade</h3>
+<div class="grid g2">
+<div class="card"><h4>Tipo</h4><ul style="font-size:14.5px"><li><b>Bug:</b> algo que deveria funcionar e não funciona</li><li><b>Dúvida:</b> o cliente não entendeu como usar</li><li><b>Melhoria:</b> pedido de algo novo, fora do escopo original</li></ul></div>
+<div class="card"><h4>Prioridade</h4><ul style="font-size:14.5px"><li><b>Alta:</b> impede o uso do sistema</li><li><b>Média:</b> atrapalha, mas tem alternativa</li><li><b>Baixa:</b> incômodo pequeno ou sugestão</li></ul></div>
+</div>
+<p>O caso do Sr. Joaquim ("login trava no celular antigo") é um bug de prioridade alta — ele fica <i>impedido</i> de usar o sistema. Já o pedido do genro (notificação de atraso) é uma melhoria: importante, mas não urgente.</p>
+
+<h3>5.3 Sigilo no registro</h3>
+<div class="box atencao"><span class="rot">Atenção — Sigilo no tratamento de dados</span><p>Um registro de ocorrência é, muitas vezes, visível para toda a squad e até para outras squads em ferramentas compartilhadas. Nunca escrevam no campo de descrição pública dados sensíveis do cliente — número de apartamento associado a nome completo e telefone, por exemplo, deve ficar em um canal reservado, não no cartão do quadro que qualquer colega pode abrir.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 5 — Registrar e encerrar.</b> Peguem os chamados recebidos na Aula 4 e ao menos três novos. Para cada um: registrem no quadro, classifiquem por tipo e prioridade, encaminhem a ação corretiva e movam até "Concluído" quando resolvido. Meta mínima: cinco ocorrências com o ciclo completo até o fim da aula.</p></div>
+
+<h2 id="a6"><span class="num">Aula 6</span>Consolidação e Checkpoint 1</h2>
+
+<p class="lede">Primeira parada avaliativa da UC2. Hoje a squad reúne tudo o que organizou nas aulas 1 a 5 em um único pacote: o Plano de Processo.</p>
+
+<h3>6.1 O que compõe o Plano de Processo</h3>
+<ul class="check">
+<li><b>Estrutura de equipe:</b> papéis definidos (Aula 1) e acordo de funcionamento assinado.</li>
+<li><b>Cronograma:</b> etapas com prazo e responsável (Aula 2), já refletido no quadro.</li>
+<li><b>Quadro de tarefas:</b> publicado e com fluxo de status em uso (Aula 3).</li>
+<li><b>Ocorrências:</b> pelo menos cinco chamados registrados, classificados e com ação corretiva encaminhada (Aulas 4 e 5).</li>
+</ul>
+
+<div class="box docente"><span class="rot">O que a devolutiva observa</span><p>O checkpoint não avalia se o projeto está "bonito" — avalia se o <b>processo</b> é coerente: todo cartão tem responsável? A classificação de tipo e prioridade faz sentido? Existe algum dado sensível exposto onde não deveria? É exatamente isso que o Indicador 1 mede.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Entrega 1 — Plano de Processo.</b> Apresentem o pacote completo ao docente. Vocês recebem devolutiva por escrito no mesmo encontro — usem o restante da aula para ajustar o que for apontado antes de seguir para o bloco de comunicação, que começa na próxima aula.</p></div>
+
+<h2 id="a7"><span class="num">Aula 7</span>Comunicação assertiva e feedback</h2>
+
+<p class="lede">Processo organizado sem comunicação clara ainda quebra. As próximas três aulas tratam do que costuma ser chamado de "soft skill" — e que, na prática, é tão técnico quanto configurar um quadro kanban.</p>
+
+<h3>7.1 O que é comunicação assertiva</h3>
+<div class="box dica"><span class="rot">Conceito-chave</span><p><b>Comunicação assertiva</b> é dizer o que precisa ser dito, de forma direta e respeitosa, sem passar por cima da outra pessoa (agressividade) nem engolir o problema para evitar desconforto (passividade). Ela combina conteúdo claro com tom e postura que não geram defensiva.</p></div>
+
+<h3>7.2 A estrutura de feedback em três partes</h3>
+<ol class="passos">
+<li><b>Fato observado:</b> o que aconteceu, sem interpretação. "O relatório não chegou até sexta, como combinamos."</li>
+<li><b>Impacto:</b> o que isso causou. "Eu não consegui revisar antes da reunião com o cliente."</li>
+<li><b>Sugestão:</b> o que ajudaria da próxima vez. "Podemos combinar um aviso com um dia de antecedência se perceber que vai atrasar?"</li>
+</ol>
+
+<figure class="anim" id="an-feedback">
+<div class="anim-head"><span class="anim-tag">Animação</span><span style="font-size:13px;color:var(--tinta2)">O ciclo de feedback que não vira briga</span><button class="btn" onclick="tocarAnim(this)">Reproduzir</button></div>
+<svg viewBox="0 0 700 230" role="img" aria-label="Ciclo de feedback: fato, impacto, sugestão, voltando para escuta">
+  <path id="fb-loop" d="M350 40 A100 100 0 1 1 349 40" fill="none" stroke="#c7ceda" stroke-width="2" stroke-dasharray="6 5"/>
+  <g id="fb-p1"><rect x="270" y="10" width="160" height="58" rx="9" fill="#e8f1f9" stroke="#00447c" stroke-width="1.5"/><text x="350" y="32" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#00447c">1. Fato</text><text x="350" y="50" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">o que aconteceu, sem opinião</text></g>
+  <g id="fb-p2"><rect x="480" y="130" width="170" height="58" rx="9" fill="#fdf0e3" stroke="#e8730c" stroke-width="1.5"/><text x="565" y="152" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#b85a08">2. Impacto</text><text x="565" y="170" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">o que isso causou em mim</text></g>
+  <g id="fb-p3"><rect x="50" y="130" width="170" height="58" rx="9" fill="#e6f4ee" stroke="#1d7a52" stroke-width="1.5"/><text x="135" y="152" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#1d7a52">3. Sugestão</text><text x="135" y="170" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">o que ajudaria da próxima vez</text></g>
+</svg>
+</figure>
+
+<div class="comparativo">
+<div class="errado"><h4>Vira briga</h4><ul><li>"Você nunca entrega no prazo."</li><li>Generaliza, usa "sempre"/"nunca", julga a pessoa em vez do fato.</li></ul></div>
+<div class="certo"><h4>Vira ajuste</h4><ul><li>"O relatório atrasou dessa vez, e isso me deixou sem tempo de revisar."</li><li>Fala do fato específico e do impacto, sem rotular quem ouve.</li></ul></div>
+</div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 7 — Conversa difícil, em duplas.</b> Simulem uma conversa em que a squad precisa avisar o cliente (Dona Ilza ou outro) sobre um atraso ou uma mudança de escopo negada. Usem a estrutura fato → impacto → sugestão. Troquem de papel e repitam.</p></div>
+
+<h2 id="a8"><span class="num">Aula 8</span>Negociação de conflitos I — conceitos</h2>
+
+<p class="lede">Conflito não é sinal de que a squad está mal — é sinal de que pessoas diferentes estão trabalhando juntas de verdade. O problema nunca é o conflito existir; é o que a squad faz com ele.</p>
+
+<h3>8.1 Tipos de conflito</h3>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:170px">Tipo</th><th>Exemplo</th></tr></thead>
+<tbody>
+<tr><td><b>De tarefa</b></td><td>Discordância sobre o que fazer ou como fazer — qual fornecedor de hospedagem escolher, por exemplo.</td></tr>
+<tr><td><b>De processo</b></td><td>Discordância sobre quem faz o quê ou como o trabalho deveria fluir.</td></tr>
+<tr><td><b>De relacionamento</b></td><td>Tensão pessoal entre integrantes, muitas vezes nascida de um conflito de tarefa mal resolvido.</td></tr>
+</tbody>
+</table>
+</div>
+<p>O padrão mais comum: um conflito de tarefa não conversado vira, com o tempo, conflito de relacionamento. Resolver cedo, no nível certo, evita esse escalonamento.</p>
+
+<h3>8.2 Ruído na comunicação</h3>
+<div class="box dica"><span class="rot">Conceito-chave</span><p><b>Ruído</b> é tudo o que distorce uma mensagem entre quem fala e quem ouve — pode ser literal (ambiente barulhento), mas também emocional (quem ouve já está na defensiva) ou de linguagem (jargão técnico que só uma pessoa entende). Boa parte dos conflitos de "relacionamento" é, na origem, ruído de comunicação nunca esclarecido.</p></div>
+
+<h3>8.3 O papel de quem media</h3>
+<p>Mediar não é dar razão a um lado. É ajudar as duas partes a se ouvirem, separar fato de interpretação, e chegar a um combinado que ambas aceitem — mesmo que não seja o que cada uma queria originalmente.</p>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 8 — Estudo de caso, em grupo.</b> Recebam do docente um caso de conflito em equipe de projeto (divergência de prioridade, atraso não avisado, sobrecarga de um integrante). Identifiquem o tipo de conflito e proponham uma estratégia de mediação. Apresentem em até 2 minutos.</p></div>
+
+<h2 id="a9"><span class="num">Aula 9</span>Negociação de conflitos II — simulação</h2>
+
+<p class="lede">Hoje a teoria vira prática: cada squad recebe um conflito simulado e precisa mediá-lo de verdade, com rodízio de quem conduz.</p>
+
+<figure class="anim" id="an-conflito">
+<div class="anim-head"><span class="anim-tag">Animação</span><span style="font-size:13px;color:var(--tinta2)">Dois caminhos possíveis para o mesmo desentendimento</span><button class="btn" onclick="tocarAnim(this)">Reproduzir</button></div>
+<svg viewBox="0 0 700 230" role="img" aria-label="Um desentendimento pode escalar para conflito de relacionamento ou ser mediado para um combinado">
+  <rect x="270" y="8" width="160" height="50" rx="9" fill="#eef1f5" stroke="#8a97a8" stroke-width="1.4"/>
+  <text x="350" y="28" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#455060">Desentendimento</text>
+  <text x="350" y="45" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#455060">"você decidiu sem me avisar"</text>
+
+  <path id="cf-esc" d="M300 60 C 200 110, 140 130, 110 172" fill="none" stroke="#b3261e" stroke-width="2" stroke-dasharray="340"/>
+  <path id="cf-med" d="M400 60 C 500 110, 560 130, 590 172" fill="none" stroke="#1d7a52" stroke-width="2" stroke-dasharray="340"/>
+
+  <g id="cf-ruim"><rect x="20" y="176" width="180" height="50" rx="9" fill="#fdecea" stroke="#b3261e" stroke-width="1.4"/><text x="110" y="196" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#b3261e">Escala</text><text x="110" y="213" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#455060">vira mágoa pessoal, contamina a squad</text></g>
+  <g id="cf-bom"><rect x="500" y="176" width="180" height="50" rx="9" fill="#e6f4ee" stroke="#1d7a52" stroke-width="1.4"/><text x="590" y="196" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#1d7a52">Mediado</text><text x="590" y="213" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#455060">vira um combinado por escrito</text></g>
+</svg>
+</figure>
+
+<h3>9.1 Como a simulação funciona</h3>
+<ol class="passos">
+<li>A squad recebe um roteiro de conflito com papéis distribuídos (docente prepara com antecedência).</li>
+<li>Um integrante conduz a mediação, aplicando comunicação assertiva e a estrutura fato → impacto → sugestão.</li>
+<li>Os demais interpretam os papéis do conflito; quem não está atuando observa e registra em ficha própria.</li>
+<li>Repete-se com outro integrante conduzindo, em um segundo conflito.</li>
+</ol>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>Em equipes ágeis, é comum que esse papel de mediação seja assumido pelo <i>Scrum Master</i> ou por um líder técnico — mas a habilidade de mediar não deveria depender de um único cargo. Uma squad em que qualquer integrante consegue mediar um atrito pequeno é uma squad mais resiliente.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 9 — Mediação com rodízio.</b> Preencham a ficha de observação durante as duas simulações. Ao final, registrem: o que funcionou na mediação, o que travou a conversa, e o que cada um levaria para uma situação real.</p></div>
+
+<h2 id="a10"><span class="num">Aula 10</span>Evento disruptivo e replanejamento</h2>
+
+<p class="lede">Nenhum cronograma sobrevive ao primeiro imprevisto sem ajuste. Hoje sua squad recebe um — sem aviso prévio de qual será.</p>
+
+<h3>10.1 O que pode disparar um replanejamento</h3>
+<div class="grid g3">
+  <div class="card"><h4>Mudança de escopo</h4><p style="font-size:14.5px">O cliente pede algo novo — como o pedido do genro de Dona Ilza por notificação de atraso.</p></div>
+  <div class="card"><h4>Atraso de fornecedor</h4><p style="font-size:14.5px">Um serviço terceirizado do qual a squad depende não entrega no prazo combinado.</p></div>
+  <div class="card"><h4>Indisponibilidade de integrante</h4><p style="font-size:14.5px">Alguém da squad fica impossibilitado de trabalhar por um período.</p></div>
+</div>
+
+<h3>10.2 Analisar antes de decidir</h3>
+<figure class="anim" id="an-replanejamento">
+<div class="anim-head"><span class="anim-tag">Animação</span><span style="font-size:13px;color:var(--tinta2)">Do imprevisto à decisão registrada</span><button class="btn" onclick="tocarAnim(this)">Reproduzir</button></div>
+<svg viewBox="0 0 700 230" role="img" aria-label="Fluxo de replanejamento: evento, impacto, opções, decisão registrada">
+  <g id="rp-1"><rect x="20" y="80" width="150" height="66" rx="9" fill="#fdecea" stroke="#b3261e" stroke-width="1.5"/><text x="95" y="106" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#b3261e">Evento</text><text x="95" y="124" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">o que mudou, de fato</text></g>
+  <g id="rp-2"><rect x="200" y="80" width="150" height="66" rx="9" fill="#fdf0e3" stroke="#e8730c" stroke-width="1.5"/><text x="275" y="106" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#b85a08">Impacto</text><text x="275" y="124" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">quais etapas são atingidas</text></g>
+  <g id="rp-3a"><rect x="380" y="20" width="150" height="56" rx="9" fill="#e8f1f9" stroke="#00447c" stroke-width="1.5"/><text x="455" y="44" text-anchor="middle" font-family="sans-serif" font-size="11.5" font-weight="700" fill="#00447c">Opção A: adiar</text><text x="455" y="60" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#455060">move o prazo</text></g>
+  <g id="rp-3b"><rect x="380" y="140" width="150" height="56" rx="9" fill="#e8f1f9" stroke="#00447c" stroke-width="1.5"/><text x="455" y="164" text-anchor="middle" font-family="sans-serif" font-size="11.5" font-weight="700" fill="#00447c">Opção B: redistribuir</text><text x="455" y="180" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#455060">muda responsável</text></g>
+  <g id="rp-4"><rect x="560" y="80" width="130" height="66" rx="9" fill="#e6f4ee" stroke="#1d7a52" stroke-width="1.5"/><text x="625" y="106" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#1d7a52">Decisão</text><text x="625" y="124" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#455060">registrada e justificada</text></g>
+  <line x1="172" y1="113" x2="196" y2="113" stroke="#8a97a8" stroke-width="1.6" marker-end="url(#setaB)"/>
+  <line x1="352" y1="100" x2="376" y2="55" stroke="#8a97a8" stroke-width="1.4" marker-end="url(#setaB)"/>
+  <line x1="352" y1="126" x2="376" y2="165" stroke="#8a97a8" stroke-width="1.4" marker-end="url(#setaB)"/>
+  <line x1="532" y1="55" x2="556" y2="98" stroke="#8a97a8" stroke-width="1.4" marker-end="url(#setaB)"/>
+  <line x1="532" y1="165" x2="556" y2="128" stroke="#8a97a8" stroke-width="1.4" marker-end="url(#setaB)"/>
+</svg>
+</figure>
+
+<h3>10.3 A ficha de decisão de replanejamento</h3>
+<p>Toda decisão de adaptar o processo precisa responder quatro perguntas, por escrito:</p>
+<ol class="passos">
+<li><b>O que aconteceu?</b> descrição objetiva do evento.</li>
+<li><b>O que isso afeta?</b> quais etapas do cronograma e quais cartões do quadro.</li>
+<li><b>O que decidimos?</b> adiar, redistribuir, renegociar escopo ou outra saída.</li>
+<li><b>Por quê?</b> a justificativa — o que fez essa opção parecer a melhor entre as possíveis.</li>
+</ol>
+
+<div class="box atencao"><span class="rot">Atenção</span><p>Não existe decisão "certa" aqui — existe decisão <b>coerente e bem registrada</b>. Duas squads podem escolher caminhos opostos diante do mesmo tipo de evento e as duas estarem corretas, desde que a análise de impacto e a justificativa se sustentem.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 10 — Reagir ao imprevisto.</b> Recebam o evento disruptivo da squad (reservado, cada squad recebe um diferente). Preencham a ficha de decisão de replanejamento e atualizem o cronograma e o quadro de tarefas de acordo com a decisão.</p></div>
+
+<h2 id="a11"><span class="num">Aula 11</span>Consolidação e Checkpoint 2</h2>
+
+<p class="lede">Segunda parada avaliativa. Hoje a squad prepara e entrega a resposta ao imprevisto da Aula 10.</p>
+
+<h3>11.1 O que compõe a entrega</h3>
+<ul class="check">
+<li>Ficha de decisão de replanejamento preenchida (as quatro perguntas da Aula 10).</li>
+<li>Cronograma atualizado, refletindo a decisão tomada.</li>
+<li>Quadro de tarefas com os cartões movidos ou ajustados de acordo.</li>
+</ul>
+
+<div class="box docente"><span class="rot">O que a devolutiva observa</span><p>Aqui o Indicador 2 entra em jogo: a squad <i>identificou</i> corretamente que precisava adaptar o processo? A decisão preserva o compromisso assumido com o cliente, ou empurra o problema para debaixo do tapete? Isso é o que a devolutiva escrita vai apontar.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Entrega 2 — Cronograma replanejado.</b> Apresentem a ficha de decisão e o cronograma atualizado. A devolutiva chega no mesmo encontro, com um plano de ajuste válido até a entrega final da Aula 16.</p></div>
+
+<h2 id="a12"><span class="num">Aula 12</span>Fornecedores e serviços de terceiros</h2>
+
+<p class="lede">Nenhum projeto real é construído do zero, sozinho. Hoje a squad aprende a pesquisar e comparar quem vai fornecer o que a agência não faz internamente.</p>
+
+<h3>12.1 O que costuma ser terceirizado</h3>
+<div class="grid g2">
+<div class="card"><h4>Infraestrutura</h4><p style="font-size:14.5px">Hospedagem, registro de domínio, certificado de segurança (SSL), serviços de e-mail.</p></div>
+<div class="card"><h4>Trabalho especializado</h4><p style="font-size:14.5px">Freelancers para uma tarefa pontual (ilustração, redação, tradução), APIs pagas, ferramentas de apoio por assinatura.</p></div>
+</div>
+
+<h3>12.2 Critérios de comparação</h3>
+<p>Comparar fornecedores sem critério vira "qual é mais barato" — o que quase sempre sai caro depois. Três critérios mínimos:</p>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:130px">Critério</th><th>Pergunta a responder</th></tr></thead>
+<tbody>
+<tr><td><b>Prioridade</b></td><td>O que é indispensável versus o que é "seria bom ter"?</td></tr>
+<tr><td><b>Custo</b></td><td>Valor por mês/ano, e o que acontece se o uso crescer (custo escala junto)?</td></tr>
+<tr><td><b>Características</b></td><td>Suporte em português, tempo de resposta, histórico de confiabilidade.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th>Fornecedor</th><th>Custo anual estimado</th><th>Prioridade</th><th>Observação</th></tr></thead>
+<tbody>
+<tr><td>Registro.br (domínio .com.br)</td><td>R$ 40</td><td>Alta</td><td>Renovação anual obrigatória</td></tr>
+<tr><td>Hospedagem compartilhada nacional</td><td>R$ 180–420</td><td>Alta</td><td>Verificar SLA de disponibilidade</td></tr>
+<tr><td>Freelancer para identidade visual</td><td>Sob orçamento</td><td>Média</td><td>Pedir 3 orçamentos antes de decidir</td></tr>
+</tbody>
+</table>
+</div>
+<p style="font-size:13px;color:var(--tinta2)">Valores ilustrativos — pesquisem preços reais e atualizados para o quadro da própria squad.</p>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 12 — Quadro comparativo.</b> Levantem ao menos dois fornecedores por categoria necessária ao projeto da squad. Montem o quadro comparativo em planilha e cheguem a uma recomendação justificada para cada categoria.</p></div>
+
+<h2 id="a13"><span class="num">Aula 13</span>Relatórios de desenvolvimento</h2>
+
+<p class="lede">Um processo bem organizado que ninguém consegue enxergar de fora podia muito bem não existir. Hoje a squad aprende a transformar o que já fez em um relatório que qualquer pessoa entende.</p>
+
+<h3>13.1 Estrutura de um bom relatório de processo</h3>
+<ol class="passos">
+<li><b>Contexto:</b> o que estava previsto para o período.</li>
+<li><b>Dados:</b> números objetivos — chamados abertos e resolvidos, tempo médio de atendimento, cumprimento de prazos.</li>
+<li><b>Análise:</b> o que os números significam — está dentro do esperado? Piorou? Por quê?</li>
+<li><b>Recomendação:</b> o que muda (ou se mantém) a partir de agora.</li>
+</ol>
+
+<div class="box dica"><span class="rot">Conceito-chave</span><p><b>Coerência</b> é as ideias do texto se encaixarem logicamente; <b>coesão</b> é as frases se conectarem bem gramaticalmente (uso de conectivos, pronomes, sinônimos). Um relatório pode estar gramaticalmente perfeito (coeso) e ainda confundir o leitor porque salta de assunto sem lógica (incoerente) — e vice-versa.</p></div>
+
+<h3>13.2 Da planilha ao gráfico</h3>
+<figure class="mockup">
+<div class="mockup-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="url">sheets.google.com/relatorio-processo-semana4</span></div>
+<div class="mockup-body">
+<div class="sh-grid">
+<div class="sh-row head"><div>Semana</div><div>Abertos</div><div>Resolvidos</div><div>T. médio</div><div>No prazo</div></div>
+<div class="sh-row"><div>1</div><div>3</div><div>2</div><div>1,4 dia</div><div>100%</div></div>
+<div class="sh-row"><div>2</div><div>5</div><div>4</div><div>1,1 dia</div><div>90%</div></div>
+<div class="sh-row"><div>3</div><div>6</div><div>6</div><div>0,8 dia</div><div>100%</div></div>
+<div class="sh-row"><div>4</div><div>4</div><div>5</div><div>0,6 dia</div><div>100%</div></div>
+</div>
+<div class="sh-chart">
+<i style="height:40%" title="Semana 1"></i><i style="height:70%"></i><i style="height:95%"></i><i style="height:100%"></i>
+<span style="align-self:center;font-size:11px;color:var(--tinta2);margin-left:8px">Chamados resolvidos por semana — tendência de queda no tempo médio de atendimento</span>
+</div>
+</div>
+<figcaption>Recriação ilustrativa de uma planilha com gráfico (padrão de interface do Google Sheets em 2026) — o essencial é a lógica de colunas e o gráfico de barras crescendo junto com a melhora do processo, não a ferramenta específica.</figcaption>
+</figure>
+
+<figure class="anim" id="an-metricas">
+<div class="anim-head"><span class="anim-tag">Animação</span><span style="font-size:13px;color:var(--tinta2)">Métricas melhorando ao longo das semanas</span><button class="btn" onclick="tocarAnim(this)">Reproduzir</button></div>
+<svg viewBox="0 0 700 190" role="img" aria-label="Seis barras crescentes representando chamados resolvidos, com linha de tendência">
+  <g class="mt-barra" id="mt-b1"><rect x="40" y="120" width="46" height="40" rx="4" fill="#bcd8ee"/></g>
+  <g class="mt-barra" id="mt-b2"><rect x="130" y="96" width="46" height="64" rx="4" fill="#8ab8dd"/></g>
+  <g class="mt-barra" id="mt-b3"><rect x="220" y="72" width="46" height="88" rx="4" fill="#5a98cc"/></g>
+  <g class="mt-barra" id="mt-b4"><rect x="310" y="52" width="46" height="108" rx="4" fill="#2f78b8"/></g>
+  <g class="mt-barra" id="mt-b5"><rect x="400" y="36" width="46" height="124" rx="4" fill="#0b6ab0"/></g>
+  <g class="mt-barra" id="mt-b6"><rect x="490" y="24" width="46" height="136" rx="4" fill="#00447c"/></g>
+  <line x1="20" y1="160" x2="560" y2="160" stroke="#c7ceda" stroke-width="1.4"/>
+  <path id="mt-linha" d="M63 140 L153 128 L243 104 L333 84 L423 68 L513 56" fill="none" stroke="#e8730c" stroke-width="2.4" stroke-linecap="round"/>
+  <text x="580" y="60" font-family="sans-serif" font-size="11" fill="#e8730c" font-weight="700">tendência</text>
+</svg>
+</figure>
+
+<h3>13.3 Apresentando em slides</h3>
+<figure class="mockup">
+<div class="mockup-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="url">slides.google.com/relatorio-processo-agencia</span></div>
+<div class="mockup-body">
+<div class="sl-strip">
+<div class="sl-thumb"><b>Relatório de Processo</b>Agência Web Linhares — Semana 4<div class="n">1</div></div>
+<div class="sl-thumb"><b>Métricas do período</b>Gráfico: chamados resolvidos<div class="n">2</div></div>
+<div class="sl-thumb"><b>Decisões de replanejamento</b>Evento + impacto + escolha<div class="n">3</div></div>
+<div class="sl-thumb"><b>Retrospectiva</b>O que funcionou / não funcionou<div class="n">4</div></div>
+</div>
+</div>
+<figcaption>Recriação ilustrativa de uma tira de slides (padrão de interface do Google Slides em 2026) — quatro slides bastam para uma apresentação de status de 10 minutos.</figcaption>
+</figure>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 13 — Da planilha aos slides.</b> Consolidem as métricas do período em planilha, gerem pelo menos um gráfico, e montem os slides do relatório de status combinando gráfico e texto de análise.</p></div>
+
+<h2 id="a14"><span class="num">Aula 14</span>Carreira profissional e postura</h2>
+
+<p class="lede">A UC2 termina de olhar para o processo da agência e, por uma aula, olha para o processo da sua própria carreira.</p>
+
+<h3>14.1 Itinerário formativo e mercado</h3>
+<p>O curso Desenvolvedor Mobile prepara para atuar em empresas de todos os portes — como funcionário CLT, como autônomo prestando serviço, ou como parte de uma equipe maior de TI. Vale conhecer os limites de atuação: um Desenvolvedor Mobile não é, por exemplo, o mesmo perfil de um administrador de banco de dados ou de um especialista em segurança — mas trabalha lado a lado com eles.</p>
+
+<h3>14.2 Intraempreendedorismo</h3>
+<div class="box dica"><span class="rot">Conceito-chave</span><p><b>Intraempreendedorismo</b> é agir com a postura de quem empreende — proatividade, iniciativa, visão de negócio — mesmo trabalhando como funcionário de uma empresa ou membro de uma squad. Na prática, na UC2, isso apareceu toda vez que a squad resolveu algo antes de o docente cobrar, ou sugeriu uma melhoria que ninguém pediu.</p></div>
+
+<h3>14.3 Etiqueta pessoal e profissional</h3>
+<div class="grid g2">
+<div class="card"><h4>Comunicação escrita</h4><p style="font-size:14.5px">E-mails e mensagens profissionais têm saudação, corpo claro e fechamento — mesmo em um chat rápido. Evite gírias excessivas com clientes.</p></div>
+<div class="card"><h4>Postura em reunião</h4><p style="font-size:14.5px">Pontualidade, câmera ligada quando combinado, atenção a quem está falando — os mesmos cuidados de uma reunião presencial valem para uma chamada de vídeo.</p></div>
+</div>
+
+<h3>14.4 Seu plano de carreira</h3>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:130px">Prazo</th><th>Pergunta a responder</th></tr></thead>
+<tbody>
+<tr><td><b>Curto (6 meses)</b></td><td>Que competência da UC atual eu quero levar mais longe? Que portfólio eu quero ter pronto?</td></tr>
+<tr><td><b>Médio (1–2 anos)</b></td><td>Estágio, primeiro emprego ou primeiro cliente autônomo — o que eu preciso para chegar lá?</td></tr>
+<tr><td><b>Longo (3–5 anos)</b></td><td>Que tipo de profissional eu quero ser — especialista técnico, líder de equipe, empreendedor?</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 14 — Plano de carreira individual.</b> Preencham a tabela acima com suas próprias respostas. Não precisa ser definitivo — é normal (e esperado) que mude. O que importa é ter, pela primeira vez, escrito.</p></div>
+
+<h2 id="a15"><span class="num">Aula 15</span>Diversidade humana no trabalho e consolidação</h2>
+
+<p class="lede">Última aula de conteúdo novo antes do fechamento. Hoje a turma discute diversidade no ambiente de trabalho e cada squad reúne tudo o que produziu na UC2 em um único material.</p>
+
+<h3>15.1 Diversidade como parte natural do ambiente de trabalho</h3>
+<p>Equipes de tecnologia atendem pessoas com origens, idades, corpos, orientações e culturas diferentes — o próprio Sr. Joaquim, idoso e com dificuldade em um celular antigo, é parte dessa diversidade de usuários que qualquer sistema real vai encontrar. Reconhecer a diversidade humana como algo natural, e não como um "problema a resolver", muda a qualidade do que se constrói e de como se trabalha em equipe.</p>
+
+<div class="box dica"><span class="rot">Para aprofundar</span><p>Pesquisas de mercado (como as da McKinsey & Company sobre diversidade e performance) mostram, de forma consistente, associação entre equipes diversas e melhores resultados de negócio. Vale a leitura dos materiais indicados nas <a href="#ref">Referências</a>.</p></div>
+
+<div class="box mercado"><span class="rot">No mercado</span><p>Discutir diversidade no ambiente de trabalho não é sobre opiniões pessoais fora do contexto profissional — é sobre como uma equipe trata quem é diferente dela mesma, com respeito e sem excluir, dentro do trabalho. Isso vale tanto para colegas de squad quanto para o público que vai usar o que vocês constroem.</p></div>
+
+<h3>15.2 Consolidando o Manual de Processos</h3>
+<p>O Manual de Processos da Agência reúne, em um só lugar, tudo o que a squad organizou ao longo da UC2:</p>
+<ul class="check">
+<li>Estrutura de equipe e papéis</li>
+<li>Cronograma de etapas (com a revisão da Aula 10)</li>
+<li>Quadro de tarefas</li>
+<li>Registro de ocorrências tratadas</li>
+<li>Ficha de decisão de replanejamento</li>
+<li>Quadro comparativo de fornecedores</li>
+<li>Relatório de métricas com gráficos</li>
+</ul>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Atividade 15 — Manual e ensaio.</b> Consolidem o Manual de Processos. Ensaiem, dentro do laboratório, a apresentação de até dez minutos que farão na Aula 16 — peçam um feedback rápido de outra squad ou do docente antes de ir para casa.</p></div>
+
+<h2 id="a16"><span class="num">Aula 16</span>Reunião de status final</h2>
+
+<p class="lede">Encerramento da UC2. A squad defende o Relatório de Processo diante de um "gestor" — o docente ou um convidado — exatamente como aconteceria em uma reunião real de acompanhamento de projeto.</p>
+
+<h3>16.1 Roteiro da reunião</h3>
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:100px">Tempo</th><th>O que acontece</th></tr></thead>
+<tbody>
+<tr><td>Até 10 min</td><td>Apresentação da squad: métricas, gráficos, decisões de replanejamento, retrospectiva.</td></tr>
+<tr><td>~5 min</td><td>Perguntas do gestor sobre os números e as decisões tomadas.</td></tr>
+<tr><td>—</td><td>Parecer do gestor registrado.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>16.2 Retrospectiva: o formato que fecha qualquer sprint</h3>
+<div class="grid g3">
+<div class="card"><h4>O que funcionou</h4><p style="font-size:14.5px">O que a squad faria de novo, sem pensar duas vezes.</p></div>
+<div class="card"><h4>O que não funcionou</h4><p style="font-size:14.5px">O que gerou atrito, atraso ou retrabalho evitável.</p></div>
+<div class="card"><h4>O que muda</h4><p style="font-size:14.5px">Um ajuste concreto para o próximo ciclo — não uma boa intenção vaga.</p></div>
+</div>
+
+<div class="box docente"><span class="rot">O que a devolutiva observa</span><p>Aqui fecha o Indicador 3: o relatório é claro e coerente com as métricas reais do período? A squad consegue explicar, sem enrolar, por que os números são o que são? É isso — e não a "beleza" da apresentação — que decide o A ou o NA.</p></div>
+
+<div class="box pratica"><span class="rot">Mão na massa</span><p><b>Entrega final — Relatório de Processo.</b> Apresentem à banca. Ao final, façam a autoavaliação individual e a avaliação por pares pela rubrica combinada na Aula 1. Isso encerra a UC2 — o que vocês documentaram aqui segue direto para a UC3, que retoma a parte técnica do projeto.</p></div>
+
+<h2 id="ativ"><span class="num">Prática</span>Atividades e entregas</h2>
+
+<p class="lede">Resumo de todas as entregas da unidade, na ordem em que acontecem.</p>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:70px">Aula</th><th>Entrega</th><th>Peso na avaliação</th></tr></thead>
+<tbody>
+<tr><td>6</td><td>Plano de Processo (equipe, cronograma, quadro, ocorrências)</td><td>Checkpoint 1 — Indicador 1</td></tr>
+<tr><td>11</td><td>Cronograma replanejado + ficha de decisão</td><td>Checkpoint 2 — Indicador 2</td></tr>
+<tr><td>16</td><td>Relatório de Processo + Manual de Processos + defesa</td><td>Entrega final — Indicador 3 (e revisão de I1 e I2)</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box atencao"><span class="rot">Atenção aos prazos</span><p>Diferente da UC1, aqui as entregas não são peças que se somam para formar um documento — são o próprio processo sendo avaliado enquanto acontece. Atrasar o registro de ocorrências não atrasa "uma tarefa": atrasa a evidência de que o processo está funcionando.</p></div>
+
+<h2 id="tpl"><span class="num">Ferramentas</span>Modelos para copiar</h2>
+
+<div class="tpl">
+<div class="tpl-head"><h4>Ficha de registro de ocorrência</h4><button class="btn" onclick="copiar(this)">Copiar</button></div>
+<pre>CHAMADO #___
+Data de abertura: ___/___/___
+Aberto por: (cliente/usuário)
+Descrição (fato, sem interpretação):
+
+Tipo: [ ] Bug  [ ] Dúvida  [ ] Melhoria
+Prioridade: [ ] Alta  [ ] Média  [ ] Baixa
+Responsável pela ação corretiva:
+Ação corretiva tomada:
+
+Data de encerramento: ___/___/___
+Cliente avisado do encerramento? [ ] Sim  [ ] Não</pre>
+</div>
+
+<div class="tpl">
+<div class="tpl-head"><h4>Ficha de decisão de replanejamento</h4><button class="btn" onclick="copiar(this)">Copiar</button></div>
+<pre>EVENTO DISRUPTIVO — Squad: __________  Data: ___/___/___
+
+1. O que aconteceu?
+
+
+2. O que isso afeta? (etapas e cartões impactados)
+
+
+3. O que decidimos? (adiar / redistribuir / renegociar escopo / outro)
+
+
+4. Por quê? (justificativa da escolha)
+
+
+Impacto no prazo combinado com o cliente:
+Quadro de tarefas atualizado? [ ] Sim  [ ] Não</pre>
+</div>
+
+<div class="tpl">
+<div class="tpl-head"><h4>Estrutura de feedback (fato → impacto → sugestão)</h4><button class="btn" onclick="copiar(this)">Copiar</button></div>
+<pre>FATO (o que aconteceu, sem opinião):
+"Quando ______________________________,"
+
+IMPACTO (o que isso causou):
+"isso fez com que ______________________________."
+
+SUGESTÃO (o que ajudaria da próxima vez):
+"Você toparia ______________________________?"</pre>
+</div>
+
+<div class="tpl">
+<div class="tpl-head"><h4>Roteiro do relatório de status</h4><button class="btn" onclick="copiar(this)">Copiar</button></div>
+<pre>RELATÓRIO DE PROCESSO — Semana ___
+
+1. CONTEXTO
+O que estava previsto para este período:
+
+2. DADOS
+Chamados abertos: ___  Resolvidos: ___  Tempo médio: ___
+Cumprimento do cronograma: ___%
+
+3. ANÁLISE
+O que os números significam:
+
+4. RECOMENDAÇÃO
+O que muda a partir de agora:</pre>
+</div>
+
+<div class="tpl">
+<div class="tpl-head"><h4>Plano de carreira individual</h4><button class="btn" onclick="copiar(this)">Copiar</button></div>
+<pre>PLANO DE CARREIRA — Nome: __________
+
+CURTO PRAZO (6 meses):
+
+
+MÉDIO PRAZO (1–2 anos):
+
+
+LONGO PRAZO (3–5 anos):
+
+
+Uma competência desta UC que quero levar mais longe:</pre>
+</div>
+
+<h2 id="aval"><span class="num">Acompanhamento</span>Evidências e avaliação</h2>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:60px">#</th><th>Indicador</th><th>Momento de observação</th><th>Evidência</th></tr></thead>
+<tbody>
+<tr><td><span class="bg bg-i">I1</span></td><td>Executa procedimentos de controle e registro de ocorrência em softwares de gestão</td><td>Aulas 4 a 6 (checkpoint 1)</td><td>Quadro de tarefas + ocorrências registradas e encerradas</td></tr>
+<tr><td><span class="bg bg-i">I2</span></td><td>Identifica a necessidade de adaptação das etapas e cronograma de trabalho</td><td>Aulas 10 e 11 (checkpoint 2)</td><td>Ficha de decisão de replanejamento</td></tr>
+<tr><td><span class="bg bg-i">I3</span></td><td>Elabora relatórios dos processos de trabalho conforme métricas</td><td>Aulas 13 e 16 (relatório final)</td><td>Relatório de Processo + defesa</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Além dos indicadores, atitudes e valores são observados continuamente: responsabilidade com os acordos (Aula 1), colaboração em equipe (Aula 3), cordialidade no atendimento (Aula 4), sigilo no tratamento de dados (Aula 5), proatividade na resolução de problemas (Aula 6), zelo na apresentação profissional (Aula 14) e respeito à diversidade humana (Aula 15).</p>
+
+<h2 id="glo"><span class="num">Apoio</span>Glossário</h2>
+
+<div class="tab-wrap">
+<table>
+<thead><tr><th style="width:190px">Termo</th><th>Definição</th></tr></thead>
+<tbody>
+<tr><td><b>Ação corretiva</b></td><td>Medida tomada para resolver uma ocorrência registrada.</td></tr>
+<tr><td><b>Chamado / ocorrência</b></td><td>Relato de problema, dúvida ou pedido vindo de um cliente ou usuário.</td></tr>
+<tr><td><b>Comunicação assertiva</b></td><td>Comunicação direta e respeitosa, sem agressividade nem passividade.</td></tr>
+<tr><td><b>Cultura organizacional</b></td><td>Valores, hábitos e regras não escritas que orientam o comportamento de um grupo.</td></tr>
+<tr><td><b>Fluxo de status</b></td><td>Sequência de estados (ex.: a fazer, em andamento, em revisão, concluído) que uma tarefa percorre.</td></tr>
+<tr><td><b>Intraempreendedorismo</b></td><td>Postura empreendedora — proatividade, iniciativa, visão de negócio — dentro de uma equipe ou empresa.</td></tr>
+<tr><td><b>Kanban</b></td><td>Método de gestão visual do trabalho baseado em cartões que se movem entre colunas de status.</td></tr>
+<tr><td><b>Mediação de conflito</b></td><td>Processo de ajudar duas partes em desentendimento a chegar a um combinado aceito por ambas.</td></tr>
+<tr><td><b>Ruído (comunicação)</b></td><td>Qualquer fator que distorce uma mensagem entre quem fala e quem ouve.</td></tr>
+<tr><td><b>Sigilo de dados</b></td><td>Cuidado em não expor informações sensíveis de clientes ou usuários em registros compartilhados.</td></tr>
+<tr><td><b>SLA (Service Level Agreement)</b></td><td>Prazo máximo combinado para resposta a um chamado.</td></tr>
+<tr><td><b>WIP (Work in Progress)</b></td><td>Limite de tarefas simultâneas em andamento, usado para evitar sobrecarga.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="ref"><span class="num">Fechamento</span>Referências e para aprofundar</h2>
+
+<h3>Documentos institucionais</h3>
+<ul>
+<li>SENAC. <b>Plano de curso Desenvolvedor Mobile</b>. Qualificação Profissional, código DN 2826, versão 2. Eixo tecnológico Informação e Comunicação.</li>
+<li>SENAC. DN. <b>Competência</b>. Rio de Janeiro, 2022. Coleção de documentos técnicos do Modelo Pedagógico Senac. Disponível em: <a href="http://www.extranet.senac.br/modelopedagogicosenac/">extranet.senac.br/modelopedagogicosenac</a>.</li>
+</ul>
+
+<h3>Diversidade e comunicação não violenta</h3>
+<ul>
+<li>MCKINSEY &amp; COMPANY. <b>A diversidade como alavanca de performance</b>. Disponível em: <a href="https://www.mckinsey.com/business-functions/organization/our-insights/delivering-through-diversity">mckinsey.com</a>.</li>
+<li>ALIANÇA NACIONAL LGBTI. <b>Manual de comunicação LGBTI+</b>. Disponível em: <a href="http://www.grupodignidade.org.br/wp-content/uploads/2018/05/manual-comunicacao-LGBTI.pdf">grupodignidade.org.br</a>.</li>
+<li>ITS BRASIL; Secretaria Especial dos Direitos Humanos da Presidência da República. <b>Formas não-violentas de resolução de conflitos</b>. Módulo VI, mediação de conflitos.</li>
+</ul>
+
+<h3>Ferramentas recomendadas</h3>
+<ul>
+<li><a href="https://trello.com/">Trello</a> — quadro de tarefas kanban, plano gratuito suficiente para uma squad pequena.</li>
+<li><a href="https://github.com/features/issues">GitHub Projects</a> — quadro de tarefas integrado ao repositório do projeto.</li>
+<li><a href="https://www.google.com/forms/about/">Google Forms</a> — formulários para simular a central de atendimento.</li>
+<li><a href="https://www.google.com/sheets/about/">Google Sheets</a> — planilhas e gráficos para o relatório de métricas.</li>
+<li><a href="https://www.google.com/slides/about/">Google Slides</a> — apresentação da reunião de status.</li>
+<li><a href="https://www.canva.com/">Canva</a> — materiais visuais de apoio (manual de processos, capas de apresentação).</li>
+</ul>
+
+<div class="box dica" style="margin-top:34px"><span class="rot">Da UC2 para a UC3</span><p>O Manual de Processos e o quadro de tarefas configurados aqui não terminam nesta unidade — é o mesmo quadro que a squad vai usar na UC3, quando o trabalho volta a ser técnico e a interface gráfica do aplicativo começa a ser desenvolvida. Guardem tudo, versionado e organizado, exatamente como praticaram nesta UC.</p></div>
+
+<footer>
+  <p><b>UC2 — Organizar o processo de trabalho no desenvolvimento de aplicações</b> · Apostila do Aluno · Curso Desenvolvedor Mobile · 48 horas</p>
+  <p>Material didático de apoio elaborado pelo docente Welton Castoldi com base no Plano de Curso Senac (DN 2826, v.2) e no Modelo Pedagógico Senac. Os mockups de interface deste material são recriações ilustrativas, baseadas em observação direta das ferramentas em uso público (não são prints oficiais nem reproduzem marcas registradas). Os conteúdos de terceiros referenciados pertencem a seus respectivos autores. Este material não constitui consultoria jurídica.</p>
+</footer>
+
+</main>
+</div>
+
+<script>
+// Progresso de leitura
+var prog = document.getElementById('prog');
+function atualizarProgresso(){
+  var h = document.documentElement;
+  var total = h.scrollHeight - h.clientHeight;
+  prog.style.width = (total > 0 ? (h.scrollTop / total) * 100 : 0) + '%';
+}
+window.addEventListener('scroll', atualizarProgresso, {passive:true});
+atualizarProgresso();
+
+// Destaque do item ativo no sumário
+var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+var alvos = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+function marcarAtivo(){
+  var pos = window.scrollY + 120, atual = null;
+  alvos.forEach(function(sec, i){ if (sec.offsetTop <= pos) atual = i; });
+  links.forEach(function(a){ a.classList.remove('ativo'); });
+  if (atual !== null && links[atual]) links[atual].classList.add('ativo');
+}
+window.addEventListener('scroll', marcarAtivo, {passive:true});
+marcarAtivo();
+
+// Animações
+function tocarAnim(botao){
+  var fig = botao.closest('.anim');
+  fig.classList.remove('tocando');
+  void fig.offsetWidth;
+  fig.classList.add('tocando');
+  botao.textContent = 'Reproduzindo...';
+  setTimeout(function(){ botao.textContent = 'Repetir'; }, 5200);
+}
+if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  var obsAnim = new IntersectionObserver(function(entradas){
+    entradas.forEach(function(e){
+      if (e.isIntersecting && !e.target.dataset.jaTocou){
+        e.target.dataset.jaTocou = '1';
+        e.target.classList.add('tocando');
+        var b = e.target.querySelector('.anim-head .btn');
+        if (b){ b.textContent = 'Reproduzindo...'; setTimeout(function(){ b.textContent = 'Repetir'; }, 5200); }
+      }
+    });
+  }, {threshold: 0.45});
+  document.querySelectorAll('.anim').forEach(function(f){ obsAnim.observe(f); });
+}
+
+// Copiar modelos
+function copiar(botao){
+  var texto = botao.closest('.tpl').querySelector('pre').innerText;
+  var concluir = function(){
+    var original = botao.textContent;
+    botao.textContent = 'Copiado';
+    setTimeout(function(){ botao.textContent = original; }, 1800);
+  };
+  if (navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(texto).then(concluir, function(){ fallback(texto, concluir); });
+  } else {
+    fallback(texto, concluir);
+  }
+}
+function fallback(texto, concluir){
+  var ta = document.createElement('textarea');
+  ta.value = texto;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); concluir(); } catch(e) { window.prompt('Copie o texto abaixo:', texto); }
+  document.body.removeChild(ta);
+}
+</script>
+</body>
+</html>
