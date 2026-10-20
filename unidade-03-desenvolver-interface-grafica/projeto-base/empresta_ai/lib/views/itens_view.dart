@@ -54,7 +54,7 @@ class ItensView extends StatelessWidget {
                   : ListView.separated(
                       padding: const EdgeInsets.all(TemaEmprestaAi.espacoM),
                       itemCount: itens.length,
-                      separatorBuilder: (_, __) =>
+                      separatorBuilder: (_, indice) =>
                           const SizedBox(height: TemaEmprestaAi.espacoP),
                       itemBuilder: (context, i) => ItemCard(
                         item: itens[i],
